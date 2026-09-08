@@ -785,12 +785,16 @@
             background: none;
             border: none;
             color: var(--text-dim);
-            font-size: 10.5px;
-            letter-spacing: 0.4px;
-            text-decoration: underline;
+            font-size: 10px;
+            letter-spacing: 0.3px;
             cursor: pointer;
-            padding: 0;
+            padding: 2px 0 0;
             font-family: 'Inter', sans-serif;
+            opacity: 0.75;
+        }
+
+        .edit-toggle:active {
+            opacity: 1;
         }
 
         .edit-box {
@@ -859,15 +863,10 @@
             color: var(--text-dim);
         }
 
-        .edited-tag {
+        .custom-tag {
             font-size: 10px;
-            color: var(--ember);
-            border: 1px solid var(--ember);
-            border-radius: 4px;
-            padding: 1px 6px;
-            margin-left: 8px;
-            vertical-align: middle;
-            letter-spacing: 0.3px;
+            color: var(--text-dim);
+            letter-spacing: 0.2px;
         }
 
         /* ---------- Motion + polish ---------- */
@@ -1969,6 +1968,16 @@
             border-color: var(--frost-dim);
         }
 
+        .plot-col.sel .step-bar {
+            border-color: var(--frost);
+            box-shadow: 0 0 10px rgba(125, 216, 232, 0.4);
+        }
+
+        .step-val.sel,
+        .day-letter.sel {
+            color: var(--frost);
+        }
+
         .day-letter {
             font-size: 9px;
             color: var(--text-dim);
@@ -2053,7 +2062,7 @@
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-            <div class="app-version">Winter Arc v8 · offline-ready</div>
+            <div class="app-version">Winter Arc v9 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -2169,21 +2178,21 @@
                 warmup: true,
                 note: "Learn the movements — don't prove anything. Your tendons, joints and coordination all need time to readapt after the break.",
                 exercises: week2 ? [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 10-12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
-                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 10-12", "90s", "More stability than free-weight bench while you rebuild."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 10-12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
-                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "3 x 10-12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
-                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "2 x 10-12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
+                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "More stability than free-weight bench while you rebuild."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
+                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "3 x 12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
+                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "3 x 12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
                     ex("Plank", "Core", "Mat", "3 x 20-30 sec", "45-60s", "Quality over duration — 15-20 sec is completely fine to start.", true),
                 ] : [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "2 x 10-12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
-                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "2 x 10-12", "90s", "More stability than free-weight bench while you rebuild."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "2 x 10-12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
-                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "2 x 10-12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
-                    ex("Seated Leg Curl", "Hamstrings", "Machine", "2 x 10-15", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
-                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "2 x 10-12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
-                    ex("Plank", "Core", "Mat", "2 x 20-30 sec", "45-60s", "Quality over duration — 15-20 sec is completely fine to start.", true),
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
+                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "More stability than free-weight bench while you rebuild."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
+                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "3 x 12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
+                    ex("Seated Leg Curl", "Hamstrings", "Machine", "3 x 12", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
+                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "3 x 12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
+                    ex("Plank", "Core", "Mat", "3 x 20-30 sec", "45-60s", "Quality over duration — 15-20 sec is completely fine to start.", true),
                 ],
                 finisher: "10 minutes easy treadmill/bike. You should be able to hold a conversation. Goal: leave with energy remaining, not wiped out."
             };
@@ -2194,23 +2203,23 @@
                 warmup: true,
                 note: "Same lower-body pattern, a chest-supported row and a different pulling/core pairing for variety.",
                 exercises: week2 ? [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 10-12", "90s", "Same reliable base as Full Body A."),
-                    ex("Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 10-12", "90s", "Repetition of the pressing pattern builds skill fast."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 10-12", "90s", "Keeps the vertical pull pattern grooved."),
-                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine/DB", "3 x 10-12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
-                    ex("Leg Extension", "Quads", "Machine", "2 x 12-15", "60s", "Isolated quad work, easy on the lower back."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60s", "Balances the leg extension work."),
-                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "2 x 12-15", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
-                    ex("Dead Bug", "Core", "Mat", "2 x 10/side", "45s", "Trains your core to resist unwanted movement, not just crunch."),
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Same reliable base as Full Body A."),
+                    ex("Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "Repetition of the pressing pattern builds skill fast."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Keeps the vertical pull pattern grooved."),
+                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine/DB", "3 x 12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
+                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60s", "Isolated quad work, easy on the lower back."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Balances the leg extension work."),
+                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "3 x 12", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
+                    ex("Dead Bug", "Core", "Mat", "3 x 12", "45s", "Trains your core to resist unwanted movement, not just crunch."),
                 ] : [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "2 x 10-12", "90s", "Same reliable base as Full Body A."),
-                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "2 x 10-12", "90s", "Repetition of the pressing pattern builds skill fast."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "2 x 10-12", "90s", "Keeps the vertical pull pattern grooved."),
-                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine", "2 x 10-12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
-                    ex("Leg Extension", "Quads", "Machine", "2 x 12-15", "60s", "Isolated quad work, easy on the lower back."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60s", "Balances the leg extension work."),
-                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "2 x 12-15", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
-                    ex("Dead Bug", "Core", "Mat", "2 x 8-10/side", "45s", "Trains your core to resist unwanted movement, not just crunch."),
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Same reliable base as Full Body A."),
+                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "Repetition of the pressing pattern builds skill fast."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Keeps the vertical pull pattern grooved."),
+                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine", "3 x 12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
+                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60s", "Isolated quad work, easy on the lower back."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Balances the leg extension work."),
+                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "3 x 12", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
+                    ex("Dead Bug", "Core", "Mat", "3 x 12", "45s", "Trains your core to resist unwanted movement, not just crunch."),
                 ],
                 finisher: "10-15 min easy bike/treadmill."
             };
@@ -2220,18 +2229,18 @@
                 title: "Upper Body" + (second ? " (2)" : ""),
                 note: "Free weights enter here — only because Weeks 1-2 are behind you, not because the calendar says so. Start surprisingly light on anything new.",
                 exercises: [
-                    ex("Dumbbell Incline Press", "Chest / Front delts", "Dumbbells + adjustable bench", "3 x 8-12", "90s", "More stabilization demand than the machine press — real chest/shoulder builder."),
+                    ex("Dumbbell Incline Press", "Chest / Front delts", "Dumbbells + adjustable bench", "3 x 12", "90s", "More stabilization demand than the machine press — real chest/shoulder builder."),
                     ...(second ? [
-                        ex("Chest-Supported Dumbbell Row", "Back — horizontal pull", "Dumbbells + bench", "3 x 8-12", "90s", "Dumbbell version of the row you already know."),
-                        ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 10-12", "90s", "Same pattern you've drilled for 2 weeks, now with a bit more load."),
+                        ex("Chest-Supported Dumbbell Row", "Back — horizontal pull", "Dumbbells + bench", "3 x 12", "90s", "Dumbbell version of the row you already know."),
+                        ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Same pattern you've drilled for 2 weeks, now with a bit more load."),
                     ] : [
-                        ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 8-12", "90s", "Same pattern you've drilled for 2 weeks, now with a bit more load."),
-                        ex("Chest-Supported Dumbbell Row", "Back — horizontal pull", "Dumbbells + bench", "3 x 8-12", "90s", "Dumbbell version of the row you already know."),
+                        ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Same pattern you've drilled for 2 weeks, now with a bit more load."),
+                        ex("Chest-Supported Dumbbell Row", "Back — horizontal pull", "Dumbbells + bench", "3 x 12", "90s", "Dumbbell version of the row you already know."),
                     ]),
-                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "2 x 10-12", "75s", "Kept as a machine — no need to rush overhead free-weight pressing yet."),
-                    ex("Cable Lateral Raise", "Shoulders — side delts", "Cable", "2 x 12-15", "60s", "Rounds out shoulder development."),
-                    ex("Rope Triceps Pushdown", "Triceps", "Cable + rope", "2 x 10-15", "60s", "Direct triceps work to support your pressing."),
-                    ex(second ? "Hammer Curl" : "Dumbbell Curl", "Biceps", "Dumbbells", "2 x 10-15", "60s", "Direct biceps work — balances the pulling volume."),
+                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "3 x 12", "75s", "Kept as a machine — no need to rush overhead free-weight pressing yet."),
+                    ex("Cable Lateral Raise", "Shoulders — side delts", "Cable", "3 x 12", "60s", "Rounds out shoulder development."),
+                    ex("Rope Triceps Pushdown", "Triceps", "Cable + rope", "3 x 12", "60s", "Direct triceps work to support your pressing."),
+                    ex(second ? "Hammer Curl" : "Dumbbell Curl", "Biceps", "Dumbbells", "3 x 12", "60s", "Direct biceps work — balances the pulling volume."),
                 ],
                 finisher: "10-15 min easy cardio."
             };
@@ -2241,21 +2250,21 @@
                 title: "Lower Body" + (second ? " (2)" : ""),
                 note: "No barbell squats, walking lunges, or Bulgarian split squats this month. Leg press + goblet squat + RDL train the same patterns with far less balance demand while you rebuild.",
                 exercises: second ? [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 10-12", "90s", "Your main lower-body loader all month."),
-                    ex("Goblet Squat", "Quads / Glutes / Core", "Dumbbell", "2 x 8-10", "75s", "Practices the squat pattern — light and controlled."),
-                    ex("Dumbbell RDL", "Hamstrings / Glutes", "Dumbbells", "2 x 8-10", "90s", "Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
-                    ex("Hip Thrust Machine", "Glutes", "Machine", "2 x 10-12", "60s", "Glutes are your biggest muscle group — direct work pays off."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60s", "Balances the quad-dominant work above."),
-                    ex("Calf Raise", "Calves", "Machine", "2 x 12-15", "45s", "Small muscle, real contribution to standing/walking stability."),
-                    ex("Plank", "Core", "Mat", "2 x 25-40 sec", "45s", "Core stability under fatigue at the end of the session.", true),
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Your main lower-body loader all month."),
+                    ex("Goblet Squat", "Quads / Glutes / Core", "Dumbbell", "3 x 12", "75s", "Practices the squat pattern — light and controlled."),
+                    ex("Dumbbell RDL", "Hamstrings / Glutes", "Dumbbells", "3 x 12", "90s", "Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
+                    ex("Hip Thrust Machine", "Glutes", "Machine", "3 x 12", "60s", "Glutes are your biggest muscle group — direct work pays off."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Balances the quad-dominant work above."),
+                    ex("Calf Raise", "Calves", "Machine", "3 x 12", "45s", "Small muscle, real contribution to standing/walking stability."),
+                    ex("Plank", "Core", "Mat", "3 x 25-40 sec", "45s", "Core stability under fatigue at the end of the session.", true),
                 ] : [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 8-12", "90s", "Your main lower-body loader all month."),
-                    ex("Goblet Squat to Bench", "Quads / Glutes / Core", "Dumbbell + bench", "2 x 8-10", "75s", "The bench gives you a depth reference while you practice the squat pattern."),
-                    ex("Dumbbell Romanian Deadlift", "Hamstrings / Glutes", "Dumbbells", "2 x 8-10", "90s", "Very light. Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 10-15", "60s", "Direct hamstring work."),
-                    ex("Leg Extension", "Quads", "Machine", "2 x 12-15", "60s", "Direct quad work, easy on the lower back."),
-                    ex("Calf Raise", "Calves", "Machine", "2 x 12-15", "45s", "Small muscle, real contribution to standing/walking stability."),
-                    ex("Dead Bug", "Core", "Mat", "2 x 10/side", "45s", "Core control to close out the session."),
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Your main lower-body loader all month."),
+                    ex("Goblet Squat to Bench", "Quads / Glutes / Core", "Dumbbell + bench", "3 x 12", "75s", "The bench gives you a depth reference while you practice the squat pattern."),
+                    ex("Dumbbell Romanian Deadlift", "Hamstrings / Glutes", "Dumbbells", "3 x 12", "90s", "Very light. Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Direct hamstring work."),
+                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60s", "Direct quad work, easy on the lower back."),
+                    ex("Calf Raise", "Calves", "Machine", "3 x 12", "45s", "Small muscle, real contribution to standing/walking stability."),
+                    ex("Dead Bug", "Core", "Mat", "3 x 12", "45s", "Core control to close out the session."),
                 ],
                 finisher: "10-15 min easy cardio."
             };
@@ -2326,7 +2335,7 @@
         const RIR_TEXT = { 1: "3-4 RIR — leave 3-4 good reps in the tank", 2: "3-4 RIR — leave 3-4 good reps in the tank", "34": "2-3 RIR — a bit closer to your limit, still never to failure" };
         const STEPS_TEXT = { 1: "6,000-7,000 steps/day", 2: "~7,000 steps/day", "34": "7,000-8,000+ steps/day" };
         /* ---------- STATE ---------- */
-        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false };
+        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false, selectedStepDate: null };
         const STORAGE_KEY = "winterArcData_v2";
         function loadData() {
             try {
@@ -2482,11 +2491,11 @@
             card.className = "card";
             const head = document.createElement("div");
             head.className = "card-head";
-            head.innerHTML = '<span class="ex-name">' + escHtml(exercise.name) + (ov ? '<span class="edited-tag">EDITED</span>' : '') + '</span><span class="ex-muscle">' + escHtml(exercise.muscle) + '</span>';
+            head.innerHTML = '<span class="ex-name">' + escHtml(exercise.name) + '</span><span class="ex-muscle">' + escHtml(exercise.muscle) + '</span>';
             card.appendChild(head);
             const meta = document.createElement("div");
             meta.className = "ex-meta";
-            meta.textContent = exercise.equip + " · " + effSetsReps + " · rest " + effRest;
+            meta.innerHTML = escHtml(exercise.equip + " · " + effSetsReps + " · rest " + effRest) + (ov ? ' <span class="custom-tag">· custom</span>' : '');
             card.appendChild(meta);
             if (exercise.why) {
                 const why = document.createElement("div");
@@ -2496,7 +2505,7 @@
             }
             const editBtn = document.createElement("button");
             editBtn.className = "edit-toggle";
-            editBtn.textContent = "Edit sets / reps / rest";
+            editBtn.textContent = "edit";
             editBtn.onclick = () => {
                 const box = card.querySelector(".edit-box");
                 box.style.display = box.style.display === "none" ? "block" : "none";
@@ -3280,6 +3289,25 @@
             }
             setTimeout(() => celebrateOverlay("goal", next.toLocaleString() + " steps", "Daily goal of " + goal.toLocaleString() + " crushed. Legs did that, lungs thank you."), 300);
         }
+        function saveStepDate() {
+            const ds = state.selectedStepDate;
+            if (!ds) return;
+            const sEl = document.getElementById("stepEditSteps");
+            const wEl = document.getElementById("stepEditWeight");
+            const sRaw = sEl ? String(sEl.value).trim() : "";
+            const wRaw = wEl ? String(wEl.value).trim() : "";
+            const sV = parseInt(sRaw), wV = parseFloat(wRaw);
+            if ((sRaw === "" || isNaN(sV)) && (wRaw === "" || isNaN(wV))) {
+                delete DATA.checkins[ds];
+            } else {
+                if (!DATA.checkins[ds]) DATA.checkins[ds] = {};
+                if (sRaw !== "" && !isNaN(sV)) DATA.checkins[ds].steps = String(Math.max(0, sV));
+                if (wRaw !== "" && !isNaN(wV)) DATA.checkins[ds].weight = String(wV);
+            }
+            saveData(DATA);
+            render();
+            showToast("Saved " + fmtDateShort(ds), "That day's log is updated.");
+        }
         function renderStepsView(container) {
             const title = document.createElement("div");
             title.className = "session-tag";
@@ -3360,12 +3388,17 @@
             const daysRow = document.createElement("div");
             daysRow.className = "steps-days";
             st.days.forEach((d) => {
+                const pick = () => { state.selectedStepDate = d.date; render(); };
                 const vv = document.createElement("div");
-                vv.className = "step-val" + (d.today ? " today" : "");
+                vv.className = "step-val" + (d.today ? " today" : "") + (d.date === state.selectedStepDate ? " sel" : "");
                 vv.textContent = fmtSteps(d);
+                vv.style.cursor = "pointer";
+                vv.onclick = pick;
                 valsRow.appendChild(vv);
                 const col = document.createElement("div");
-                col.className = "plot-col" + (d.steps >= st.goal && d.logged ? " hit" : "") + (d.today ? " today-col" : "");
+                col.className = "plot-col" + (d.steps >= st.goal && d.logged ? " hit" : "") + (d.today ? " today-col" : "") + (d.date === state.selectedStepDate ? " sel" : "");
+                col.style.cursor = "pointer";
+                col.onclick = pick;
                 const bar = document.createElement("div");
                 bar.className = "step-bar";
                 bar.style.height = px(d.steps) + "px";
@@ -3376,14 +3409,63 @@
                 col.appendChild(bar);
                 plot.appendChild(col);
                 const lt = document.createElement("div");
-                lt.className = "day-letter" + (d.today ? " today" : "");
+                lt.className = "day-letter" + (d.today ? " today" : "") + (d.date === state.selectedStepDate ? " sel" : "");
                 lt.textContent = letters[parseDateStr(d.date).getDay()];
+                lt.style.cursor = "pointer";
+                lt.onclick = pick;
                 daysRow.appendChild(lt);
             });
             chartCard.appendChild(valsRow);
             chartCard.appendChild(plot);
             chartCard.appendChild(daysRow);
             container.appendChild(chartCard);
+
+            if (state.selectedStepDate) {
+                const eds = state.selectedStepDate;
+                const eci = DATA.checkins[eds] || {};
+                const ed = document.createElement("div");
+                ed.className = "chart-card";
+                const eh = document.createElement("h3");
+                eh.textContent = "Edit day · " + fmtDateShort(eds) + (eds === todayDateStr() ? " (today)" : "");
+                ed.appendChild(eh);
+                const erow = document.createElement("div");
+                erow.className = "today-steps-row";
+                const es = document.createElement("input");
+                es.className = "today-steps-input";
+                es.type = "number";
+                es.inputMode = "numeric";
+                es.id = "stepEditSteps";
+                es.placeholder = "Steps";
+                es.value = eci.steps || "";
+                es.setAttribute("aria-label", "Steps for " + eds);
+                const ew = document.createElement("input");
+                ew.className = "today-steps-input";
+                ew.type = "number";
+                ew.step = "0.1";
+                ew.inputMode = "decimal";
+                ew.id = "stepEditWeight";
+                ew.placeholder = "Weight (kg)";
+                ew.value = eci.weight || "";
+                ew.setAttribute("aria-label", "Weight for " + eds);
+                erow.appendChild(es);
+                erow.appendChild(ew);
+                ed.appendChild(erow);
+                const esave = document.createElement("button");
+                esave.className = "save-btn";
+                esave.style.width = "100%";
+                esave.style.marginTop = "10px";
+                esave.textContent = "Save " + fmtDateShort(eds);
+                esave.onclick = saveStepDate;
+                ed.appendChild(esave);
+                const eclose = document.createElement("button");
+                eclose.className = "edit-toggle";
+                eclose.style.fontSize = "11px";
+                eclose.style.marginTop = "8px";
+                eclose.textContent = "close";
+                eclose.onclick = () => { state.selectedStepDate = null; render(); };
+                ed.appendChild(eclose);
+                container.appendChild(ed);
+            }
 
             const chips = document.createElement("div");
             chips.className = "stat-chips";
