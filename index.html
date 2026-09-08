@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter Arc — Training Log</title>
+    <meta name="theme-color" content="#101722">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="WinterArc">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/857/857418.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --panel: #161c26;
+            --panel-2: #1d2430;
+            --line: #2a3242;
+            --frost: #7dd8e8;
+            --frost-dim: #3a5a63;
+            --ember: #ff8a5c;
+            --text: #e8ecf1;
+            --text-dim: #8b95a5;
+            --good: #6fd694;
+            --radius: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        .wrap {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        header {
+            padding: 24px 16px 16px;
+            border-bottom: 1px solid var(--line);
+            background: linear-gradient(180deg, #101722 0%, #0d1117 100%);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        header .inner {
+            max-width: 640px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 26px;
+            letter-spacing: 0.5px;
+            margin: 0;
+            color: var(--text);
+        }
+
+        h1 span {
+            color: var(--frost);
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 12.5px;
+            margin-top: 3px;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .week-pill {
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            color: var(--frost);
+            border: 1px solid var(--frost-dim);
+            padding: 5px 12px;
+            border-radius: 999px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .info-link {
+            font-size: 11px;
+            color: var(--text-dim);
+            text-decoration: underline;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            padding: 0;
+        }
+
+        nav.days {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 12px 16px 4px;
+            max-width: 640px;
+            margin: 0 auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        nav.days::-webkit-scrollbar {
+            display: none;
+        }
+
+        .day-btn {
+            font-family: 'Oswald', sans-serif;
+            background: var(--panel);
+            color: var(--text-dim);
+            border: 1px solid var(--line);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all .15s ease;
+        }
+
+        .day-btn.active {
+            background: var(--frost);
+            color: #0d1117;
+            border-color: var(--frost);
+            font-weight: 600;
+        }
+
+        .day-btn .dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--good);
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        main {
+            padding: 16px 16px 40px;
+        }
+
+        .rir-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 9px 13px;
+            margin-bottom: 14px;
+            font-size: 12.5px;
+            color: var(--text-dim);
+        }
+
+        .rir-strip b {
+            color: var(--frost);
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.2px;
+        }
+
+        .session-tag {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            color: var(--text);
+            margin: 2px 0 2px;
+        }
+
+        .session-note {
+            color: var(--text-dim);
+            font-size: 13px;
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .warmup-card {
+            background: var(--panel-2);
+            border-left: 3px solid var(--frost-dim);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            font-size: 12.5px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .warmup-card b {
+            color: var(--frost);
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.3px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 14px 16px 16px;
+            margin-bottom: 12px;
+        }
+
+        .card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+            gap: 10px;
+        }
+
+        .ex-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .ex-muscle {
+            color: var(--frost);
+            font-size: 11.5px;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .ex-meta {
+            color: var(--text-dim);
+            font-size: 12.5px;
+            margin-bottom: 10px;
+        }
+
+        .ex-why {
+            color: var(--text-dim);
+            font-size: 12px;
+            margin: -4px 0 10px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        table.sets {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.sets th {
+            font-size: 10.5px;
+            color: var(--text-dim);
+            text-align: left;
+            font-weight: 500;
+            padding-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        table.sets td {
+            padding: 4px 4px 4px 0;
+        }
+
+        table.sets input {
+            width: 100%;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 7px 6px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+        }
+
+        table.sets input:focus {
+            outline: none;
+            border-color: var(--frost);
+        }
+
+        table.sets input::placeholder {
+            color: #4d5666;
+        }
+
+        .col-set {
+            width: 28px;
+            color: var(--text-dim);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .checkin {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .checkin .field {
+            flex: 1;
+        }
+
+        .checkin label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+
+        .checkin input {
+            width: 100%;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .cardio-card,
+        .info-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .cardio-card h3,
+        .info-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            margin: 0 0 8px;
+            color: var(--frost);
+        }
+
+        .cardio-card p {
+            margin: 0 0 10px;
+            color: var(--text-dim);
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        .cardio-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .field {
+            flex: 1;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+
+        .field input {
+            width: 100%;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .save-bar {
+            position: sticky;
+            bottom: 0;
+            background: linear-gradient(0deg, var(--bg) 65%, transparent);
+            padding: 16px 0 4px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .save-btn {
+            flex: 1;
+            background: var(--frost);
+            color: #0d1117;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.4px;
+            padding: 13px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .save-btn:active {
+            transform: scale(0.98);
+        }
+
+        .save-status {
+            font-size: 12px;
+            color: var(--good);
+            text-align: center;
+            margin-top: 8px;
+            height: 14px;
+        }
+
+        .rule-note {
+            background: var(--panel-2);
+            border-left: 3px solid var(--ember);
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .rule-note b {
+            color: var(--text);
+        }
+
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 16px 16px 30px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--text-dim);
+            font-size: 12.5px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .export-btn:hover {
+            color: var(--frost);
+            border-color: var(--frost);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 100;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg);
+            border-top: 1px solid var(--line);
+            border-radius: 16px 16px 0 0;
+            max-width: 640px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 20px 18px 30px;
+        }
+
+        .modal h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            margin: 0 0 14px;
+            color: var(--frost);
+        }
+
+        .modal h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14.5px;
+            color: var(--text);
+            margin: 18px 0 6px;
+        }
+
+        .modal p,
+        .modal li {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .modal ul {
+            margin: 6px 0;
+            padding-left: 18px;
+        }
+
+        .close-modal {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 18px;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .modal table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+        }
+
+        .modal table td,
+        .modal table th {
+            padding: 6px 4px;
+            font-size: 12.5px;
+            border-bottom: 1px solid var(--line);
+            color: var(--text-dim);
+        }
+
+        .modal table th {
+            color: var(--frost);
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="inner">
+            <div>
+                <h1>WINTER <span>ARC</span></h1>
+                <div class="subtitle">Month 1 Training Log</div>
+            </div>
+            <div class="header-right">
+                <div class="week-pill" id="weekPill">Week 1</div>
+                <button class="info-link" onclick="openInfo()">Golden Rules & Progression</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="days" id="dayNav"></nav>
+
+    <main class="wrap">
+        <div id="sessionContent"></div>
+    </main>
+
+    <div class="wrap">
+        <footer>
+            <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;">
+                Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal">
+            <h2>Golden Rules & Progression</h2>
+            <h3>Rule 1 — No ego lifting</h3>
+            <p>The question every set is "can I control this weight perfectly?" — not "how much can I lift?" If the last
+                3 reps look ugly, the weight is too heavy.</p>
+            <h3>Rule 2 — RIR (Reps In Reserve)</h3>
+            <p>If you finish a set thinking "I could've done 3 more good reps," that's ~3 RIR.</p>
+            <table>
+                <tr>
+                    <th>Phase</th>
+                    <th>Target RIR</th>
+                </tr>
+                <tr>
+                    <td>Weeks 1–2</td>
+                    <td>3–4 RIR</td>
+                </tr>
+                <tr>
+                    <td>Weeks 3–4</td>
+                    <td>2–3 RIR</td>
+                </tr>
+            </table>
+            <p>Never train to failure this month.</p>
+            <h3>Double progression (how you add weight)</h3>
+            <p>For a "3 x 8-12" exercise: once you hit 12 reps on every set, add a little weight next session — even if
+                reps temporarily drop back down (e.g. 10kg→12.5kg might give you 9/8/8 again). That's normal. Build back
+                up to 12/12/12, then increase again.</p>
+            <h3>Cardio targets by week</h3>
+            <table>
+                <tr>
+                    <th>Week</th>
+                    <th>Target</th>
+                </tr>
+                <tr>
+                    <td>Week 1</td>
+                    <td>25–30 min</td>
+                </tr>
+                <tr>
+                    <td>Week 2</td>
+                    <td>30–35 min</td>
+                </tr>
+                <tr>
+                    <td>Week 3</td>
+                    <td>30–40 min</td>
+                </tr>
+                <tr>
+                    <td>Week 4</td>
+                    <td>35–45 min</td>
+                </tr>
+            </table>
+            <p>Not mandatory to escalate — if joints feel beat up, hold the duration instead.</p>
+            <h3>Daily steps</h3>
+            <table>
+                <tr>
+                    <th>Week</th>
+                    <th>Target</th>
+                </tr>
+                <tr>
+                    <td>Week 1</td>
+                    <td>6,000–7,000</td>
+                </tr>
+                <tr>
+                    <td>Week 2</td>
+                    <td>~7,000</td>
+                </tr>
+                <tr>
+                    <td>Weeks 3–4</td>
+                    <td>7,000–8,000+</td>
+                </tr>
+            </table>
+            <h3>Avoid this month</h3>
+            <p>Running sprints, box jumps, burpees, high-volume jumping, heavy barbell squats/deadlifts, max lifts,
+                training to failure, ego lifting. None of these are necessary for Month 1.</p>
+            <h3>Pain rule</h3>
+            <p><b style="color:var(--text);">Normal:</b> muscle fatigue, burning, mild soreness.<br>
+                <b style="color:var(--text);">Stop immediately for:</b> sharp/pinching/joint pain, sudden pain, pain
+                that changes your movement, dizziness, chest pain, unusual shortness of breath.
+            </p>
+            <h3>Moving to Weeks 3–4</h3>
+            <p>Not calendar-locked. Only advance once: no unusual joint pain, recovering well, technique feels solid,
+                current weights leave 2+ RIR without struggle, and you completed Weeks 1–2 consistently. If not all true
+                yet — repeat Weeks 1–2 a bit longer. That's the smart choice, not a setback.</p>
+            <button class="close-modal" onclick="closeInfo()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        /* ---------- PLAN DATA (matches the Winter Arc Month 1 document exactly) ---------- */
+        const WARMUP_TEXT = "5-7 min easy treadmill walk or bike, then: shoulder circles x10 each way, hip circles x10, bodyweight squat x8 to comfortable depth, very light leg press x10. This raises body temperature and rehearses the movement before loading it — no jumping/running needed at this stage.";
+        function ex(name, muscle, equip, setsReps, rest, why) {
+            return { name, muscle, equip, setsReps, rest, why };
+        }
+        function fullBodyA(week2) {
+            return {
+                title: "Full Body A",
+                warmup: true,
+                note: "Learn the movements — don't prove anything. Your tendons, joints and coordination all need time to readapt after the break.",
+                exercises: week2 ? [
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 10-12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
+                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 10-12", "90s", "More stability than free-weight bench while you rebuild."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 10-12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
+                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "3 x 10-12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
+                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "2 x 10-12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
+                    ex("Plank", "Core", "Mat", "3 x 20-30 sec", "45-60s", "Quality over duration — 15-20 sec is completely fine to start."),
+                ] : [
+                    ex("Leg Press", "Quads / Glutes", "Machine", "2 x 10-12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
+                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "2 x 10-12", "90s", "More stability than free-weight bench while you rebuild."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "2 x 10-12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
+                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "2 x 10-12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
+                    ex("Seated Leg Curl", "Hamstrings", "Machine", "2 x 10-15", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
+                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "2 x 10-12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
+                    ex("Plank", "Core", "Mat", "2 x 20-30 sec", "45-60s", "Quality over duration — 15-20 sec is completely fine to start."),
+                ],
+                finisher: "10 minutes easy treadmill/bike. You should be able to hold a conversation. Goal: leave with energy remaining, not wiped out."
+            };
+        }
+        function fullBodyB(week2) {
+            return {
+                title: "Full Body B",
+                warmup: true,
+                note: "Same lower-body pattern, a chest-supported row and a different pulling/core pairing for variety.",
+                exercises: week2 ? [
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 10-12", "90s", "Same reliable base as Full Body A."),
+                    ex("Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 10-12", "90s", "Repetition of the pressing pattern builds skill fast."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 10-12", "90s", "Keeps the vertical pull pattern grooved."),
+                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine/DB", "3 x 10-12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
+                    ex("Leg Extension", "Quads", "Machine", "2 x 12-15", "60s", "Isolated quad work, easy on the lower back."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60s", "Balances the leg extension work."),
+                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "2 x 12-15", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
+                    ex("Dead Bug", "Core", "Mat", "2 x 10/side", "45s", "Trains your core to resist unwanted movement, not just crunch."),
+                ] : [
+                    ex("Leg Press", "Quads / Glutes", "Machine", "2 x 10-12", "90s", "Same reliable base as Full Body A."),
+                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "2 x 10-12", "90s", "Repetition of the pressing pattern builds skill fast."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "2 x 10-12", "90s", "Keeps the vertical pull pattern grooved."),
+                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine", "2 x 10-12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
+                    ex("Leg Extension", "Quads", "Machine", "2 x 12-15", "60s", "Isolated quad work, easy on the lower back."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60s", "Balances the leg extension work."),
+                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "2 x 12-15", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
+                    ex("Dead Bug", "Core", "Mat", "2 x 8-10/side", "45s", "Trains your core to resist unwanted movement, not just crunch."),
+                ],
+                finisher: "10-15 min easy bike/treadmill."
+            };
+        }
+        function upperDay(second) {
+            return {
+                title: "Upper Body" + (second ? " (2)" : ""),
+                note: "Free weights enter here — only because Weeks 1-2 are behind you, not because the calendar says so. Start surprisingly light on anything new.",
+                exercises: [
+                    ex("Dumbbell Incline Press", "Chest / Front delts", "Dumbbells + adjustable bench", "3 x 8-12", "90s", "More stabilization demand than the machine press — real chest/shoulder builder."),
+                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 8-12", "90s", "Same pattern you've drilled for 2 weeks, now with a bit more load."),
+                    ex(second ? "Chest-Supported Dumbbell Row" : "Chest-Supported Dumbbell Row", "Back — horizontal pull", "Dumbbells + bench", "3 x 8-12", "90s", "Dumbbell version of the row you already know."),
+                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "2 x 10-12", "75s", "Kept as a machine — no need to rush overhead free-weight pressing yet."),
+                    ex("Cable Lateral Raise", "Shoulders — side delts", "Cable", "2 x 12-15", "60s", "Rounds out shoulder development."),
+                    ex("Rope Triceps Pushdown", "Triceps", "Cable + rope", "2 x 10-15", "60s", "Direct triceps work to support your pressing."),
+                    ex(second ? "Hammer Curl" : "Dumbbell Curl", "Biceps", "Dumbbells", "2 x 10-15", "60s", "Direct biceps work — balances the pulling volume."),
+                ],
+                finisher: "10-15 min easy cardio."
+            };
+        }
+        function lowerDay(second) {
+            return {
+                title: "Lower Body" + (second ? " (2)" : ""),
+                note: "No barbell squats, walking lunges, or Bulgarian split squats this month. Leg press + goblet squat + RDL train the same patterns with far less balance demand while you rebuild.",
+                exercises: second ? [
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 10-12", "90s", "Your main lower-body loader all month."),
+                    ex("Goblet Squat", "Quads / Glutes / Core", "Dumbbell", "2 x 8-10", "75s", "Practices the squat pattern — light and controlled."),
+                    ex("Dumbbell RDL", "Hamstrings / Glutes", "Dumbbells", "2 x 8-10", "90s", "Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
+                    ex("Hip Thrust Machine", "Glutes", "Machine", "2 x 10-12", "60s", "Glutes are your biggest muscle group — direct work pays off."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 12-15", "60s", "Balances the quad-dominant work above."),
+                    ex("Calf Raise", "Calves", "Machine", "2 x 12-15", "45s", "Small muscle, real contribution to standing/walking stability."),
+                    ex("Plank", "Core", "Mat", "2 x 25-40 sec", "45s", "Core stability under fatigue at the end of the session."),
+                ] : [
+                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 8-12", "90s", "Your main lower-body loader all month."),
+                    ex("Goblet Squat to Bench", "Quads / Glutes / Core", "Dumbbell + bench", "2 x 8-10", "75s", "The bench gives you a depth reference while you practice the squat pattern."),
+                    ex("Dumbbell Romanian Deadlift", "Hamstrings / Glutes", "Dumbbells", "2 x 8-10", "90s", "Very light. Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
+                    ex("Leg Curl", "Hamstrings", "Machine", "2 x 10-15", "60s", "Direct hamstring work."),
+                    ex("Leg Extension", "Quads", "Machine", "2 x 12-15", "60s", "Direct quad work, easy on the lower back."),
+                    ex("Calf Raise", "Calves", "Machine", "2 x 12-15", "45s", "Small muscle, real contribution to standing/walking stability."),
+                    ex("Dead Bug", "Core", "Mat", "2 x 10/side", "45s", "Core control to close out the session."),
+                ],
+                finisher: "10-15 min easy cardio."
+            };
+        }
+        function cardioDay(title, note, mins) {
+            return { type: "cardio", title, note, mins };
+        }
+        function cardioCoreDay(mins, w2) {
+            return {
+                type: "cardiocore",
+                title: "Cardio + Core",
+                note: mins + " min easy-moderate cardio — bike, elliptical, or treadmill walking, whichever feels best. Then a short core circuit.",
+                mins: mins,
+                core: [
+                    { name: "Bird Dog", reps: w2 ? "2 x 8/side" : "2 x 8/side" },
+                    { name: "Glute Bridge", reps: w2 ? "2 x 12" : "2 x 10-12" },
+                    { name: "Plank", reps: w2 ? "2 x 25-30 sec" : "2 x 20-30 sec" },
+                ]
+            };
+        }
+        function recoveryDay() {
+            return {
+                type: "recovery",
+                title: "Active Recovery",
+                note: "20-30 min easy walk (treadmill or outdoors) + 10 min mobility: ankle rocks x10/side, hip circles x10, thoracic rotations x8/side, shoulder circles x10, cat-cow x8, gentle hip-flexor and calf stretch. No lifting today — recovery is part of the program, not a day off from effort. It's what lets you perform well next session."
+            };
+        }
+        function restDay() {
+            return {
+                type: "rest",
+                title: "Rest",
+                note: "No formal training. Eat, hydrate, sleep, recover. You can walk normally and do light mobility if you want, but don't turn this into another workout."
+            };
+        }
+        const DAY_NAMES = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        const PLAN_W1 = {
+            1: fullBodyA(false),
+            2: cardioDay("Cardio + Mobility", "25-30 min — stationary bike, elliptical, or treadmill walking. RPE 4-5/10: breathing harder but still able to speak in sentences. Then 8-10 min mobility (ankle rocks, hip circles, thoracic rotations, shoulder circles, cat-cow, hip-flexor + calf stretch).", "25-30"),
+            3: fullBodyB(false),
+            4: recoveryDay(),
+            5: { ...fullBodyA(false), note: "Repeat Monday. First progression check: if an exercise felt way too easy, increase the weight slightly. If it felt right, keep the same weight. If your technique broke down, reduce it. Don't increase everything just because it's Friday." },
+            6: cardioCoreDay("25-35"),
+            7: restDay(),
+        };
+        const PLAN_W2 = {
+            1: fullBodyA(true),
+            2: cardioDay("Cardio", "30-35 min — bike/elliptical/treadmill, RPE 4-5. Then 8-10 min mobility.", "30-35"),
+            3: fullBodyB(true),
+            4: recoveryDay(),
+            5: { ...fullBodyA(true), note: "Repeat Monday's Full Body A." },
+            6: cardioCoreDay("30-40", true),
+            7: restDay(),
+        };
+        const PLAN_W34 = {
+            1: upperDay(false),
+            2: lowerDay(false),
+            3: cardioDay("Cardio + Mobility", "30-40 min — bike, elliptical, or treadmill walking. Then 10 min mobility.", "30-40"),
+            4: upperDay(true),
+            5: lowerDay(true),
+            6: cardioDay("Long Cardio", "35-45 min. Bike, elliptical, or incline/flat treadmill walking. Running is NOT required for fat loss at this stage — walking + diet + resistance training works.", "35-45"),
+            7: restDay(),
+        };
+        function getPlanForWeek(week) {
+            if (week === 1) return PLAN_W1;
+            if (week === 2) return PLAN_W2;
+            return PLAN_W34;
+        }
+        const RIR_TEXT = { 1: "3-4 RIR — leave 3-4 good reps in the tank", 2: "3-4 RIR — leave 3-4 good reps in the tank", "34": "2-3 RIR — a bit closer to your limit, still never to failure" };
+        const STEPS_TEXT = { 1: "6,000-7,000 steps/day", 2: "~7,000 steps/day", "34": "7,000-8,000+ steps/day" };
+        /* ---------- STATE ---------- */
+        let state = { week: 1, day: 1 };
+        const STORAGE_KEY = "winterArcData_v2";
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : { logs: {}, checkins: {} };
+            } catch (e) { return { logs: {}, checkins: {} }; }
+        }
+        function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+        let DATA = loadData();
+        if (!DATA.checkins) DATA.checkins = {};
+        function todayKey(week, day) { return "w" + week + "-d" + day; }
+        function todayDateStr() { return new Date().toISOString().slice(0, 10); }
+        function parseNumSets(setsReps) {
+            const m = setsReps.match(/^(\d+)/);
+            return m ? parseInt(m[1]) : 3;
+        }
+        /* ---------- RENDER ---------- */
+        function renderDayNav() {
+            const nav = document.getElementById("dayNav");
+            nav.innerHTML = "";
+            for (let d = 1; d <= 7; d++) {
+                const btn = document.createElement("button");
+                btn.className = "day-btn" + (state.day === d ? " active" : "");
+                const key = todayKey(state.week, d);
+                const hasLog = DATA.logs[key] && Object.keys(DATA.logs[key]).length > 0;
+                btn.innerHTML = DAY_NAMES[d] + (hasLog ? '<span class="dot"></span>' : "");
+                btn.onclick = () => { state.day = d; render(); };
+                nav.appendChild(btn);
+            }
+        }
+        function renderWeekPill() {
+            const pill = document.getElementById("weekPill");
+            const label = state.week === "34" ? "Weeks 3-4" : "Week " + state.week;
+            pill.textContent = label;
+            pill.onclick = () => {
+                if (state.week === 1) state.week = 2;
+                else if (state.week === 2) state.week = "34";
+                else state.week = 1;
+                state.day = 1;
+                render();
+            };
+        }
+        function render() {
+            renderDayNav();
+            renderWeekPill();
+            const plan = getPlanForWeek(state.week);
+            const session = plan[state.day];
+            const container = document.getElementById("sessionContent");
+            container.innerHTML = "";
+            const key = todayKey(state.week, state.day);
+            if (!DATA.logs[key]) DATA.logs[key] = {};
+            if (session.type !== "rest") {
+                const strip = document.createElement("div");
+                strip.className = "rir-strip";
+                strip.innerHTML = '<span>Target: <b>' + RIR_TEXT[state.week] + '</b></span><span>' + STEPS_TEXT[state.week] + '</span>';
+                container.appendChild(strip);
+            }
+            if (state.week === "34" && state.day === 1) {
+                const banner = document.createElement("div");
+                banner.className = "rule-note";
+                banner.innerHTML = "<b>Before starting Weeks 3-4:</b> only move here once every box is checked — no unusual joint pain, recovering well, solid technique, current weights leave 2+ RIR without struggle, and Weeks 1-2 were consistent. If not — repeat Weeks 1-2 a bit longer. Smart choice, not a setback.";
+                container.appendChild(banner);
+            }
+            if (!session.type) {
+                container.appendChild(renderStrengthDay(session, key));
+            } else if (session.type === "cardio") {
+                container.appendChild(renderCardioDay(session, key));
+            } else if (session.type === "cardiocore") {
+                container.appendChild(renderCardioCoreDay(session, key));
+            } else if (session.type === "recovery" || session.type === "rest") {
+                container.appendChild(renderSimpleDay(session, key));
+            }
+        }
+        function renderCheckin(key) {
+            const wrap = document.createElement("div");
+            wrap.className = "checkin";
+            const dateStr = todayDateStr();
+            const saved = DATA.checkins[dateStr] || {};
+            wrap.innerHTML =
+                '<div class="field"><label>Body weight (kg)</label><input type="number" step="0.1" id="checkinWeight" value="' + (saved.weight || "") + '" placeholder="e.g. 119.5"></div>' +
+                '<div class="field"><label>Steps today</label><input type="number" id="checkinSteps" value="' + (saved.steps || "") + '" placeholder="e.g. 7000"></div>';
+            return wrap;
+        }
+        function renderStrengthDay(session, key) {
+            const wrap = document.createElement("div");
+            const title = document.createElement("div");
+            title.className = "session-tag";
+            title.textContent = session.title;
+            wrap.appendChild(title);
+            const note = document.createElement("div");
+            note.className = "session-note";
+            note.textContent = session.note;
+            wrap.appendChild(note);
+            if (session.warmup) {
+                const wu = document.createElement("div");
+                wu.className = "warmup-card";
+                wu.innerHTML = "<b>Warm-up — 8-10 min</b>" + WARMUP_TEXT;
+                wrap.appendChild(wu);
+            }
+            wrap.appendChild(renderCheckin(key));
+            session.exercises.forEach((exercise) => {
+                wrap.appendChild(renderExerciseCard(exercise, key));
+            });
+            if (session.finisher) {
+                const fin = document.createElement("div");
+                fin.className = "info-card";
+                fin.innerHTML = '<h3>Finisher</h3><p style="margin:0;">' + session.finisher + '</p>';
+                wrap.appendChild(fin);
+            }
+            wrap.appendChild(renderSaveBar(key));
+            return wrap;
+        }
+        function renderExerciseCard(exercise, key) {
+            const numSets = parseNumSets(exercise.setsReps);
+            const card = document.createElement("div");
+            card.className = "card";
+            const head = document.createElement("div");
+            head.className = "card-head";
+            head.innerHTML = '<span class="ex-name">' + exercise.name + '</span><span class="ex-muscle">' + exercise.muscle + '</span>';
+            card.appendChild(head);
+            const meta = document.createElement("div");
+            meta.className = "ex-meta";
+            meta.textContent = exercise.equip + " · " + exercise.setsReps + " · rest " + exercise.rest;
+            card.appendChild(meta);
+            if (exercise.why) {
+                const why = document.createElement("div");
+                why.className = "ex-why";
+                why.textContent = exercise.why;
+                card.appendChild(why);
+            }
+            const table = document.createElement("table");
+            table.className = "sets";
+            table.innerHTML = '<tr><th style="width:28px;"></th><th>Weight (kg)</th><th>Reps</th><th>RIR</th></tr>';
+            if (!DATA.logs[key][exercise.name]) DATA.logs[key][exercise.name] = [];
+            const saved = DATA.logs[key][exercise.name];
+            for (let s = 0; s < numSets; s++) {
+                const row = document.createElement("tr");
+                const v = saved[s] || {};
+                row.innerHTML =
+                    '<td class="col-set">' + (s + 1) + '</td>' +
+                    '<td><input type="number" inputmode="decimal" data-ex="' + exercise.name + '" data-set="' + s + '" data-field="weight" value="' + (v.weight || "") + '" placeholder="-"></td>' +
+                    '<td><input type="number" inputmode="numeric" data-ex="' + exercise.name + '" data-set="' + s + '" data-field="reps" value="' + (v.reps || "") + '" placeholder="-"></td>' +
+                    '<td><input type="number" inputmode="numeric" data-ex="' + exercise.name + '" data-set="' + s + '" data-field="rir" value="' + (v.rir || "") + '" placeholder="-"></td>';
+                table.appendChild(row);
+            }
+            card.appendChild(table);
+            return card;
+        }
+        function renderCardioDay(session, key) {
+            const wrap = document.createElement("div");
+            const title = document.createElement("div");
+            title.className = "session-tag";
+            title.textContent = session.title;
+            wrap.appendChild(title);
+            wrap.appendChild(renderCheckin(key));
+            const card = document.createElement("div");
+            card.className = "cardio-card";
+            card.innerHTML = '<p>' + session.note + '</p>';
+            const saved = DATA.logs[key]["cardio"] || {};
+            const inputs = document.createElement("div");
+            inputs.className = "cardio-inputs";
+            inputs.innerHTML =
+                '<div class="field"><label>Minutes done</label><input type="number" id="cardioMins" value="' + (saved.mins || "") + '" placeholder="' + session.mins + '"></div>' +
+                '<div class="field"><label>Effort (1-10)</label><input type="number" id="cardioRpe" value="' + (saved.rpe || "") + '" placeholder="4-5"></div>';
+            card.appendChild(inputs);
+            wrap.appendChild(card);
+            wrap.appendChild(renderSaveBar(key));
+            return wrap;
+        }
+        function renderCardioCoreDay(session, key) {
+            const wrap = document.createElement("div");
+            const title = document.createElement("div");
+            title.className = "session-tag";
+            title.textContent = session.title;
+            wrap.appendChild(title);
+            wrap.appendChild(renderCheckin(key));
+            const card = document.createElement("div");
+            card.className = "cardio-card";
+            card.innerHTML = '<p>' + session.note + '</p>';
+            const saved = DATA.logs[key]["cardio"] || {};
+            const inputs = document.createElement("div");
+            inputs.className = "cardio-inputs";
+            inputs.innerHTML =
+                '<div class="field"><label>Minutes done</label><input type="number" id="cardioMins" value="' + (saved.mins || "") + '" placeholder="' + session.mins + '"></div>' +
+                '<div class="field"><label>Effort (1-10)</label><input type="number" id="cardioRpe" value="' + (saved.rpe || "") + '" placeholder="4-5"></div>';
+            card.appendChild(inputs);
+            wrap.appendChild(card);
+            const coreCard = document.createElement("div");
+            coreCard.className = "info-card";
+            coreCard.innerHTML = '<h3>Core Circuit — 2 rounds, 60s rest between rounds</h3>';
+            session.core.forEach(c => {
+                const line = document.createElement("p");
+                line.style.margin = "0 0 4px";
+                line.textContent = c.name + " — " + c.reps;
+                coreCard.appendChild(line);
+            });
+            wrap.appendChild(coreCard);
+            wrap.appendChild(renderSaveBar(key));
+            return wrap;
+        }
+        function renderSimpleDay(session, key) {
+            const wrap = document.createElement("div");
+            const title = document.createElement("div");
+            title.className = "session-tag";
+            title.textContent = session.title;
+            wrap.appendChild(title);
+            wrap.appendChild(renderCheckin(key));
+            const card = document.createElement("div");
+            card.className = "info-card";
+            card.innerHTML = '<p style="margin:0;color:var(--text-dim);font-size:13.5px;line-height:1.5;">' + session.note + '</p>';
+            wrap.appendChild(card);
+            wrap.appendChild(renderSaveBar(key));
+            return wrap;
+        }
+        function renderSaveBar(key) {
+            const bar = document.createElement("div");
+            bar.className = "save-bar";
+            const btn = document.createElement("button");
+            btn.className = "save-btn";
+            btn.textContent = "Save today's session";
+            btn.onclick = () => saveSession(key);
+            bar.appendChild(btn);
+            return bar;
+        }
+        function saveSession(key) {
+            if (!DATA.logs[key]) DATA.logs[key] = {};
+            document.querySelectorAll('input[data-ex]').forEach(input => {
+                const exName = input.dataset.ex;
+                const setIdx = parseInt(input.dataset.set);
+                const field = input.dataset.field;
+                if (!DATA.logs[key][exName]) DATA.logs[key][exName] = [];
+                if (!DATA.logs[key][exName][setIdx]) DATA.logs[key][exName][setIdx] = {};
+                DATA.logs[key][exName][setIdx][field] = input.value;
+            });
+            const cm = document.getElementById("cardioMins");
+            const cr = document.getElementById("cardioRpe");
+            if (cm || cr) {
+                DATA.logs[key]["cardio"] = { mins: cm ? cm.value : "", rpe: cr ? cr.value : "" };
+            }
+            const cw = document.getElementById("checkinWeight");
+            const cs = document.getElementById("checkinSteps");
+            if (cw || cs) {
+                const dateStr = todayDateStr();
+                DATA.checkins[dateStr] = { weight: cw ? cw.value : "", steps: cs ? cs.value : "" };
+            }
+            DATA.logs[key]["_savedAt"] = new Date().toISOString();
+            saveData(DATA);
+            renderDayNav();
+            const bar = document.querySelector(".save-bar");
+            let status = bar.nextElementSibling;
+            if (!status || !status.classList.contains("save-status")) {
+                status = document.createElement("div");
+                status.className = "save-status";
+                bar.insertAdjacentElement("afterend", status);
+            }
+            status.textContent = "Saved ✓";
+            setTimeout(() => { status.textContent = ""; }, 2000);
+        }
+        function exportData() {
+            const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "winter-arc-backup-" + todayDateStr() + ".json";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        function openInfo() { document.getElementById("infoModal").classList.add("open"); }
+        function closeInfo() { document.getElementById("infoModal").classList.remove("open"); }
+        render();
+
+        /* ---------- PWA: Service Worker registration (offline-first, localStorage persists offline) ---------- */
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js').then(function (reg) {
+                    console.log('SW registered:', reg.scope);
+                }).catch(function (err) {
+                    console.log('SW registration failed:', err);
+                });
+            });
+        }
+    </script>
+
+</body>
+
+</html>
