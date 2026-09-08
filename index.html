@@ -11,7 +11,8 @@
     <meta name="apple-mobile-web-app-title" content="WinterArc">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/857/857418.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
@@ -1649,6 +1650,28 @@
             background: rgba(255, 138, 92, 0.16);
         }
 
+        .install-btn {
+            flex: 1.2;
+            background: linear-gradient(135deg, #8fe3f2 0%, var(--frost) 55%, #5cc3d8 100%);
+            color: #0d1117;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.4px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            min-height: 44px;
+            box-shadow: 0 4px 18px rgba(125, 216, 232, 0.25);
+            transition: transform 0.1s ease;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        .install-btn:active {
+            transform: scale(0.96);
+        }
+
         .app-version {
             font-size: 10.5px;
             color: var(--text-dim);
@@ -1912,10 +1935,11 @@
     <div class="wrap">
         <footer>
             <div class="footer-actions">
+                <button class="install-btn" id="installBtn" style="display:none;" onclick="onInstallClick()">Install app</button>
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-            <div class="app-version">Winter Arc v4 · offline-ready</div>
+            <div class="app-version">Winter Arc v5 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -3504,6 +3528,7 @@
             closeConfirm();
             if (confirmGoFn) { const fn = confirmGoFn; confirmGoFn = null; fn(); }
         };
+        refreshInstallBtn();
         render();
 
         /* ---------- Native bridge (Capacitor — safe no-op on web) ---------- */
@@ -3548,6 +3573,47 @@
             });
         }
         nativeBoot();
+
+        /* ---------- PWA install prompt (Chrome no longer auto-prompts) ---------- */
+        var deferredInstall = null;
+        function isIosDevice() {
+            try {
+                return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+            } catch (e) { return false; }
+        }
+        function refreshInstallBtn() {
+            const btn = document.getElementById("installBtn");
+            if (!btn) return;
+            const show = !!deferredInstall || isIosDevice();
+            btn.style.display = show ? "" : "none";
+        }
+        window.addEventListener("beforeinstallprompt", (e) => {
+            e.preventDefault();
+            deferredInstall = e;
+            refreshInstallBtn();
+        });
+        window.addEventListener("appinstalled", () => {
+            deferredInstall = null;
+            refreshInstallBtn();
+            showToast("Installed — see you on the home screen", "Launch it from there for the fullscreen app.");
+        });
+        function onInstallClick() {
+            if (deferredInstall) {
+                const p = deferredInstall;
+                deferredInstall = null;
+                refreshInstallBtn();
+                try {
+                    p.prompt();
+                    p.userChoice.then(() => { deferredInstall = null; refreshInstallBtn(); }).catch(() => {});
+                } catch (e) {}
+                return;
+            }
+            if (isIosDevice()) {
+                showToast("Install on iPhone", "Tap Share below, then Add to Home Screen.");
+                return;
+            }
+            showToast("Install", "Open this page in Chrome, then tap ⋮ → Add to Home screen → Install.");
+        }
 
         /* ---------- PWA: Service Worker registration (offline-first, localStorage persists offline) ---------- */
         if ('serviceWorker' in navigator) {
