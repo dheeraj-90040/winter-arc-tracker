@@ -1291,6 +1291,333 @@
                 padding: 11px 14px;
             }
         }
+
+        /* ---------- Complete toggle + validation ---------- */
+        @keyframes shakeX {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-7px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(3px); }
+        }
+
+        .complete-wrap {
+            margin: 2px 0 6px;
+        }
+
+        .complete-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 13px 15px;
+        }
+
+        .complete-row.shake {
+            animation: shakeX 0.4s ease;
+            border-color: var(--ember);
+        }
+
+        .complete-text b {
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.4px;
+            display: block;
+        }
+
+        .complete-text span {
+            font-size: 11.5px;
+            color: var(--text-dim);
+            display: block;
+            margin-top: 2px;
+            line-height: 1.45;
+        }
+
+        .complete-text span.ready {
+            color: var(--good);
+        }
+
+        .complete-text span.lacking {
+            color: var(--ember);
+        }
+
+        .switch {
+            flex-shrink: 0;
+            width: 58px;
+            height: 33px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: var(--panel-2);
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            min-height: 33px;
+            padding: 0;
+        }
+
+        .switch .knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--text-dim);
+            transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1.2), background 0.2s ease;
+        }
+
+        .switch.on {
+            background: rgba(111, 214, 148, 0.22);
+            border-color: var(--good);
+            box-shadow: 0 0 14px rgba(111, 214, 148, 0.3);
+        }
+
+        .switch.on .knob {
+            transform: translateX(25px);
+            background: var(--good);
+        }
+
+        .saved-date-line {
+            font-size: 11px;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 7px;
+            min-height: 14px;
+        }
+
+        .saved-date-line b {
+            color: var(--frost);
+            font-weight: 600;
+        }
+
+        table.sets input.missing,
+        .cardio-inputs input.missing,
+        .checkin input.missing,
+        .notes-box textarea.missing {
+            border-color: var(--ember) !important;
+            box-shadow: 0 0 0 1px var(--ember);
+        }
+
+        .danger-btn {
+            display: block;
+            width: 100%;
+            background: none;
+            border: 1px solid var(--ember);
+            color: var(--ember);
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.4px;
+            padding: 11px;
+            border-radius: 8px;
+            margin-top: 14px;
+            cursor: pointer;
+        }
+
+        .danger-btn:active {
+            transform: scale(0.98);
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .confirm-actions button {
+            flex: 1;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 13.5px;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .confirm-go {
+            background: var(--ember);
+            color: #0d1117;
+            border: none;
+            font-weight: 600;
+        }
+
+        .confirm-back {
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--text);
+        }
+
+        /* ---------- Celebrations ---------- */
+        .confetti-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            z-index: 300;
+            pointer-events: none;
+        }
+
+        @keyframes burstRing {
+            from { opacity: 0.9; transform: translate(-50%, -50%) scale(0.2); }
+            to { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .burst-ring {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            border: 3px solid var(--frost);
+            border-radius: 50%;
+            z-index: 299;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: burstRing 0.6s ease-out both;
+        }
+
+        .celebrate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            z-index: 250;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            animation: fadeIn 0.25s ease both;
+        }
+
+        .celebrate-card {
+            background: var(--panel);
+            border: 1px solid var(--frost);
+            border-radius: 16px;
+            padding: 28px 26px;
+            text-align: center;
+            max-width: 340px;
+            width: 100%;
+            box-shadow: 0 0 50px rgba(125, 216, 232, 0.3);
+            animation: celebratePop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+        }
+
+        .celebrate-card.streak-tier {
+            border-color: var(--ember);
+            box-shadow: 0 0 50px rgba(255, 138, 92, 0.35);
+        }
+
+        @keyframes celebratePop {
+            from { opacity: 0; transform: scale(0.7) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .celebrate-kicker {
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--frost);
+        }
+
+        .celebrate-card.streak-tier .celebrate-kicker {
+            color: var(--ember);
+        }
+
+        .celebrate-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 8px 0 6px;
+        }
+
+        .celebrate-sub {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .celebrate-close {
+            margin-top: 18px;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 11px 26px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* ---------- Progress compare + empty states ---------- */
+        .compare-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 14px 16px 16px;
+            margin-bottom: 12px;
+        }
+
+        .compare-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        .compare-cols {
+            display: flex;
+            gap: 10px;
+        }
+
+        .compare-col {
+            flex: 1;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 8px;
+            text-align: center;
+        }
+
+        .compare-col .wk {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+        }
+
+        .compare-col .big {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            color: var(--text);
+            margin: 4px 0 2px;
+        }
+
+        .compare-col .small {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .delta-up {
+            color: var(--good);
+            font-weight: 700;
+        }
+
+        .delta-down {
+            color: var(--ember);
+            font-weight: 700;
+        }
+
+        .delta-flat {
+            color: var(--text-dim);
+        }
+
+        .empty-art {
+            font-family: 'Oswald', sans-serif;
+            font-size: 34px;
+            color: var(--panel-2);
+            text-align: center;
+            line-height: 1;
+            margin: 6px 0 2px;
+            -webkit-text-stroke: 1px var(--frost-dim);
+        }
     </style>
 </head>
 
@@ -1321,6 +1648,9 @@
     <div class="wrap">
         <footer>
             <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
+            <div>
+                <button class="info-link" style="margin-top:12px;" onclick="askReset()">Reset all data</button>
+            </div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:10px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -1410,6 +1740,17 @@
                 current weights leave 2+ RIR without struggle, and you completed Weeks 1–2 consistently. If not all true
                 yet — repeat Weeks 1–2 a bit longer. That's the smart choice, not a setback.</p>
             <button class="close-modal" onclick="closeInfo()">Close</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <h2 id="confirmTitle">Are you sure?</h2>
+            <p id="confirmBody" style="font-size:13.5px;color:var(--text-dim);line-height:1.6;"></p>
+            <div class="confirm-actions">
+                <button class="confirm-back" id="confirmBack">Cancel</button>
+                <button class="confirm-go" id="confirmGo">Confirm</button>
+            </div>
         </div>
     </div>
 
@@ -1666,6 +2007,9 @@
             } else if (session.type === "recovery" || session.type === "rest") {
                 container.appendChild(renderSimpleDay(session, key));
             }
+            activeKey = key;
+            activeSession = session;
+            refreshCompleteness();
         }
         function renderCheckin(key) {
             const wrap = document.createElement("div");
@@ -1703,7 +2047,7 @@
                 fin.innerHTML = '<h3>Finisher</h3><p style="margin:0;">' + session.finisher + '</p>';
                 wrap.appendChild(fin);
             }
-            wrap.appendChild(renderSaveBar(key));
+            wrap.appendChild(renderSaveBar(key, session));
             return wrap;
         }
         function renderExerciseCard(exercise, key, session) {
@@ -1800,7 +2144,7 @@
                 '<div class="field"><label>Effort (1-10)</label><input type="number" id="cardioRpe" value="' + (saved.rpe || "") + '" placeholder="4-5"></div>';
             card.appendChild(inputs);
             wrap.appendChild(card);
-            wrap.appendChild(renderSaveBar(key));
+            wrap.appendChild(renderSaveBar(key, session));
             return wrap;
         }
         function renderCardioCoreDay(session, key) {
@@ -1831,7 +2175,7 @@
                 coreCard.appendChild(line);
             });
             wrap.appendChild(coreCard);
-            wrap.appendChild(renderSaveBar(key));
+            wrap.appendChild(renderSaveBar(key, session));
             return wrap;
         }
         function renderSimpleDay(session, key) {
@@ -1845,10 +2189,10 @@
             card.className = "info-card";
             card.innerHTML = '<p style="margin:0;color:var(--text-dim);font-size:13.5px;line-height:1.5;">' + session.note + '</p>';
             wrap.appendChild(card);
-            wrap.appendChild(renderSaveBar(key));
+            wrap.appendChild(renderSaveBar(key, session));
             return wrap;
         }
-        function renderSaveBar(key) {
+        function renderSaveBar(key, session) {
             const wrap = document.createElement("div");
             const notes = document.createElement("div");
             notes.className = "notes-box";
@@ -1862,11 +2206,41 @@
             wrap.appendChild(notes);
             const bar = document.createElement("div");
             bar.className = "save-bar";
-            const btn = document.createElement("button");
-            btn.className = "save-btn";
-            btn.textContent = "Save today's session";
-            btn.onclick = () => saveSession(key);
-            bar.appendChild(btn);
+            const cwrap = document.createElement("div");
+            cwrap.className = "complete-wrap";
+            const done = dayHasSave(key);
+            const savedOn = DATA.logs[key] && DATA.logs[key]._date;
+            const row = document.createElement("div");
+            row.className = "complete-row";
+            row.id = "completeRow";
+            const txt = document.createElement("div");
+            txt.className = "complete-text";
+            txt.innerHTML = "<b>Mark as complete</b>";
+            const line = document.createElement("span");
+            line.id = "completeLine";
+            line.textContent = done ? "Completed" : "Fill every mandatory field to complete";
+            txt.appendChild(line);
+            const sw = document.createElement("button");
+            sw.className = "switch" + (done ? " on" : "");
+            sw.id = "completeSwitch";
+            sw.setAttribute("role", "switch");
+            sw.setAttribute("aria-checked", done ? "true" : "false");
+            sw.setAttribute("aria-label", "Mark session as complete");
+            sw.innerHTML = '<span class="knob"></span>';
+            sw.onclick = () => onToggleComplete(key, session);
+            row.appendChild(txt);
+            row.appendChild(sw);
+            cwrap.appendChild(row);
+            const dline = document.createElement("div");
+            dline.className = "saved-date-line";
+            dline.id = "savedDateLine";
+            if (done) {
+                dline.innerHTML = "Logged · <b>" + (savedOn ? fmtDateShort(savedOn) : "saved") + "</b> · edit + re-toggle to update";
+            } else {
+                dline.textContent = "Not logged yet";
+            }
+            cwrap.appendChild(dline);
+            bar.appendChild(cwrap);
             wrap.appendChild(bar);
             return wrap;
         }
@@ -1891,7 +2265,245 @@
             document.body.appendChild(t);
             setTimeout(() => { t.classList.add("out"); setTimeout(() => t.remove(), 350); }, 3200);
         }
-        function saveSession(key) {
+        function reducedMotion() {
+            try {
+                return typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+            } catch (e) { return false; }
+        }
+        function burstAt(x, y, big) {
+            if (reducedMotion()) return;
+            const colors = ["#7dd8e8", "#ff8a5c", "#6fd694", "#e8ecf1"];
+            const count = big ? 46 : 24;
+            const ring = document.createElement("div");
+            ring.className = "burst-ring";
+            ring.style.left = x + "px";
+            ring.style.top = y + "px";
+            if (big) { ring.style.width = "200px"; ring.style.height = "200px"; }
+            document.body.appendChild(ring);
+            setTimeout(() => ring.remove(), 700);
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement("div");
+                p.className = "confetti-particle";
+                p.style.background = colors[i % colors.length];
+                p.style.left = x + "px";
+                p.style.top = y + "px";
+                document.body.appendChild(p);
+                const ang = Math.random() * Math.PI * 2;
+                const dist = (big ? 90 : 55) + Math.random() * (big ? 130 : 80);
+                const dx = Math.cos(ang) * dist;
+                const dy = Math.sin(ang) * dist * 0.7 + 60;
+                try {
+                    const anim = p.animate(
+                        [{ transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+                         { transform: "translate(" + dx + "px," + dy + "px) rotate(" + (Math.random() * 540 - 270) + "deg)", opacity: 0 }],
+                        { duration: 750 + Math.random() * 550, easing: "cubic-bezier(.2,.7,.3,1)" }
+                    );
+                    anim.onfinish = () => p.remove();
+                    setTimeout(() => p.remove(), 1600);
+                } catch (e) { p.remove(); }
+            }
+        }
+        function toggleCenter() {
+            const sw = document.getElementById("completeSwitch");
+            if (sw && sw.getBoundingClientRect) {
+                const r = sw.getBoundingClientRect();
+                return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+            }
+            return { x: window.innerWidth / 2, y: window.innerHeight * 0.7 };
+        }
+        function celebrateOverlay(kind, title, sub) {
+            const ov = document.createElement("div");
+            ov.className = "celebrate-overlay";
+            const card = document.createElement("div");
+            card.className = "celebrate-card" + (kind === "streak" ? " streak-tier" : "");
+            card.innerHTML =
+                '<div class="celebrate-kicker">' + (kind === "pr" ? "PERSONAL RECORD" : kind === "streak" ? "STREAK MILESTONE" : "SESSION LOGGED") + '</div>' +
+                '<div class="celebrate-title">' + escHtml(title) + '</div>' +
+                '<div class="celebrate-sub">' + escHtml(sub) + '</div>';
+            const btn = document.createElement("button");
+            btn.className = "celebrate-close";
+            btn.textContent = "Keep going";
+            btn.onclick = () => ov.remove();
+            card.appendChild(btn);
+            ov.appendChild(card);
+            ov.addEventListener("click", (e) => { if (e.target === ov) ov.remove(); });
+            document.body.appendChild(ov);
+            setTimeout(() => { if (ov.parentNode) ov.remove(); }, 5000);
+            const c = { x: window.innerWidth / 2, y: window.innerHeight * 0.4 };
+            burstAt(c.x, c.y, true);
+            setTimeout(() => burstAt(c.x, c.y, true), 350);
+        }
+        function celebrateSave(res) {
+            const c = toggleCenter();
+            if (res.prs.length) {
+                const p = res.prs[0];
+                const extra = res.prs.length > 1 ? " (+" + (res.prs.length - 1) + " more PRs today)" : "";
+                if (reducedMotion()) {
+                    showToast("NEW PR — " + p.ex + ": " + p.top + " kg", "Previous best beaten." + extra);
+                    return;
+                }
+                burstAt(c.x, c.y, false);
+                setTimeout(() => celebrateOverlay("pr", p.ex + " · " + p.top + " kg", "Previous best beaten." + extra + " The Arc compounds."), 350);
+            } else if (res.milestone) {
+                if (reducedMotion()) {
+                    showToast(res.milestone + "-day streak — unstoppable", "Consistency is the whole game.");
+                    return;
+                }
+                burstAt(c.x, c.y, false);
+                setTimeout(() => celebrateOverlay("streak", res.milestone + "-day streak", "Consistency is the whole game. Keep showing up."), 350);
+            } else {
+                if (reducedMotion()) {
+                    showToast("Session complete", "Logged. Recovery starts now.");
+                    return;
+                }
+                burstAt(c.x, c.y, false);
+                showToast("Session complete", "Logged. Recovery starts now.");
+            }
+        }
+        /* ---------- Strict validation (mandatory vs optional per session type) ---------- */
+        const NO_WEIGHT_EX = ["Plank", "Dead Bug", "Bird Dog", "Glute Bridge"];
+        let activeKey = null, activeSession = null;
+        function effectiveSets(week, session, exercise) {
+            const ov = DATA.planOverrides[planOverrideKey(week, session.title, exercise.name)];
+            return ov ? ov.sets : parseNumSets(exercise.setsReps);
+        }
+        function validateDay(key, session) {
+            const missing = [];
+            const buckets = {};
+            document.querySelectorAll('input[data-ex]').forEach(input => {
+                buckets[input.dataset.ex + "|" + input.dataset.set + "|" + input.dataset.field] = input;
+            });
+            const check = (exName, setIdx, field, label) => {
+                const inp = buckets[exName + "|" + setIdx + "|" + field];
+                const filled = !!inp && String(inp.value).trim() !== "";
+                if (!filled) missing.push({ label, input: inp || null });
+                return filled;
+            };
+            if (!session.type) {
+                session.exercises.forEach((exercise) => {
+                    const n = effectiveSets(state.week, session, exercise);
+                    const exemptW = NO_WEIGHT_EX.indexOf(exercise.name) !== -1;
+                    for (let s = 0; s < n; s++) {
+                        check(exercise.name, s, "reps", exercise.name + " · set " + (s + 1) + " · reps");
+                        if (!exemptW) check(exercise.name, s, "weight", exercise.name + " · set " + (s + 1) + " · weight");
+                    }
+                });
+            } else if (session.type === "cardio" || session.type === "cardiocore") {
+                const cm = document.getElementById("cardioMins");
+                const mv = cm ? parseFloat(cm.value) : NaN;
+                if (!cm || !(mv > 0)) missing.push({ label: "Cardio · minutes", input: cm });
+            } else {
+                const cw = document.getElementById("checkinWeight");
+                const cs = document.getElementById("checkinSteps");
+                const sn = document.getElementById("sessionNotes");
+                const ciOk = (cw && String(cw.value).trim() !== "") || (cs && String(cs.value).trim() !== "");
+                const noteOk = sn && String(sn.value).trim() !== "";
+                if (!ciOk && !noteOk) missing.push({ label: "Check-in (weight or steps) or a note", input: cw });
+            }
+            return { ok: missing.length === 0, missing };
+        }
+        function paintMissing(v) {
+            document.querySelectorAll("#sessionContent .missing").forEach((el) => el.classList.remove("missing"));
+            v.missing.forEach((m) => { if (m.input && m.input.classList) m.input.classList.add("missing"); });
+        }
+        function refreshCompleteness() {
+            if (state.view !== "log" || !activeSession || !activeKey) return;
+            const line = document.getElementById("completeLine");
+            if (!line) return;
+            if (dayHasSave(activeKey)) {
+                line.textContent = "Completed";
+                line.className = "ready";
+                return;
+            }
+            const v = validateDay(activeKey, activeSession);
+            if (v.ok) {
+                line.textContent = "All mandatory fields filled — flip the switch";
+                line.className = "ready";
+            } else {
+                line.textContent = v.missing.length + " field" + (v.missing.length === 1 ? "" : "s") + " to go — " + v.missing.slice(0, 2).map((m) => m.label).join(" · ") + (v.missing.length > 2 ? " · …" : "");
+                line.className = "lacking";
+            }
+        }
+        function shakeToggle() {
+            const row = document.getElementById("completeRow");
+            if (!row) return;
+            row.classList.remove("shake");
+            void row.offsetWidth;
+            row.classList.add("shake");
+        }
+        /* ---------- Generic confirm sheet ---------- */
+        let confirmGoFn = null;
+        function showConfirm(opts) {
+            document.getElementById("confirmTitle").textContent = opts.title || "Are you sure?";
+            document.getElementById("confirmBody").textContent = opts.body || "";
+            const go = document.getElementById("confirmGo");
+            go.textContent = opts.go || "Confirm";
+            confirmGoFn = opts.onGo || null;
+            document.getElementById("confirmModal").classList.add("open");
+        }
+        function closeConfirm() { document.getElementById("confirmModal").classList.remove("open"); }
+        function askReset() {
+            showConfirm({
+                title: "Reset all data?",
+                body: "This will erase all logged sessions, check-ins, and streaks. This can't be undone.",
+                go: "Erase everything",
+                onGo: () => {
+                    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+                    location.reload();
+                }
+            });
+        }
+        function onToggleComplete(key, session) {
+            if (dayHasSave(key)) {
+                showConfirm({
+                    title: "Unmark this session?",
+                    body: "The day loses its dot, volume, and streak credit — but everything you typed stays as a draft. You can re-mark it after editing.",
+                    go: "Unmark",
+                    onGo: () => {
+                        if (DATA.logs[key]) {
+                            delete DATA.logs[key]._savedAt;
+                            delete DATA.logs[key]._date;
+                            saveData(DATA);
+                        }
+                        render();
+                    }
+                });
+                return;
+            }
+            const v = validateDay(key, session);
+            if (!v.ok) {
+                paintMissing(v);
+                shakeToggle();
+                showToast("Not complete yet",
+                    v.missing.slice(0, 3).map((m) => m.label).join(" · ") + (v.missing.length > 3 ? " · +" + (v.missing.length - 3) + " more" : ""));
+                return;
+            }
+            const prevDate = DATA.logs[key] && DATA.logs[key]._date;
+            const sw = document.getElementById("completeSwitch");
+            const doSave = () => {
+                const res = saveSession(key, session);
+                if (res && res.ok) {
+                    celebrateSave(res, sw);
+                    render();
+                } else if (res) {
+                    paintMissing({ missing: res.missing || [] });
+                    shakeToggle();
+                }
+            };
+            if (prevDate && prevDate !== todayDateStr()) {
+                showConfirm({
+                    title: "Update this session?",
+                    body: "Already logged on " + fmtDateShort(prevDate) + ". Save today's values over it?",
+                    go: "Update",
+                    onGo: doSave
+                });
+                return;
+            }
+            doSave();
+        }
+        function saveSession(key, session) {
+            const v = validateDay(key, session);
+            if (!v.ok) return { ok: false, missing: v.missing };
             if (!DATA.logs[key]) DATA.logs[key] = {};
             const watched = {};
             document.querySelectorAll('input[data-ex]').forEach(input => {
@@ -1913,22 +2525,6 @@
             const cs = document.getElementById("checkinSteps");
             const sn = document.getElementById("sessionNotes");
             const dateStr = todayDateStr();
-            const storedCi = DATA.checkins[dateStr] || {};
-            const storedNote = (DATA.logs[key] && DATA.logs[key]._notes) || "";
-            let hasContent = false;
-            document.querySelectorAll('input[data-ex]').forEach(input => {
-                if (String(input.value).trim() !== "") hasContent = true;
-            });
-            if (cm && String(cm.value).trim() !== "") hasContent = true;
-            if (cr && String(cr.value).trim() !== "") hasContent = true;
-            if (cw && cw.value.trim() !== "" && cw.value.trim() !== String(storedCi.weight || "")) hasContent = true;
-            if (cs && cs.value.trim() !== "" && cs.value.trim() !== String(storedCi.steps || "")) hasContent = true;
-            if (sn && sn.value.trim() !== "" && sn.value.trim() !== String(storedNote)) hasContent = true;
-            if (!hasContent && !dayHasSave(key)) {
-                if (DATA.logs[key] && Object.keys(DATA.logs[key]).length === 0) delete DATA.logs[key];
-                showToast("Nothing to save yet", "Log at least one set, cardio, weigh-in, or note first.");
-                return;
-            }
             if (cm || cr) {
                 DATA.logs[key]["cardio"] = { mins: cm ? cm.value : "", rpe: cr ? cr.value : "" };
             }
@@ -1936,6 +2532,7 @@
                 DATA.checkins[dateStr] = { weight: cw ? cw.value : "", steps: cs ? cs.value : "" };
             }
             if (sn) DATA.logs[key]["_notes"] = sn.value;
+            DATA.logs[key]["_date"] = dateStr;
             DATA.logs[key]["_savedAt"] = new Date().toISOString();
             saveData(DATA);
             renderDayNav();
@@ -1950,26 +2547,14 @@
                 });
                 if (top !== null && prev[ex] !== null && top > prev[ex]) prs.push({ ex, top });
             });
-            if (prs.length) {
-                const p = prs[0];
-                showToast("NEW PR — " + p.ex + ": " + p.top + " kg",
-                    prs.length > 1 ? "+" + (prs.length - 1) + " more PRs this session" : "Previous best beaten. Keep going.");
-            }
+            let milestone = 0;
             const streakN = calcStreak();
             if (!prs.length && (streakN === 3 || streakN === 7 || streakN === 14 || streakN === 30) && !DATA.milestones[streakN]) {
                 DATA.milestones[streakN] = true;
                 saveData(DATA);
-                showToast(streakN + "-day streak — unstoppable", "Consistency is the whole game. Keep showing up.");
+                milestone = streakN;
             }
-            const bar = document.querySelector(".save-bar");
-            let status = bar.nextElementSibling;
-            if (!status || !status.classList.contains("save-status")) {
-                status = document.createElement("div");
-                status.className = "save-status";
-                bar.insertAdjacentElement("afterend", status);
-            }
-            status.textContent = "Saved ✓";
-            setTimeout(() => { status.textContent = ""; }, 2000);
+            return { ok: true, prs, milestone };
         }
         function exportData() {
             const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: "application/json" });
@@ -2238,14 +2823,52 @@
         }
 
         /* ---------- PROGRESS VIEW ---------- */
+        /* ---------- Progress helpers: volume trend + week compare ---------- */
+        function sessionDateStr(log) {
+            if (log._date) return log._date;
+            return log._savedAt ? log._savedAt.slice(0, 10) : null;
+        }
+        function allLoggedSessions() {
+            const out = [];
+            Object.keys(DATA.logs).forEach((key) => {
+                const log = DATA.logs[key];
+                if (!log._savedAt) return;
+                const ds = sessionDateStr(log);
+                if (!ds) return;
+                let volume = 0, sets = 0;
+                Object.keys(log).forEach((exName) => {
+                    if (exName.charAt(0) === "_" || exName === "cardio") return;
+                    const arr = log[exName];
+                    if (!Array.isArray(arr)) return;
+                    arr.forEach((s) => {
+                        const w = parseFloat(s.weight), r = parseFloat(s.reps);
+                        if (!isNaN(w) && !isNaN(r)) { volume += w * r; sets++; }
+                    });
+                });
+                out.push({ key, date: ds, volume, sets });
+            });
+            out.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.key < b.key ? -1 : 1));
+            return out;
+        }
+        function mondayKey(ds) {
+            const d = parseDateStr(ds);
+            const dow = (d.getDay() + 6) % 7;
+            d.setDate(d.getDate() - dow);
+            return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+        }
+        function shiftWeek(mk, deltaDays) {
+            const d = parseDateStr(mk);
+            d.setDate(d.getDate() + deltaDays);
+            return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+        }
         function renderProgressView(container) {
             const title = document.createElement("div");
             title.className = "session-tag";
-            title.textContent = "Progress";
+            title.textContent = "Progress — proof you're getting stronger";
             container.appendChild(title);
             const sub = document.createElement("div");
             sub.className = "session-note";
-            sub.textContent = "Top-set weight per saved session, plus bodyweight trend with 7-day average — all from your logs.";
+            sub.textContent = "Everything below reads live from your saved logs: top-set weight per exercise, total volume per session, and how this calendar week stacks up against last week.";
             container.appendChild(sub);
 
             const names = allExerciseNames();
@@ -2276,7 +2899,7 @@
             if (!hist.length) {
                 const p = document.createElement("p");
                 p.className = "chart-sub";
-                p.textContent = "No saved sets for this exercise yet — log a session to start the line.";
+                p.textContent = "Nothing here yet — once you complete 2+ sessions with weight on this exercise, its strength curve appears here.";
                 exCard.appendChild(p);
             } else {
                 const first = hist[0].top, last = hist[hist.length - 1].top;
@@ -2299,6 +2922,84 @@
                 exCard.appendChild(div);
             }
             container.appendChild(exCard);
+
+            /* ----- Total volume trend ----- */
+            const logged = allLoggedSessions();
+            const lifted = logged.filter((s) => s.volume > 0);
+            const volCard = document.createElement("div");
+            volCard.className = "chart-card";
+            const vh = document.createElement("h3");
+            vh.textContent = "Total volume trend";
+            volCard.appendChild(vh);
+            if (!lifted.length) {
+                const art = document.createElement("div");
+                art.className = "empty-art";
+                art.textContent = "0 KG";
+                volCard.appendChild(art);
+                const p = document.createElement("p");
+                p.className = "chart-sub";
+                p.textContent = "This will trace your total lifted volume (sets × reps × weight) per session. Complete a strength day to light it up.";
+                volCard.appendChild(p);
+            } else if (lifted.length === 1) {
+                const p = document.createElement("p");
+                p.className = "chart-sub";
+                p.textContent = "One lifting session banked (" + Math.round(lifted[0].volume).toLocaleString() + " kg). Log one more and the trend line wakes up.";
+                volCard.appendChild(p);
+            } else {
+                const bestV = lifted.reduce((a, b) => (b.volume > a.volume ? b : a), lifted[0]);
+                const dSub = document.createElement("div");
+                dSub.className = "chart-sub";
+                dSub.textContent = lifted.length + " lifting sessions · biggest " + Math.round(bestV.volume).toLocaleString() + " kg (" + fmtDateShort(bestV.date) + ")";
+                volCard.appendChild(dSub);
+                const div = document.createElement("div");
+                div.innerHTML = svgLineChart(
+                    [{ points: lifted.map((s) => Math.round(s.volume)), color: "frost" }],
+                    lifted.map((s) => fmtDateShort(s.date)),
+                    "kg"
+                );
+                volCard.appendChild(div);
+            }
+            container.appendChild(volCard);
+
+            /* ----- This week vs last week ----- */
+            const cmpCard = document.createElement("div");
+            cmpCard.className = "compare-card";
+            const ch = document.createElement("h3");
+            ch.textContent = "This week vs last week";
+            cmpCard.appendChild(ch);
+            const thisMk = mondayKey(todayDateStr());
+            const lastMk = shiftWeek(thisMk, -7);
+            const agg = (mk) => {
+                let n = 0, vol = 0;
+                logged.forEach((s) => { if (mondayKey(s.date) === mk) { n++; vol += s.volume; } });
+                return { n, vol };
+            };
+            const cur = agg(thisMk), prv = agg(lastMk);
+            const cols = document.createElement("div");
+            cols.className = "compare-cols";
+            cols.innerHTML =
+                '<div class="compare-col"><div class="wk">THIS WEEK</div><div class="big">' + Math.round(cur.vol).toLocaleString() + ' kg</div><div class="small">' + cur.n + ' session' + (cur.n === 1 ? '' : 's') + '</div></div>' +
+                '<div class="compare-col"><div class="wk">LAST WEEK</div><div class="big">' + Math.round(prv.vol).toLocaleString() + ' kg</div><div class="small">' + prv.n + ' session' + (prv.n === 1 ? '' : 's') + '</div></div>';
+            cmpCard.appendChild(cols);
+            const deltaLine = document.createElement("div");
+            deltaLine.className = "chart-sub";
+            deltaLine.style.marginTop = "10px";
+            deltaLine.style.marginBottom = "0";
+            if (!cur.n && !prv.n) {
+                deltaLine.textContent = "No sessions either week — complete a day and the comparison starts here.";
+            } else if (!prv.n) {
+                deltaLine.innerHTML = "First week with data — <span class='delta-up'>baseline set.</span> Beat it next week.";
+            } else if (!cur.vol && !prv.vol) {
+                deltaLine.textContent = "Cardio and recovery only so far — volume comparison begins with your first lifting session.";
+            } else {
+                const d = cur.vol - prv.vol;
+                const pct = prv.vol > 0 ? Math.round((d / prv.vol) * 100) : 0;
+                if (d > 0) deltaLine.innerHTML = "<span class='delta-up'>▲ +" + Math.round(d).toLocaleString() + " kg (+" + pct + "%)</span> vs last week. The Arc compounds.";
+                else if (d < 0) deltaLine.innerHTML = "<span class='delta-down'>▼ " + Math.round(d).toLocaleString() + " kg (" + pct + "%)</span> vs last week. Even a short session flips this.";
+                else deltaLine.innerHTML = "<span class='delta-flat'>Even with last week.</span> Consistency is the win.";
+            }
+            cmpCard.appendChild(deltaLine);
+            container.appendChild(cmpCard);
 
             const bwCard = document.createElement("div");
             bwCard.className = "chart-card";
@@ -2342,6 +3043,15 @@
             container.appendChild(bwCard);
         }
 
+        document.getElementById("sessionContent").addEventListener("input", (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains("missing")) e.target.classList.remove("missing");
+            refreshCompleteness();
+        });
+        document.getElementById("confirmBack").onclick = closeConfirm;
+        document.getElementById("confirmGo").onclick = () => {
+            closeConfirm();
+            if (confirmGoFn) { const fn = confirmGoFn; confirmGoFn = null; fn(); }
+        };
         render();
 
         /* ---------- PWA: Service Worker registration (offline-first, localStorage persists offline) ---------- */
