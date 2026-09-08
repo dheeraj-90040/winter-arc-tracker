@@ -545,6 +545,316 @@
             font-family: 'Oswald', sans-serif;
             font-weight: 500;
         }
+
+        /* ---------- Progress / summary / streak UI ---------- */
+        .streak-pill {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11.5px;
+            letter-spacing: 0.4px;
+            color: var(--ember);
+            border: 1px solid var(--line);
+            padding: 4px 11px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        nav.tabs {
+            display: flex;
+            gap: 6px;
+            padding: 10px 16px 2px;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            font-family: 'Oswald', sans-serif;
+            background: var(--panel);
+            color: var(--text-dim);
+            border: 1px solid var(--line);
+            padding: 8px 0;
+            border-radius: 8px;
+            font-size: 13px;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: var(--panel-2);
+            color: var(--frost);
+            border-color: var(--frost-dim);
+        }
+
+        .reminder {
+            background: var(--panel-2);
+            border-left: 3px solid var(--ember);
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 12.5px;
+            color: var(--text-dim);
+            margin: 12px 0 2px;
+            line-height: 1.5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reminder b {
+            color: var(--text);
+        }
+
+        .reminder button {
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--text-dim);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 11.5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .chart-card,
+        .summary-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 14px 16px 16px;
+            margin-bottom: 12px;
+        }
+
+        .chart-card h3,
+        .summary-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            margin: 0 0 4px;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .chart-sub {
+            color: var(--text-dim);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .chart-card svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 14px;
+            font-size: 11.5px;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        .chart-legend i {
+            display: inline-block;
+            width: 16px;
+            height: 3px;
+            border-radius: 2px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .ex-select {
+            width: 100%;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 9px 8px;
+            font-size: 13.5px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 12px;
+        }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 13px;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .day-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .day-dot.done {
+            background: var(--good);
+        }
+
+        .day-dot.pending {
+            background: var(--line);
+            border: 1px solid #3a4457;
+        }
+
+        .summary-day {
+            font-family: 'Oswald', sans-serif;
+            width: 34px;
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .summary-title {
+            flex: 1;
+            color: var(--text);
+        }
+
+        .summary-vol {
+            color: var(--frost);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 13px;
+            font-size: 12.5px;
+            color: var(--text-dim);
+            margin-top: 10px;
+        }
+
+        .summary-total b {
+            color: var(--frost);
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .notes-box {
+            margin: 2px 0 6px;
+        }
+
+        .notes-box label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+
+        .notes-box textarea {
+            width: 100%;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 9px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            min-height: 56px;
+            resize: vertical;
+        }
+
+        .notes-box textarea:focus {
+            outline: none;
+            border-color: var(--frost);
+        }
+
+        .edit-toggle {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 10.5px;
+            letter-spacing: 0.4px;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .edit-box {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .edit-box .row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .edit-box label {
+            display: block;
+            font-size: 10.5px;
+            color: var(--text-dim);
+            margin-bottom: 3px;
+        }
+
+        .edit-box input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 7px 6px;
+            font-size: 13px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .edit-box input:focus {
+            outline: none;
+            border-color: var(--frost);
+        }
+
+        .edit-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-actions button {
+            flex: 1;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .edit-save {
+            background: var(--frost);
+            color: #0d1117;
+            border: none;
+            font-weight: 600;
+        }
+
+        .edit-reset {
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--text-dim);
+        }
+
+        .edited-tag {
+            font-size: 10px;
+            color: var(--ember);
+            border: 1px solid var(--ember);
+            border-radius: 4px;
+            padding: 1px 6px;
+            margin-left: 8px;
+            vertical-align: middle;
+            letter-spacing: 0.3px;
+        }
     </style>
 </head>
 
@@ -558,14 +868,17 @@
             </div>
             <div class="header-right">
                 <div class="week-pill" id="weekPill">Week 1</div>
+                <div class="streak-pill" id="streakPill">0-DAY STREAK</div>
                 <button class="info-link" onclick="openInfo()">Golden Rules & Progression</button>
             </div>
         </div>
     </header>
 
     <nav class="days" id="dayNav"></nav>
+    <nav class="tabs" id="viewTabs"></nav>
 
     <main class="wrap">
+        <div id="reminderSlot"></div>
         <div id="sessionContent"></div>
     </main>
 
@@ -828,7 +1141,7 @@
         const RIR_TEXT = { 1: "3-4 RIR — leave 3-4 good reps in the tank", 2: "3-4 RIR — leave 3-4 good reps in the tank", "34": "2-3 RIR — a bit closer to your limit, still never to failure" };
         const STEPS_TEXT = { 1: "6,000-7,000 steps/day", 2: "~7,000 steps/day", "34": "7,000-8,000+ steps/day" };
         /* ---------- STATE ---------- */
-        let state = { week: 1, day: 1 };
+        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false };
         const STORAGE_KEY = "winterArcData_v2";
         function loadData() {
             try {
@@ -839,6 +1152,7 @@
         function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
         let DATA = loadData();
         if (!DATA.checkins) DATA.checkins = {};
+        if (!DATA.planOverrides) DATA.planOverrides = {};
         function todayKey(week, day) { return "w" + week + "-d" + day; }
         function todayDateStr() { return new Date().toISOString().slice(0, 10); }
         function parseNumSets(setsReps) {
@@ -874,10 +1188,24 @@
         function render() {
             renderDayNav();
             renderWeekPill();
-            const plan = getPlanForWeek(state.week);
-            const session = plan[state.day];
+            renderTabs();
+            renderStreak();
+            renderReminder();
             const container = document.getElementById("sessionContent");
             container.innerHTML = "";
+            if (state.view === "summary") {
+                document.getElementById("dayNav").style.display = "none";
+                renderSummaryView(container);
+                return;
+            }
+            if (state.view === "progress") {
+                document.getElementById("dayNav").style.display = "none";
+                renderProgressView(container);
+                return;
+            }
+            document.getElementById("dayNav").style.display = "";
+            const plan = getPlanForWeek(state.week);
+            const session = plan[state.day];
             const key = todayKey(state.week, state.day);
             if (!DATA.logs[key]) DATA.logs[key] = {};
             if (session.type !== "rest") {
@@ -930,7 +1258,7 @@
             }
             wrap.appendChild(renderCheckin(key));
             session.exercises.forEach((exercise) => {
-                wrap.appendChild(renderExerciseCard(exercise, key));
+                wrap.appendChild(renderExerciseCard(exercise, key, session));
             });
             if (session.finisher) {
                 const fin = document.createElement("div");
@@ -941,17 +1269,21 @@
             wrap.appendChild(renderSaveBar(key));
             return wrap;
         }
-        function renderExerciseCard(exercise, key) {
-            const numSets = parseNumSets(exercise.setsReps);
+        function renderExerciseCard(exercise, key, session) {
+            const oKey = planOverrideKey(state.week, session ? session.title : "", exercise.name);
+            const ov = DATA.planOverrides[oKey];
+            const effSetsReps = ov ? (ov.sets + " x " + ov.reps) : exercise.setsReps;
+            const effRest = ov ? ov.rest : exercise.rest;
+            const numSets = ov ? ov.sets : parseNumSets(exercise.setsReps);
             const card = document.createElement("div");
             card.className = "card";
             const head = document.createElement("div");
             head.className = "card-head";
-            head.innerHTML = '<span class="ex-name">' + exercise.name + '</span><span class="ex-muscle">' + exercise.muscle + '</span>';
+            head.innerHTML = '<span class="ex-name">' + escHtml(exercise.name) + (ov ? '<span class="edited-tag">EDITED</span>' : '') + '</span><span class="ex-muscle">' + escHtml(exercise.muscle) + '</span>';
             card.appendChild(head);
             const meta = document.createElement("div");
             meta.className = "ex-meta";
-            meta.textContent = exercise.equip + " · " + exercise.setsReps + " · rest " + exercise.rest;
+            meta.textContent = exercise.equip + " · " + effSetsReps + " · rest " + effRest;
             card.appendChild(meta);
             if (exercise.why) {
                 const why = document.createElement("div");
@@ -959,6 +1291,42 @@
                 why.textContent = exercise.why;
                 card.appendChild(why);
             }
+            const editBtn = document.createElement("button");
+            editBtn.className = "edit-toggle";
+            editBtn.textContent = "Edit sets / reps / rest";
+            editBtn.onclick = () => {
+                const box = card.querySelector(".edit-box");
+                box.style.display = box.style.display === "none" ? "block" : "none";
+            };
+            card.appendChild(editBtn);
+            const editBox = document.createElement("div");
+            editBox.className = "edit-box";
+            editBox.style.display = "none";
+            const curReps = ov ? ov.reps : exercise.setsReps.replace(/^\d+\s*x\s*/, "");
+            editBox.innerHTML =
+                '<div class="row">' +
+                '<div style="flex:1"><label>Sets</label><input type="number" inputmode="numeric" value="' + numSets + '"></div>' +
+                '<div style="flex:2"><label>Reps (e.g. 8-12)</label><input type="text" value="' + escHtml(curReps) + '"></div>' +
+                '<div style="flex:2"><label>Rest (e.g. 90s)</label><input type="text" value="' + escHtml(effRest) + '"></div>' +
+                '</div>' +
+                '<div class="edit-actions"><button class="edit-save">Save</button>' +
+                (ov ? '<button class="edit-reset">Reset to plan</button>' : '') + '</div>';
+            const inputs = editBox.querySelectorAll("input");
+            editBox.querySelector(".edit-save").onclick = () => {
+                const s = Math.max(1, Math.min(10, parseInt(inputs[0].value) || numSets));
+                DATA.planOverrides[oKey] = { sets: s, reps: inputs[1].value.trim() || curReps, rest: inputs[2].value.trim() || effRest };
+                saveData(DATA);
+                render();
+            };
+            const resetBtn = editBox.querySelector(".edit-reset");
+            if (resetBtn) {
+                resetBtn.onclick = () => {
+                    delete DATA.planOverrides[oKey];
+                    saveData(DATA);
+                    render();
+                };
+            }
+            card.appendChild(editBox);
             const table = document.createElement("table");
             table.className = "sets";
             table.innerHTML = '<tr><th style="width:28px;"></th><th>Weight (kg)</th><th>Reps</th><th>RIR</th></tr>';
@@ -1044,6 +1412,17 @@
             return wrap;
         }
         function renderSaveBar(key) {
+            const wrap = document.createElement("div");
+            const notes = document.createElement("div");
+            notes.className = "notes-box";
+            const savedNote = (DATA.logs[key] && DATA.logs[key]._notes) || "";
+            notes.innerHTML = '<label>Session notes — energy, sleep, how it felt</label>';
+            const ta = document.createElement("textarea");
+            ta.id = "sessionNotes";
+            ta.placeholder = "e.g. Slept 7h, good energy, last set of press felt heavy...";
+            ta.value = savedNote;
+            notes.appendChild(ta);
+            wrap.appendChild(notes);
             const bar = document.createElement("div");
             bar.className = "save-bar";
             const btn = document.createElement("button");
@@ -1051,7 +1430,8 @@
             btn.textContent = "Save today's session";
             btn.onclick = () => saveSession(key);
             bar.appendChild(btn);
-            return bar;
+            wrap.appendChild(bar);
+            return wrap;
         }
         function saveSession(key) {
             if (!DATA.logs[key]) DATA.logs[key] = {};
@@ -1074,9 +1454,12 @@
                 const dateStr = todayDateStr();
                 DATA.checkins[dateStr] = { weight: cw ? cw.value : "", steps: cs ? cs.value : "" };
             }
+            const sn = document.getElementById("sessionNotes");
+            if (sn) DATA.logs[key]["_notes"] = sn.value;
             DATA.logs[key]["_savedAt"] = new Date().toISOString();
             saveData(DATA);
             renderDayNav();
+            renderStreak();
             const bar = document.querySelector(".save-bar");
             let status = bar.nextElementSibling;
             if (!status || !status.classList.contains("save-status")) {
@@ -1098,6 +1481,342 @@
         }
         function openInfo() { document.getElementById("infoModal").classList.add("open"); }
         function closeInfo() { document.getElementById("infoModal").classList.remove("open"); }
+
+        /* ---------- HELPERS ---------- */
+        function escHtml(s) {
+            return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => (
+                { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+            ));
+        }
+        function planOverrideKey(week, sessionTitle, exName) {
+            return "w" + week + "|" + sessionTitle + "|" + exName;
+        }
+        function dayHasSave(key) {
+            return !!(DATA.logs[key] && DATA.logs[key]._savedAt);
+        }
+        function parseDateStr(ds) {
+            const [y, m, d] = ds.split("-").map(Number);
+            return new Date(y, m - 1, d);
+        }
+        function fmtDateShort(ds) {
+            try {
+                return parseDateStr(ds).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+            } catch (e) { return ds; }
+        }
+        function savedDates() {
+            const set = {};
+            Object.keys(DATA.logs).forEach((k) => {
+                const s = DATA.logs[k]._savedAt;
+                if (s) set[s.slice(0, 10)] = true;
+            });
+            return Object.keys(set).sort();
+        }
+
+        /* ---------- VIEW TABS ---------- */
+        function renderTabs() {
+            const tabs = document.getElementById("viewTabs");
+            tabs.innerHTML = "";
+            [["log", "Log"], ["summary", "Week"], ["progress", "Progress"]].forEach(([v, label]) => {
+                const b = document.createElement("button");
+                b.className = "tab-btn" + (state.view === v ? " active" : "");
+                b.textContent = label;
+                b.onclick = () => { state.view = v; render(); };
+                tabs.appendChild(b);
+            });
+        }
+
+        /* ---------- STREAK ---------- */
+        function calcStreak() {
+            const dates = savedDates();
+            if (!dates.length) return 0;
+            const has = {};
+            dates.forEach((d) => { has[d] = true; });
+            const t = new Date();
+            const key = (dt) => dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0");
+            let cursor = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+            if (!has[key(cursor)]) cursor.setDate(cursor.getDate() - 1);
+            let streak = 0;
+            while (has[key(cursor)]) {
+                streak++;
+                cursor.setDate(cursor.getDate() - 1);
+            }
+            return streak;
+        }
+        function renderStreak() {
+            const pill = document.getElementById("streakPill");
+            const n = calcStreak();
+            pill.textContent = n + "-DAY STREAK";
+        }
+
+        /* ---------- REMINDER ---------- */
+        function daysSinceLastLog() {
+            const dates = savedDates();
+            if (!dates.length) return null;
+            const last = parseDateStr(dates[dates.length - 1]);
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            return Math.round((today - last) / 86400000);
+        }
+        function renderReminder() {
+            const slot = document.getElementById("reminderSlot");
+            slot.innerHTML = "";
+            if (state.reminderDismissed) return;
+            const gap = daysSinceLastLog();
+            if (gap === null || gap < 2) return;
+            const bar = document.createElement("div");
+            bar.className = "reminder";
+            const span = document.createElement("span");
+            span.innerHTML = "<b>Quick nudge:</b> nothing logged for " + gap + " days. Even a short session keeps the momentum — future you says thanks.";
+            const btn = document.createElement("button");
+            btn.textContent = "Log today";
+            btn.onclick = () => { state.view = "log"; render(); };
+            const x = document.createElement("button");
+            x.textContent = "Dismiss";
+            x.onclick = () => { state.reminderDismissed = true; renderReminder(); };
+            const actions = document.createElement("div");
+            actions.style.display = "flex";
+            actions.style.gap = "8px";
+            actions.appendChild(btn);
+            actions.appendChild(x);
+            bar.appendChild(span);
+            bar.appendChild(actions);
+            slot.appendChild(bar);
+        }
+
+        /* ---------- VOLUME + WEEK SUMMARY ---------- */
+        function dayVolume(week, day) {
+            const key = todayKey(week, day);
+            const log = DATA.logs[key];
+            if (!log) return { volume: 0, sets: 0 };
+            let volume = 0, sets = 0;
+            Object.keys(log).forEach((exName) => {
+                if (exName.charAt(0) === "_" || exName === "cardio") return;
+                const arr = log[exName];
+                if (!Array.isArray(arr)) return;
+                arr.forEach((s) => {
+                    const w = parseFloat(s.weight), r = parseFloat(s.reps);
+                    if (!isNaN(w) && !isNaN(r)) { volume += w * r; sets++; }
+                });
+            });
+            return { volume, sets };
+        }
+        function renderSummaryView(container) {
+            const plan = getPlanForWeek(state.week);
+            const label = state.week === "34" ? "Weeks 3-4" : "Week " + state.week;
+            const title = document.createElement("div");
+            title.className = "session-tag";
+            title.textContent = label + " — Summary";
+            container.appendChild(title);
+            const sub = document.createElement("div");
+            sub.className = "session-note";
+            sub.textContent = "Done vs pending for this week, plus total lifting volume (sets x reps x weight).";
+            container.appendChild(sub);
+            const card = document.createElement("div");
+            card.className = "summary-card";
+            let totalVol = 0, totalSets = 0, done = 0;
+            for (let d = 1; d <= 7; d++) {
+                const s = plan[d];
+                const key = todayKey(state.week, d);
+                const isDone = dayHasSave(key);
+                const { volume, sets } = dayVolume(state.week, d);
+                if (isDone) { done++; totalVol += volume; totalSets += sets; }
+                const row = document.createElement("div");
+                row.className = "summary-row";
+                row.innerHTML =
+                    '<span class="day-dot ' + (isDone ? "done" : "pending") + '"></span>' +
+                    '<span class="summary-day">' + DAY_NAMES[d] + '</span>' +
+                    '<span class="summary-title">' + escHtml(s.title) + '</span>' +
+                    '<span class="summary-vol">' + (isDone ? (volume > 0 ? Math.round(volume).toLocaleString() + " kg" : "logged") : "pending") + '</span>';
+                row.style.cursor = "pointer";
+                row.onclick = ((dd) => () => { state.day = dd; state.view = "log"; render(); })(d);
+                card.appendChild(row);
+            }
+            const total = document.createElement("div");
+            total.className = "summary-total";
+            total.innerHTML = "<span><b>" + done + "/7</b> sessions done</span><span><b>" +
+                Math.round(totalVol).toLocaleString() + " kg</b> · " + totalSets + " sets</span>";
+            card.appendChild(total);
+            container.appendChild(card);
+        }
+
+        /* ---------- SVG LINE CHARTS (no external deps — works offline) ---------- */
+        function svgLineChart(seriesList, labels, unit) {
+            const W = 320, H = 160, P = { l: 38, r: 8, t: 10, b: 22 };
+            const all = [];
+            seriesList.forEach((s) => s.points.forEach((p) => all.push(p)));
+            if (!all.length) return '<p class="chart-sub">No data yet — save a session to start the line.</p>';
+            let min = Math.min.apply(null, all), max = Math.max.apply(null, all);
+            if (min === max) { min -= 1; max += 1; }
+            const pad = (max - min) * 0.15;
+            min -= pad; max += pad;
+            const n = Math.max.apply(null, seriesList.map((s) => s.points.length));
+            const X = (i) => n === 1 ? P.l + (W - P.l - P.r) / 2 : P.l + (i * (W - P.l - P.r)) / (n - 1);
+            const Y = (v) => P.t + (1 - (v - min) / (max - min)) * (H - P.t - P.b);
+            const colors = { frost: "#7dd8e8", ember: "#ff8a5c" };
+            let svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img">';
+            [min, (min + max) / 2, max].forEach((g) => {
+                const y = Y(g).toFixed(1);
+                svg += '<line x1="' + P.l + '" y1="' + y + '" x2="' + (W - P.r) + '" y2="' + y + '" stroke="#2a3242" stroke-width="1"/>';
+                svg += '<text x="2" y="' + (+y + 3.5) + '" fill="#8b95a5" font-size="9">' + Math.round(g) + "</text>";
+            });
+            seriesList.forEach((s) => {
+                const c = colors[s.color] || colors.frost;
+                const pts = s.points.map((p, i) => X(i).toFixed(1) + "," + Y(p).toFixed(1)).join(" ");
+                const dash = s.dashed ? ' stroke-dasharray="5 4"' : "";
+                svg += '<polyline points="' + pts + '" fill="none" stroke="' + c + '" stroke-width="2"' + dash + ' stroke-linejoin="round" stroke-linecap="round"/>';
+                if (!s.dashed) {
+                    s.points.forEach((p, i) => {
+                        svg += '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(p).toFixed(1) + '" r="3" fill="' + c + '"/>';
+                    });
+                }
+            });
+            if (labels && labels.length) {
+                const idx = [0, Math.floor((labels.length - 1) / 2), labels.length - 1];
+                idx.forEach((i) => {
+                    svg += '<text x="' + X(i).toFixed(1) + '" y="' + (H - 6) + '" fill="#8b95a5" font-size="9" text-anchor="middle">' + escHtml(labels[i]) + "</text>";
+                });
+            }
+            svg += "</svg>";
+            return svg;
+        }
+
+        /* ---------- EXERCISE HISTORY ---------- */
+        function allExerciseNames() {
+            const seen = {}, out = [];
+            [1, 2, "34"].forEach((w) => {
+                const plan = getPlanForWeek(w);
+                for (let d = 1; d <= 7; d++) {
+                    const s = plan[d];
+                    if (s && s.exercises) {
+                        s.exercises.forEach((e) => {
+                            if (!seen[e.name]) { seen[e.name] = true; out.push(e.name); }
+                        });
+                    }
+                }
+            });
+            return out.sort();
+        }
+        function exerciseHistory(exName) {
+            const rows = [];
+            Object.keys(DATA.logs).forEach((key) => {
+                const log = DATA.logs[key];
+                const arr = log[exName];
+                if (!Array.isArray(arr) || !arr.length) return;
+                let top = null;
+                arr.forEach((s) => {
+                    const w = parseFloat(s.weight);
+                    if (!isNaN(w) && (top === null || w > top)) top = w;
+                });
+                if (top === null) return;
+                rows.push({ key, date: (log._savedAt || "").slice(0, 10), top });
+            });
+            rows.sort((a, b) => {
+                if (a.date && b.date && a.date !== b.date) return a.date < b.date ? -1 : 1;
+                return a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
+            });
+            return rows;
+        }
+
+        /* ---------- PROGRESS VIEW ---------- */
+        function renderProgressView(container) {
+            const title = document.createElement("div");
+            title.className = "session-tag";
+            title.textContent = "Progress";
+            container.appendChild(title);
+            const sub = document.createElement("div");
+            sub.className = "session-note";
+            sub.textContent = "Top-set weight per saved session, plus bodyweight trend with 7-day average — all from your logs.";
+            container.appendChild(sub);
+
+            const names = allExerciseNames();
+            if (!state.selectedEx || names.indexOf(state.selectedEx) === -1) {
+                state.selectedEx = null;
+                for (let i = 0; i < names.length; i++) {
+                    if (exerciseHistory(names[i]).length) { state.selectedEx = names[i]; break; }
+                }
+                if (!state.selectedEx && names.length) state.selectedEx = names[0];
+            }
+            const exCard = document.createElement("div");
+            exCard.className = "chart-card";
+            const h = document.createElement("h3");
+            h.textContent = "Exercise progress";
+            exCard.appendChild(h);
+            const sel = document.createElement("select");
+            sel.className = "ex-select";
+            names.forEach((n) => {
+                const o = document.createElement("option");
+                o.value = n;
+                o.textContent = n;
+                if (n === state.selectedEx) o.selected = true;
+                sel.appendChild(o);
+            });
+            sel.onchange = () => { state.selectedEx = sel.value; render(); };
+            exCard.appendChild(sel);
+            const hist = state.selectedEx ? exerciseHistory(state.selectedEx) : [];
+            if (!hist.length) {
+                const p = document.createElement("p");
+                p.className = "chart-sub";
+                p.textContent = "No saved sets for this exercise yet — log a session to start the line.";
+                exCard.appendChild(p);
+            } else {
+                const first = hist[0].top, last = hist[hist.length - 1].top;
+                const delta = last - first;
+                const dSub = document.createElement("div");
+                dSub.className = "chart-sub";
+                dSub.textContent = hist.length + " sessions · " + first + " → " + last + " kg (" + (delta >= 0 ? "+" : "") + (Math.round(delta * 10) / 10) + " kg)";
+                exCard.appendChild(dSub);
+                const div = document.createElement("div");
+                div.innerHTML = svgLineChart(
+                    [{ points: hist.map((r) => r.top), color: "frost" }],
+                    hist.map((r) => r.date ? fmtDateShort(r.date) : r.key),
+                    "kg"
+                );
+                exCard.appendChild(div);
+            }
+            container.appendChild(exCard);
+
+            const bwCard = document.createElement("div");
+            bwCard.className = "chart-card";
+            const bh = document.createElement("h3");
+            bh.textContent = "Bodyweight trend";
+            bwCard.appendChild(bh);
+            const entries = Object.keys(DATA.checkins)
+                .filter((d) => DATA.checkins[d] && DATA.checkins[d].weight !== "" && !isNaN(parseFloat(DATA.checkins[d].weight)))
+                .sort()
+                .map((d) => ({ date: d, w: parseFloat(DATA.checkins[d].weight) }));
+            if (!entries.length) {
+                const p = document.createElement("p");
+                p.className = "chart-sub";
+                p.textContent = "No weigh-ins yet — add your body weight in any day's check-in box.";
+                bwCard.appendChild(p);
+            } else {
+                const avg = entries.map((_, i) => {
+                    const from = Math.max(0, i - 6);
+                    const slice = entries.slice(from, i + 1);
+                    return Math.round((slice.reduce((a, e) => a + e.w, 0) / slice.length) * 10) / 10;
+                });
+                const dSub = document.createElement("div");
+                dSub.className = "chart-sub";
+                dSub.textContent = entries.length + " weigh-ins · latest " + entries[entries.length - 1].w + " kg";
+                bwCard.appendChild(dSub);
+                const div = document.createElement("div");
+                div.innerHTML = svgLineChart(
+                    [
+                        { points: entries.map((e) => e.w), color: "frost" },
+                        { points: avg, color: "ember", dashed: true }
+                    ],
+                    entries.map((e) => fmtDateShort(e.date)),
+                    "kg"
+                );
+                bwCard.appendChild(div);
+                const leg = document.createElement("div");
+                leg.className = "chart-legend";
+                leg.innerHTML = '<span><i style="background:#7dd8e8"></i>Daily</span><span><i style="background:#ff8a5c"></i>7-day avg</span>';
+                bwCard.appendChild(leg);
+            }
+            container.appendChild(bwCard);
+        }
+
         render();
 
         /* ---------- PWA: Service Worker registration (offline-first, localStorage persists offline) ---------- */
