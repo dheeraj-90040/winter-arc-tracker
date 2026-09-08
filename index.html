@@ -315,8 +315,17 @@
 
         .checkin {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 16px;
+        }
+
+        .checkin-title {
+            flex: 1 1 100%;
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.6px;
+            color: var(--frost);
         }
 
         .checkin .field {
@@ -603,6 +612,10 @@
 
         .reminder b {
             color: var(--text);
+        }
+
+        .reminder.steps-nudge {
+            border-left-color: var(--frost);
         }
 
         .reminder button {
@@ -2040,7 +2053,7 @@
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-            <div class="app-version">Winter Arc v7 · offline-ready</div>
+            <div class="app-version">Winter Arc v8 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -2313,7 +2326,7 @@
         const RIR_TEXT = { 1: "3-4 RIR — leave 3-4 good reps in the tank", 2: "3-4 RIR — leave 3-4 good reps in the tank", "34": "2-3 RIR — a bit closer to your limit, still never to failure" };
         const STEPS_TEXT = { 1: "6,000-7,000 steps/day", 2: "~7,000 steps/day", "34": "7,000-8,000+ steps/day" };
         /* ---------- STATE ---------- */
-        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false };
+        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false };
         const STORAGE_KEY = "winterArcData_v2";
         function loadData() {
             try {
@@ -2328,7 +2341,14 @@
         if (!DATA.milestones) DATA.milestones = {};
         if (!DATA.stepGoal) DATA.stepGoal = 7000;
         function todayKey(week, day) { return "w" + week + "-d" + day; }
-        function todayDateStr() { return new Date().toISOString().slice(0, 10); }
+        function pad2(n) { return String(n).padStart(2, "0"); }
+        function localDs(d) { return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+        function todayDateStr() { return localDs(new Date()); }
+        function savedAtDs(iso) {
+            if (!iso) return null;
+            const d = new Date(iso);
+            return isNaN(d) ? iso.slice(0, 10) : localDs(d);
+        }
         function parseNumSets(setsReps) {
             const m = setsReps.match(/^(\d+)/);
             return m ? parseInt(m[1]) : 3;
@@ -2418,6 +2438,7 @@
             const dateStr = todayDateStr();
             const saved = DATA.checkins[dateStr] || {};
             wrap.innerHTML =
+                '<div class="checkin-title">Today\'s check-in · ' + fmtDateShort(dateStr) + '</div>' +
                 '<div class="field"><label>Body weight (kg)</label><input type="number" step="0.1" id="checkinWeight" value="' + (saved.weight || "") + '" placeholder="e.g. 119.5"></div>' +
                 '<div class="field"><label>Steps today</label><input type="number" id="checkinSteps" value="' + (saved.steps || "") + '" placeholder="e.g. 7000"></div>';
             return wrap;
@@ -2946,7 +2967,9 @@
                 DATA.logs[key]["cardio"] = { mins: cm ? cm.value : "", rpe: cr ? cr.value : "" };
             }
             if (cw || cs) {
-                DATA.checkins[dateStr] = { weight: cw ? cw.value : "", steps: cs ? cs.value : "" };
+                if (!DATA.checkins[dateStr]) DATA.checkins[dateStr] = {};
+                if (cw && String(cw.value).trim() !== "") DATA.checkins[dateStr].weight = cw.value;
+                if (cs && String(cs.value).trim() !== "") DATA.checkins[dateStr].steps = cs.value;
             }
             if (sn) DATA.logs[key]["_notes"] = sn.value;
             DATA.logs[key]["_date"] = dateStr;
@@ -3010,7 +3033,7 @@
             const set = {};
             Object.keys(DATA.logs).forEach((k) => {
                 const s = DATA.logs[k]._savedAt;
-                if (s) set[s.slice(0, 10)] = true;
+                if (s) set[savedAtDs(s)] = true;
             });
             return Object.keys(set).sort();
         }
@@ -3070,6 +3093,31 @@
         function renderReminder() {
             const slot = document.getElementById("reminderSlot");
             slot.innerHTML = "";
+            if (!state.stepsNudgeDismissed) {
+                const today = todayDateStr();
+                const ci = DATA.checkins[today] || {};
+                const stepsLogged = ci.steps !== "" && ci.steps != null && !isNaN(parseInt(ci.steps));
+                if (!stepsLogged) {
+                    const nudge = document.createElement("div");
+                    nudge.className = "reminder steps-nudge";
+                    const span = document.createElement("span");
+                    span.innerHTML = "<b>Today's steps</b> (" + fmtDateShort(today) + ") aren't logged yet — one tap, ten seconds.";
+                    const go = document.createElement("button");
+                    go.textContent = "Log steps";
+                    go.onclick = () => { state.view = "steps"; render(); };
+                    const x = document.createElement("button");
+                    x.textContent = "Later";
+                    x.onclick = () => { state.stepsNudgeDismissed = true; renderReminder(); };
+                    const actions = document.createElement("div");
+                    actions.style.display = "flex";
+                    actions.style.gap = "8px";
+                    actions.appendChild(go);
+                    actions.appendChild(x);
+                    nudge.appendChild(span);
+                    nudge.appendChild(actions);
+                    slot.appendChild(nudge);
+                }
+            }
             if (state.reminderDismissed) return;
             const gap = daysSinceLastLog();
             if (gap === null || gap < 2) return;
@@ -3444,7 +3492,7 @@
                     }
                 });
                 if (top === null && bestTime === null) return;
-                rows.push({ key, date: (log._savedAt || "").slice(0, 10), top, time: bestTime });
+                rows.push({ key, date: sessionDateStr(log), top, time: bestTime });
             });
             rows.sort((a, b) => {
                 if (a.date && b.date && a.date !== b.date) return a.date < b.date ? -1 : 1;
@@ -3457,7 +3505,7 @@
         /* ---------- Progress helpers: volume trend + week compare ---------- */
         function sessionDateStr(log) {
             if (log._date) return log._date;
-            return log._savedAt ? log._savedAt.slice(0, 10) : null;
+            return savedAtDs(log._savedAt);
         }
         function allLoggedSessions() {
             const out = [];
