@@ -1,88 +1,108 @@
-# ❄️ WINTER ARC — Training Log
+# ❄️ Winter Arc — Training Log
 
-> Your offline-first pocket coach for Winter Arc Month 1. Log lifts, track bodyweight,
-> chase streaks, smash PRs — no account, no backend, no signal required.
+**Your entire Month-1 program, in your pocket, working in a basement with zero signal.**
 
-**Live app:** `https://dheeraj-90040.github.io/winter-arc-tracker/index.html`
-Install it on Android Chrome via **⋮ → Add to Home screen → Install** and it runs
-fullscreen, straight from your home screen — even in a signal-blind gym basement.
+Most workout apps need accounts, subscriptions, and cell service — exactly what you don't have mid-set in a concrete gym. This one is a single HTML file: open it once, install it, and it logs lifts, steps, bodyweight, streaks, and PRs fully offline, forever free.
 
----
+## Overview
 
-## ✨ Features
+Winter Arc is an offline-first training log built around a 4-week re-entry program (Sept 9 → Oct 6, 2026): full-body machine days that evolve into an upper/lower split, RIR-based progression, walking + cardio targets, and daily steps. The app doesn't just display the plan — it enforces it: every session validates before it saves, every log is date-stamped, and every chart reads live from your own data.
 
-| Area | What you get |
-|---|---|
-| 📓 Training log | Full Month 1 plan (Full Body A/B → Upper/Lower split), per-set weight × reps × RIR inputs |
-| 📈 Progress charts | Top-set weight-over-time line per exercise, with session count, delta & **all-time best** |
-| ⚖️ Bodyweight trend | Daily weigh-ins + dashed 7-day rolling average |
-| 🔥 Streaks | Animated header streak pill (shine sweep, ember glow at 3+ days) + milestone toasts at 3/7/14/30 |
-| 🏆 PR detector | Beating a previous best top-set fires a **NEW PR** celebration toast on save |
-| 🗓️ Week summary | Done vs pending days, per-day volume bars, animated week-progress bar, total kg & sets |
-| ✏️ Editable plan | Tweak sets/reps/rest per exercise when your gym lacks a machine — remembered, with reset |
-| 📝 Session notes | Energy, sleep, how it felt — saved per day |
-| 🔔 Gentle nudges | In-app reminder banner after 2+ silent days (no push, no spam) |
-| 💾 Backup | One-tap `.json` export of everything |
-| 📴 Offline-first | Service worker + cache-first strategy; your data lives in `localStorage` |
+**Live demo:** https://dheeraj-90040.github.io/winter-arc-tracker/index.html
+(open once in Chrome → ⋮ → Add to Home screen → Install)
 
-## 📱 Install on Android
+## Features
 
-1. Open the live URL in **Chrome** (online, once — this primes the offline cache).
-2. Tap **⋮ → Add to Home screen → Install**.
-3. Train. Airplane mode works. Your numbers persist between sessions.
+- **Guided daily logging** — every set validated before it counts; incomplete sessions can't fake a streak
+- **"Mark as complete" switch** — flip it on to save with confetti, flip it off to unmark (your entries stay as a draft)
+- **Proof you're progressing** — per-exercise strength curves, total-volume trend, this-week-vs-last-week, all-time bests
+- **Steps dashboard** — goal arc, distance/kcal/active minutes, streak flame, achievements, weekly bars, one-tap logging modal
+- **Bodyweight trend** — daily weigh-ins with a 7-day rolling average, so one bad morning never ruins the story
+- **PR detector** — beat a previous best and the app throws you a full-screen celebration
+- **Streaks that stick** — animated counter, milestone rewards at 3/7/14/30 days, gentle nudge when you go quiet
+- **Your gym, your plan** — every exercise defaults to 3×12 but each one is individually customizable (timed holds for planks)
+- **Zero-backend privacy** — everything lives in your browser's `localStorage`; no account, no tracking, no server
+- **Native Android build** — the same code ships as an installable APK via Capacitor, with haptics on every save
 
-## 🗂️ Project structure
+## Demo
 
+No screenshots yet — the fastest demo is the real thing (30 seconds):
+
+1. Open https://dheeraj-90040.github.io/winter-arc-tracker/index.html in Chrome on your phone
+2. Tap **⋮ → Add to Home screen → Install**
+3. Turn on airplane mode and log a session — that's the whole pitch
+
+Check the footer for the version tag (`v11`) to confirm you're on the latest.
+
+## Installation
+
+**Option A — use it in the browser (30 seconds, recommended):**
+
+```text
+1. Open the demo link above in Chrome (online, once — this primes the offline cache)
+2. ⋮ → Add to Home screen → Install
+3. Train. Airplane mode works.
 ```
-winter-arc-tracker/
-├── index.html      # The entire app — plan data, UI, charts, storage (single file)
-├── manifest.json   # PWA installer profile (standalone, portrait, icons)
-├── sw.js           # Offline cache manager (cache-first, network fallback)
-└── README.md       # You are here
-```
 
-## 🔒 Privacy
-
-Everything stays on your device. `localStorage` holds your logs under the
-`winterArcData_v2` key. There is no server, no analytics, no account.
-Fresh download = fresh (empty) log — use **Export backup (.json)** before switching devices.
-
-## 🛠️ Local development
-
-No build step. Just open it:
+**Option B — run it locally:**
 
 ```powershell
-cd "C:\Users\DELL\Desktop\Winter Arc Tracker"
-# option A: double-click index.html
-# option B: serve it (service workers need http)
+# No build step. Either double-click index.html,
+# or serve it properly (service workers need http):
 npx serve .
 ```
 
-Push to deploy — GitHub Pages serves from `main` → `/ (root)`:
+**Option C — build the native Android APK:**
 
 ```powershell
-git add index.html manifest.json sw.js
-git commit -m "Update"
-git push origin main
+cd winter-arc-app
+npm install
+npx cap sync android
+# then open android/ in Android Studio and press Run,
+# or: .\android\gradlew.bat -p android assembleDebug
 ```
 
-> ⚠️ After changing `index.html`, bump `CACHE_NAME` in `sw.js`
-> (e.g. `winter-arc-cache-v2` → `-v3`) so installed phones fetch the new shell
-> instead of serving the old cached copy forever.
+## Usage
 
-## 🧪 Tested
+- **Log tab** — pick your day, fill every set, flip **Mark as complete**. The switch won't turn on until every mandatory field is filled, and it tells you exactly what's missing.
+- **Week tab** — see done vs pending days, per-day volume bars, and your total tonnage.
+- **Progress tab** — strength curves, volume trend, and the week-over-week comparison.
+- **Steps tab** — set a goal, hit **+ Log Steps**, watch bars turn green and badges unlock.
+- **Footer** — Export backup (`.json`, do this before switching devices) and Reset (with confirmation).
+- **Updating a saved day?** Toggle it off and on again — your entries are kept as a draft.
 
-Logic is covered by a DOM-stubbed Node smoke suite (streaks, volume math,
-history, empty-save guard, reminders, charts) — 29 checks, all green.
+> ⚠️ Maintainer note: after changing `index.html`, bump `CACHE_NAME` in `sw.js`
+> or installed phones will keep serving the old cached copy.
 
-## 🗺️ Roadmap ideas
+## Tech Stack
+
+- **Single-file HTML/CSS/JS** — no framework, no bundler, no dependencies
+- **`localStorage`** (`winterArcData_v2`) — the entire database, date-stamped and exportable
+- **Service Worker** — cache-first offline shell (`winter-arc-cache-v*`)
+- **Web App Manifest** — standalone install, custom launcher icons
+- **Capacitor 8** — native Android wrapper (App, Haptics, StatusBar, SplashScreen plugins)
+- **Node smoke suite** — 90+ DOM-stubbed checks covering validation, streaks, volume math, and rewards
+
+## Roadmap
 
 - [ ] Rest timer between sets
 - [ ] Plate calculator
 - [ ] CSV export for spreadsheets
-- [ ] Deload / Month 2 plan import
-- [ ] iOS `apple-touch` splash screens
+- [ ] Month 2 plan import
+- [ ] Screenshots + demo GIF for this README
+
+## Contributing
+
+This is a personal training project, but good ideas are welcome: open an issue describing the workout problem you hit, not just the feature you want. PRs that keep the single-file, zero-dependency, offline-first constraints get merged fastest.
+
+## Why I built this
+
+I needed a log that respects the actual conditions of training: chalky hands, no signal, no patience for sign-up screens. So I built the app I wanted to open between sets — strict enough to keep me honest, fast enough to never break flow.
+
+## License
+
+Personal project, all rights reserved for now — the code is public so you can learn from it. Ask before reusing it in your own app.
 
 ---
 
-*Built for the grind. Leave with energy remaining — that's the program working.* ❄️🔥
+*Built for the grind. If this got you through a session, ⭐ star the repo — and go hit your steps.* ❄️🔥
