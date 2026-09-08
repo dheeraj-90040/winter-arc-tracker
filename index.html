@@ -1733,6 +1733,95 @@
             }
         }
 
+        /* ---------- Today context + answer-first UI (v13) ---------- */
+        .today-kicker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            letter-spacing: 1.4px;
+            color: var(--frost);
+            margin: 2px 0 6px;
+        }
+
+        .today-kicker .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--good);
+            box-shadow: 0 0 8px rgba(111, 214, 148, 0.9);
+            flex-shrink: 0;
+        }
+
+        .today-kicker.preview {
+            color: var(--text-dim);
+        }
+
+        .today-kicker.preview .live-dot {
+            background: var(--text-dim);
+            box-shadow: none;
+        }
+
+        .day-btn.today {
+            border-color: var(--frost);
+            box-shadow: 0 0 10px rgba(125, 216, 232, 0.35);
+        }
+
+        .ex-presc {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin: 4px 0 2px;
+        }
+
+        .ex-presc b {
+            font-family: 'Oswald', sans-serif;
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--frost);
+            letter-spacing: 0.4px;
+        }
+
+        .ex-presc span {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .ex-last {
+            border-left: 2px solid var(--frost-dim);
+            padding: 6px 10px;
+            margin: 8px 0 4px;
+            font-size: 12.5px;
+            color: var(--text);
+            background: var(--panel-2);
+            border-radius: 0 6px 6px 0;
+            line-height: 1.5;
+        }
+
+        .ex-last.first {
+            color: var(--text-dim);
+            border-left-color: var(--line);
+        }
+
+        .week-strip {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .week-strip:active {
+            transform: scale(0.99);
+        }
+
         /* ---------- Complete toggle + validation ---------- */
         @keyframes shakeX {
             0%, 100% { transform: translateX(0); }
@@ -2438,7 +2527,7 @@
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-            <div class="app-version">Winter Arc v11 · offline-ready</div>
+                <div class="app-version">Winter Arc v13 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -2456,22 +2545,18 @@
             <table>
                 <tr>
                     <th>Phase</th>
-                    <th>Target RIR</th>
+                    <th>Target</th>
                 </tr>
                 <tr>
-                    <td>Weeks 1–2</td>
-                    <td>3–4 RIR</td>
-                </tr>
-                <tr>
-                    <td>Weeks 3–4</td>
-                    <td>2–3 RIR</td>
+                    <td>All weeks</td>
+                    <td>3 × 12 · rest 60–90s</td>
                 </tr>
             </table>
-            <p>Never train to failure this month.</p>
+            <p>Leave 1–2 good reps in the tank. Never train to failure this month.</p>
             <h3>Double progression (how you add weight)</h3>
-            <p>For a "3 x 8-12" exercise: once you hit 12 reps on every set, add a little weight next session — even if
-                reps temporarily drop back down (e.g. 10kg→12.5kg might give you 9/8/8 again). That's normal. Build back
-                up to 12/12/12, then increase again.</p>
+            <p>For a "3 x 12" exercise: once you hit 12 reps on every set with 1–2 reps still in the tank, add a
+                little weight next session — even if reps temporarily drop back down (e.g. 10kg→12.5kg might give
+                you 9/8/8 again). That's normal. Build back up to 12/12/12, then increase again.</p>
             <h3>Cardio targets by week</h3>
             <table>
                 <tr>
@@ -2480,7 +2565,7 @@
                 </tr>
                 <tr>
                     <td>Week 1</td>
-                    <td>25–30 min</td>
+                    <td>30 min</td>
                 </tr>
                 <tr>
                     <td>Week 2</td>
@@ -2488,11 +2573,11 @@
                 </tr>
                 <tr>
                     <td>Week 3</td>
-                    <td>30–40 min</td>
+                    <td>35–40 min</td>
                 </tr>
                 <tr>
                     <td>Week 4</td>
-                    <td>35–45 min</td>
+                    <td>35–40 min</td>
                 </tr>
             </table>
             <p>Not mandatory to escalate — if joints feel beat up, hold the duration instead.</p>
@@ -2504,17 +2589,22 @@
                 </tr>
                 <tr>
                     <td>Week 1</td>
-                    <td>6,000–7,000</td>
+                    <td>5,000–6,000</td>
                 </tr>
                 <tr>
                     <td>Week 2</td>
-                    <td>~7,000</td>
+                    <td>6,000–7,000</td>
                 </tr>
                 <tr>
-                    <td>Weeks 3–4</td>
-                    <td>7,000–8,000+</td>
+                    <td>Week 3</td>
+                    <td>7,000–8,000</td>
+                </tr>
+                <tr>
+                    <td>Week 4</td>
+                    <td>8,000–9,000</td>
                 </tr>
             </table>
+            <p>Long-term target: 10,000 steps/day. Don't force 10K immediately — the app raises your daily goal automatically each week (you can still adjust it).</p>
             <h3>Avoid this month</h3>
             <p>Running sprints, box jumps, burpees, high-volume jumping, heavy barbell squats/deadlifts, max lifts,
                 training to failure, ego lifting. None of these are necessary for Month 1.</p>
@@ -2523,10 +2613,10 @@
                 <b style="color:var(--text);">Stop immediately for:</b> sharp/pinching/joint pain, sudden pain, pain
                 that changes your movement, dizziness, chest pain, unusual shortness of breath.
             </p>
-            <h3>Moving to Weeks 3–4</h3>
-            <p>Not calendar-locked. Only advance once: no unusual joint pain, recovering well, technique feels solid,
-                current weights leave 2+ RIR without struggle, and you completed Weeks 1–2 consistently. If not all true
-                yet — repeat Weeks 1–2 a bit longer. That's the smart choice, not a setback.</p>
+            <h3>Startup week (Sep 9–13)</h3>
+            <p>The Arc begins <b style="color:var(--text);">Wednesday Sep 9</b>: Wed Upper A → Thu Cardio → Fri Lower A →
+                Sat Recovery / Cardio + Core → Sun Rest. Mon/Tue are not missed sessions. From Monday Sep 14 the normal
+                cycle runs: Mon Lower A → Tue Cardio → Wed Upper A → Thu Lower B → Fri Upper B → Sat Cardio + Core → Sun Rest.</p>
             <button class="close-modal" onclick="closeInfo()">Close</button>
         </div>
     </div>
@@ -2548,101 +2638,70 @@
         function ex(name, muscle, equip, setsReps, rest, why, timed) {
             return { name, muscle, equip, setsReps, rest, why, timed: !!timed };
         }
-        function fullBodyA(week2) {
+        function lowerA() {
             return {
-                title: "Full Body A",
+                title: "Lower A",
                 warmup: true,
-                note: "Learn the movements — don't prove anything. Your tendons, joints and coordination all need time to readapt after the break.",
-                exercises: week2 ? [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
-                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "More stability than free-weight bench while you rebuild."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
-                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "3 x 12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
-                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "3 x 12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
-                    ex("Plank", "Core", "Mat", "3 x 20-30 sec", "45-60s", "Quality over duration — 15-20 sec is completely fine to start.", true),
-                ] : [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Large muscle groups, heavy stimulus, no barbell balance required."),
-                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "More stability than free-weight bench while you rebuild."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
-                    ex("Seated Cable Row", "Back — horizontal pull", "Cable", "3 x 12", "90s", "Pulldown (vertical) + row (horizontal) together train your back completely."),
-                    ex("Seated Leg Curl", "Hamstrings", "Machine", "3 x 12", "60-90s", "Targets hamstrings without needing RDLs on Day 1."),
-                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "3 x 12", "60-90s", "Machine stability while shoulders relearn overhead pressing."),
-                    ex("Plank", "Core", "Mat", "3 x 20-30 sec", "45-60s", "Quality over duration — 15-20 sec is completely fine to start.", true),
-                ],
-                finisher: "10 minutes easy treadmill/bike. You should be able to hold a conversation. Goal: leave with energy remaining, not wiped out."
-            };
-        }
-        function fullBodyB(week2) {
-            return {
-                title: "Full Body B",
-                warmup: true,
-                note: "Same lower-body pattern, a chest-supported row and a different pulling/core pairing for variety.",
-                exercises: week2 ? [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Same reliable base as Full Body A."),
-                    ex("Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "Repetition of the pressing pattern builds skill fast."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Keeps the vertical pull pattern grooved."),
-                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine/DB", "3 x 12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
-                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60s", "Isolated quad work, easy on the lower back."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Balances the leg extension work."),
-                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "3 x 12", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
-                    ex("Dead Bug", "Core", "Mat", "3 x 12", "45s", "Trains your core to resist unwanted movement, not just crunch."),
-                ] : [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Same reliable base as Full Body A."),
-                    ex("Machine Chest Press", "Chest / Front delts / Triceps", "Machine", "3 x 12", "90s", "Repetition of the pressing pattern builds skill fast."),
-                    ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Keeps the vertical pull pattern grooved."),
-                    ex("Chest-Supported Row", "Back — horizontal pull", "Machine", "3 x 12", "90s", "Chest support reduces the stabilization your lower back has to provide."),
-                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60s", "Isolated quad work, easy on the lower back."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Balances the leg extension work."),
-                    ex("Face Pull", "Rear delts / Upper back", "Cable + rope", "3 x 12", "60s", "Extra pulling pattern — keep it light, this isn't a strength exercise."),
-                    ex("Dead Bug", "Core", "Mat", "3 x 12", "45s", "Trains your core to resist unwanted movement, not just crunch."),
-                ],
-                finisher: "10-15 min easy bike/treadmill."
-            };
-        }
-        function upperDay(second) {
-            return {
-                title: "Upper Body" + (second ? " (2)" : ""),
-                note: "Free weights enter here — only because Weeks 1-2 are behind you, not because the calendar says so. Start surprisingly light on anything new.",
+                note: "Quads + glutes first, hamstrings second. Standard: 3 x 12, rest 60-90s. Leave 1-2 good reps in the tank.",
                 exercises: [
-                    ex("Dumbbell Incline Press", "Chest / Front delts", "Dumbbells + adjustable bench", "3 x 12", "90s", "More stabilization demand than the machine press — real chest/shoulder builder."),
-                    ...(second ? [
-                        ex("Chest-Supported Dumbbell Row", "Back — horizontal pull", "Dumbbells + bench", "3 x 12", "90s", "Dumbbell version of the row you already know."),
-                        ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Same pattern you've drilled for 2 weeks, now with a bit more load."),
-                    ] : [
-                        ex("Lat Pulldown", "Back — vertical pull", "Cable", "3 x 12", "90s", "Same pattern you've drilled for 2 weeks, now with a bit more load."),
-                        ex("Chest-Supported Dumbbell Row", "Back — horizontal pull", "Dumbbells + bench", "3 x 12", "90s", "Dumbbell version of the row you already know."),
-                    ]),
-                    ex("Machine Shoulder Press", "Shoulders / Triceps", "Machine", "3 x 12", "75s", "Kept as a machine — no need to rush overhead free-weight pressing yet."),
-                    ex("Cable Lateral Raise", "Shoulders — side delts", "Cable", "3 x 12", "60s", "Rounds out shoulder development."),
-                    ex("Rope Triceps Pushdown", "Triceps", "Cable + rope", "3 x 12", "60s", "Direct triceps work to support your pressing."),
-                    ex(second ? "Hammer Curl" : "Dumbbell Curl", "Biceps", "Dumbbells", "3 x 12", "60s", "Direct biceps work — balances the pulling volume."),
+                    ex("Leg Press", "Quads + Glutes", "Machine", "3 x 12", "60-90s", "Main lower-body loader — feet flat, control every rep."),
+                    ex("Seated Leg Curl", "Hamstrings", "Machine", "3 x 12", "60-90s", "Direct hamstring work to balance the quad pressing."),
+                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60-90s", "Isolated quad work, easy on the lower back."),
+                    ex("Glute Bridge", "Glutes", "Mat", "3 x 12", "60s", "Squeeze hard at the top — your biggest muscle group."),
+                    ex("Calf Raise", "Calves", "Machine", "3 x 12", "60s", "Small muscle, real contribution to standing and walking stability."),
+                    ex("Dead Bug", "Core", "Mat", "3 x 12 / side", "45-60s", "Move slow — trains your core to resist unwanted movement."),
                 ],
-                finisher: "10-15 min easy cardio."
+                finisher: "30-40 min easy cardio — treadmill walk or cross-trainer. Conversational pace."
             };
         }
-        function lowerDay(second) {
+        function upperA() {
             return {
-                title: "Lower Body" + (second ? " (2)" : ""),
-                note: "No barbell squats, walking lunges, or Bulgarian split squats this month. Leg press + goblet squat + RDL train the same patterns with far less balance demand while you rebuild.",
-                exercises: second ? [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Your main lower-body loader all month."),
-                    ex("Goblet Squat", "Quads / Glutes / Core", "Dumbbell", "3 x 12", "75s", "Practices the squat pattern — light and controlled."),
-                    ex("Dumbbell RDL", "Hamstrings / Glutes", "Dumbbells", "3 x 12", "90s", "Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
-                    ex("Hip Thrust Machine", "Glutes", "Machine", "3 x 12", "60s", "Glutes are your biggest muscle group — direct work pays off."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Balances the quad-dominant work above."),
-                    ex("Calf Raise", "Calves", "Machine", "3 x 12", "45s", "Small muscle, real contribution to standing/walking stability."),
-                    ex("Plank", "Core", "Mat", "3 x 25-40 sec", "45s", "Core stability under fatigue at the end of the session.", true),
-                ] : [
-                    ex("Leg Press", "Quads / Glutes", "Machine", "3 x 12", "90s", "Your main lower-body loader all month."),
-                    ex("Goblet Squat to Bench", "Quads / Glutes / Core", "Dumbbell + bench", "3 x 12", "75s", "The bench gives you a depth reference while you practice the squat pattern."),
-                    ex("Dumbbell Romanian Deadlift", "Hamstrings / Glutes", "Dumbbells", "3 x 12", "90s", "Very light. Cue: push hips backward, don't try to touch the floor. Stop when you can't keep a neutral torso."),
-                    ex("Leg Curl", "Hamstrings", "Machine", "3 x 12", "60s", "Direct hamstring work."),
-                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60s", "Direct quad work, easy on the lower back."),
-                    ex("Calf Raise", "Calves", "Machine", "3 x 12", "45s", "Small muscle, real contribution to standing/walking stability."),
-                    ex("Dead Bug", "Core", "Mat", "3 x 12", "45s", "Core control to close out the session."),
+                title: "Upper A",
+                warmup: true,
+                note: "Push + pull balanced. Standard: 3 x 12, rest 60-90s. Start light enough to own every rep.",
+                exercises: [
+                    ex("Machine Chest Press", "Chest + Triceps", "Machine", "3 x 12", "60-90s", "Stable pressing while you build the pattern."),
+                    ex("Lat Pulldown", "Lats + Upper Back", "Cable", "3 x 12", "60-90s", "Pull elbows toward ribs — don't turn it into a biceps exercise."),
+                    ex("Seated Cable Row", "Mid Back", "Cable", "3 x 12", "60-90s", "Vertical pull + horizontal row together train your back completely."),
+                    ex("Machine Shoulder Press", "Shoulders", "Machine", "3 x 12", "60-90s", "Machine stability while shoulders press overhead."),
+                    ex("Rope Triceps Pushdown", "Triceps", "Cable + rope", "3 x 12", "60s", "Direct triceps work to support your pressing."),
+                    ex("Dumbbell Curl", "Biceps", "Dumbbells", "3 x 12", "60s", "Direct biceps work to balance the pulling volume."),
                 ],
-                finisher: "10-15 min easy cardio."
+                finisher: "30-40 min easy cardio — treadmill walk or cross-trainer. Conversational pace."
+            };
+        }
+        function lowerB() {
+            return {
+                title: "Lower B",
+                warmup: true,
+                note: "Squat pattern + hinge pattern in one day. Standard: 3 x 12, rest 60-90s. Hinge cue: push hips back, keep a neutral torso.",
+                exercises: [
+                    ex("Leg Press", "Quads + Glutes", "Machine", "3 x 12", "60-90s", "Your main lower-body loader all month."),
+                    ex("Goblet Squat", "Legs + Squat Pattern", "Dumbbell", "3 x 12", "60-90s", "Practices the squat pattern — light and controlled."),
+                    ex("Dumbbell Romanian Deadlift", "Hamstrings + Glutes", "Dumbbells", "3 x 12", "60-90s", "Very light. Stop when you can't keep a neutral torso."),
+                    ex("Seated Leg Curl", "Hamstrings", "Machine", "3 x 12", "60-90s", "Direct hamstring work after the hinge."),
+                    ex("Leg Extension", "Quads", "Machine", "3 x 12", "60-90s", "Direct quad work, easy on the lower back."),
+                    ex("Calf Raise", "Calves", "Machine", "3 x 12", "60s", "Small muscle, real contribution to standing and walking stability."),
+                    ex("Plank", "Core", "Mat", "3 sets", "45-60s", "Quality over duration — stop before form breaks.", true),
+                ],
+                finisher: "30-40 min easy cardio — treadmill walk or cross-trainer. Conversational pace."
+            };
+        }
+        function upperB() {
+            return {
+                title: "Upper B",
+                warmup: true,
+                note: "Back thickness + side delts + arms. Standard: 3 x 12, rest 60-90s.",
+                exercises: [
+                    ex("Machine Chest Press", "Chest", "Machine", "3 x 12", "60-90s", "Groove the pressing pattern again — small load jumps only."),
+                    ex("Chest-Supported Row", "Upper + Mid Back", "Machine", "3 x 12", "60-90s", "Chest support takes your lower back out of the lift."),
+                    ex("Lat Pulldown", "Lats", "Cable", "3 x 12", "60-90s", "Keeps the vertical pull pattern grooved."),
+                    ex("Machine Shoulder Press", "Shoulders", "Machine", "3 x 12", "60-90s", "Kept as a machine — no need to rush overhead free weights yet."),
+                    ex("Cable Lateral Raise", "Side Delts", "Cable", "3 x 12", "60s", "Rounds out shoulder development — keep it strict and light."),
+                    ex("Rope Triceps Pushdown", "Triceps", "Cable + rope", "3 x 12", "60s", "Direct triceps work to support your pressing."),
+                    ex("Hammer Curl", "Biceps + Forearms", "Dumbbells", "3 x 12", "60s", "Neutral grip — balances the week's pulling volume."),
+                ],
+                finisher: "30-40 min easy cardio — treadmill walk or cross-trainer. Conversational pace."
             };
         }
         function cardioDay(title, note, mins) {
@@ -2655,9 +2714,9 @@
                 note: mins + " min easy-moderate cardio — bike, elliptical, or treadmill walking, whichever feels best. Then a short core circuit.",
                 mins: mins,
                 core: [
-                    { name: "Bird Dog", reps: w2 ? "2 x 8/side" : "2 x 8/side" },
-                    { name: "Glute Bridge", reps: w2 ? "2 x 12" : "2 x 10-12" },
-                    { name: "Plank", reps: w2 ? "2 x 25-30 sec" : "2 x 20-30 sec" },
+                    { name: "Bird Dog", reps: "3 x 12 / side" },
+                    { name: "Glute Bridge", reps: "3 x 12" },
+                    { name: "Plank", reps: "3 sets" },
                 ]
             };
         }
@@ -2672,46 +2731,106 @@
             return {
                 type: "rest",
                 title: "Rest",
-                note: "No formal training. Eat, hydrate, sleep, recover. You can walk normally and do light mobility if you want, but don't turn this into another workout."
+                note: "No formal training. Eat, hydrate, sleep, recover. Easy walking is allowed — light mobility if you want, but don't turn this into another workout. Rest is never a missed session."
             };
         }
         const DAY_NAMES = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-        const PLAN_W1 = {
-            1: fullBodyA(false),
-            2: cardioDay("Cardio + Mobility", "25-30 min — stationary bike, elliptical, or treadmill walking. RPE 4-5/10: breathing harder but still able to speak in sentences. Then 8-10 min mobility (ankle rocks, hip circles, thoracic rotations, shoulder circles, cat-cow, hip-flexor + calf stretch).", "25-30"),
-            3: fullBodyB(false),
-            4: recoveryDay(),
-            5: { ...fullBodyA(false), note: "Repeat Monday. First progression check: if an exercise felt way too easy, increase the weight slightly. If it felt right, keep the same weight. If your technique broke down, reduce it. Don't increase everything just because it's Friday." },
-            6: cardioCoreDay("25-35"),
-            7: restDay(),
-        };
-        const PLAN_W2 = {
-            1: fullBodyA(true),
-            2: cardioDay("Cardio", "30-35 min — bike/elliptical/treadmill, RPE 4-5. Then 8-10 min mobility.", "30-35"),
-            3: fullBodyB(true),
-            4: recoveryDay(),
-            5: { ...fullBodyA(true), note: "Repeat Monday's Full Body A." },
-            6: cardioCoreDay("30-40", true),
-            7: restDay(),
-        };
-        const PLAN_W34 = {
-            1: upperDay(false),
-            2: lowerDay(false),
-            3: cardioDay("Cardio + Mobility", "30-40 min — bike, elliptical, or treadmill walking. Then 10 min mobility.", "30-40"),
-            4: upperDay(true),
-            5: lowerDay(true),
-            6: cardioDay("Long Cardio", "35-45 min. Bike, elliptical, or incline/flat treadmill walking. Running is NOT required for fat loss at this stage — walking + diet + resistance training works.", "35-45"),
-            7: restDay(),
-        };
-        function getPlanForWeek(week) {
-            if (week === 1) return PLAN_W1;
-            if (week === 2) return PLAN_W2;
-            return PLAN_W34;
+        /* ---------- WINTER ARC 4-WEEK PROGRAM (Sep 9 → Oct 4, 2026) ---------- */
+        const PROGRAM_START_DS = "2026-09-09";
+        const PROGRAM_WEEKS = [
+            { n: 1, start: "2026-09-09", end: "2026-09-13", days: [3, 4, 5, 6, 7], label: "Week 1 · Sep 9–13" },
+            { n: 2, start: "2026-09-14", end: "2026-09-20", days: [1, 2, 3, 4, 5, 6, 7], label: "Week 2 · Sep 14–20" },
+            { n: 3, start: "2026-09-21", end: "2026-09-27", days: [1, 2, 3, 4, 5, 6, 7], label: "Week 3 · Sep 21–27" },
+            { n: 4, start: "2026-09-28", end: "2026-10-04", days: [1, 2, 3, 4, 5, 6, 7], label: "Week 4 · Sep 28–Oct 4" },
+        ];
+        const CARDIO_MINS = { 1: "30", 2: "30-35", 3: "35-40", 4: "35-40", post: "35-40" };
+        const STEPS_RANGE = { 1: [5000, 6000], 2: [6000, 7000], 3: [7000, 8000], 4: [8000, 9000], post: [8000, 9000] };
+        const STEP_MID = { 1: 5500, 2: 6500, 3: 7500, 4: 8500, post: 8500 };
+        const STANDARD_TAG = "3 × 12 · rest 60–90s";
+        function buildWeek(mins) {
+            return {
+                1: lowerA(),
+                2: cardioDay("Cardio", mins + " min — treadmill walking or cross-trainer / elliptical. Conversational pace: breathing harder but still able to speak in sentences. Focus: cardiovascular fitness + calorie expenditure. Optional light mobility after.", mins),
+                3: upperA(),
+                4: lowerB(),
+                5: upperB(),
+                6: cardioCoreDay(mins),
+                7: restDay(),
+            };
         }
-        const RIR_TEXT = { 1: "3-4 RIR — leave 3-4 good reps in the tank", 2: "3-4 RIR — leave 3-4 good reps in the tank", "34": "2-3 RIR — a bit closer to your limit, still never to failure" };
-        const STEPS_TEXT = { 1: "6,000-7,000 steps/day", 2: "~7,000 steps/day", "34": "7,000-8,000+ steps/day" };
+        function buildWeek1() {
+            // Startup week: program begins Wed Sep 9. Mon/Tue are not missed sessions.
+            const liteCore = cardioCoreDay("30");
+            liteCore.title = "Recovery / Cardio + Core";
+            liteCore.note = "30 min easy cardio — treadmill or cross-trainer, whichever feels best. Then a short core circuit. Recovery is part of the program, not a day off from effort.";
+            return {
+                3: upperA(),
+                4: cardioDay("Cardio", "30 min — treadmill walking or cross-trainer / elliptical. Conversational pace: breathing harder but still able to speak in sentences. Focus: cardiovascular fitness + calorie expenditure. Optional light mobility after.", "30"),
+                5: lowerA(),
+                6: liteCore,
+                7: restDay(),
+            };
+        }
+        function getPlanForWeek(week) {
+            if (week === 1) return buildWeek1();
+            if (week === 2) return buildWeek(CARDIO_MINS[2]);
+            if (week === 3) return buildWeek(CARDIO_MINS[3]);
+            if (week === 4) return buildWeek(CARDIO_MINS[4]);
+            return buildWeek(CARDIO_MINS.post);
+        }
+        function stepsTextForWeek(week) {
+            const r = STEPS_RANGE[week] || STEPS_RANGE.post;
+            return r[0].toLocaleString() + "–" + r[1].toLocaleString() + " steps/day";
+        }
+        const STEPS_TEXT = { 1: "5,000–6,000 steps/day", 2: "6,000–7,000 steps/day", 3: "7,000–8,000 steps/day", 4: "8,000–9,000 steps/day", post: "8,000–9,000+ steps/day · long-term 10,000" };
+        /* ---------- PROGRAM DATE SYNC (Monday→Sunday weeks, mid-week start Sep 9) ---------- */
+        function programWeekForDate(ds) {
+            for (let i = 0; i < PROGRAM_WEEKS.length; i++) {
+                const w = PROGRAM_WEEKS[i];
+                if (ds >= w.start && ds <= w.end) return w.n;
+            }
+            return ds < PROGRAM_START_DS ? 0 : "post";
+        }
+        function activeDays(week) {
+            if (week === "post") return [1, 2, 3, 4, 5, 6, 7];
+            const w = PROGRAM_WEEKS[week - 1];
+            return w ? w.days.slice() : [1, 2, 3, 4, 5, 6, 7];
+        }
+        function dateForWeekDay(week, dow) {
+            const w = PROGRAM_WEEKS[week - 1];
+            if (!w || w.days.indexOf(dow) === -1) return null;
+            const base = parseDateStr(w.start);
+            base.setDate(base.getDate() + (week === 1 ? dow - 3 : dow - 1));
+            return localDs(base);
+        }
+        function weekLabel(week) {
+            if (week === "post") {
+                const mk = mondayKey(todayDateStr());
+                return "Week · " + fmtDateShort(mk) + "–" + fmtDateShort(shiftWeek(mk, 6));
+            }
+            const w = PROGRAM_WEEKS[week - 1];
+            return w ? w.label : "Week " + week;
+        }
+        function bootToToday() {
+            const t = todayDateStr();
+            const pw = programWeekForDate(t);
+            const nowDow = (new Date().getDay() + 6) % 7 + 1;
+            if (pw === 0) { state.week = 1; state.day = 3; return; }
+            if (pw === "post") { state.week = "post"; state.day = nowDow; return; }
+            state.week = pw;
+            const days = activeDays(pw);
+            state.day = days.indexOf(nowDow) !== -1 ? nowDow : days[0];
+        }
+        function maybeAutoStepGoal() {
+            const w = state.week;
+            if (w !== 1 && w !== 2 && w !== 3 && w !== 4) return;
+            if (DATA.stepGoalWeek === w) return;
+            DATA.stepGoal = STEP_MID[w];
+            DATA.stepGoalWeek = w;
+            saveData(DATA);
+        }
         /* ---------- STATE ---------- */
-        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false };
+        let state = { week: 1, day: 3, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false };
         const STORAGE_KEY = "winterArcData_v2";
         function loadData() {
             try {
@@ -2723,9 +2842,16 @@
         let DATA = loadData();
         if (!DATA.checkins) DATA.checkins = {};
         if (!DATA.planOverrides) DATA.planOverrides = {};
+        if (!DATA.custom) DATA.custom = { swaps: {}, added: {}, removed: {}, edits: {} };
+        if (!DATA.custom.swaps) DATA.custom.swaps = {};
+        if (!DATA.custom.added) DATA.custom.added = {};
+        if (!DATA.custom.removed) DATA.custom.removed = {};
+        if (!DATA.custom.edits) DATA.custom.edits = {};
+        if (DATA.stepGoalWeek === undefined || DATA.stepGoalWeek === null) DATA.stepGoalWeek = 0;
         if (!DATA.milestones) DATA.milestones = {};
         if (!DATA.stepGoal) DATA.stepGoal = 7000;
-        function todayKey(week, day) { return "w" + week + "-d" + day; }
+        function todayKey(week, day) { return "p2-w" + week + "-d" + day; }
+        function isCurrentKey(k) { return typeof k === "string" && k.indexOf("p2-") === 0; }
         function pad2(n) { return String(n).padStart(2, "0"); }
         function localDs(d) { return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
         function todayDateStr() { return localDs(new Date()); }
@@ -2742,29 +2868,40 @@
         function renderDayNav() {
             const nav = document.getElementById("dayNav");
             nav.innerHTML = "";
-            for (let d = 1; d <= 7; d++) {
+            activeDays(state.week).forEach((d) => {
                 const btn = document.createElement("button");
-                btn.className = "day-btn" + (state.day === d ? " active" : "");
                 const key = todayKey(state.week, d);
                 const hasLog = dayHasSave(key);
-                btn.innerHTML = DAY_NAMES[d] + (hasLog ? '<span class="dot"></span>' : "");
+                let label = DAY_NAMES[d];
+                let real = dateForWeekDay(state.week, d);
+                if (!real && state.week === "post") real = shiftWeek(mondayKey(todayDateStr()), d - 1);
+                if (real) label += " " + parseDateStr(real).getDate();
+                const isToday = real ? real === todayDateStr() : false;
+                btn.className = "day-btn" + (state.day === d ? " active" : "") + (isToday ? " today" : "");
+                btn.innerHTML = escHtml(label) + (hasLog ? '<span class="dot"></span>' : "");
                 btn.onclick = () => { state.day = d; render(); };
                 nav.appendChild(btn);
-            }
+            });
+            try {
+                const cur = nav.querySelector(".day-btn.active");
+                if (cur && cur.scrollIntoView) cur.scrollIntoView({ inline: "center", block: "nearest" });
+            } catch (e) {}
         }
         function renderWeekPill() {
             const pill = document.getElementById("weekPill");
-            const label = state.week === "34" ? "Weeks 3-4" : "Week " + state.week;
-            pill.textContent = label;
+            pill.textContent = weekLabel(state.week);
             pill.onclick = () => {
                 if (state.week === 1) state.week = 2;
-                else if (state.week === 2) state.week = "34";
+                else if (state.week === 2) state.week = 3;
+                else if (state.week === 3) state.week = 4;
+                else if (state.week === 4) state.week = "post";
                 else state.week = 1;
-                state.day = 1;
+                state.day = activeDays(state.week)[0];
                 render();
             };
         }
         function render() {
+            maybeAutoStepGoal();
             renderDayNav();
             renderWeekPill();
             renderTabs();
@@ -2790,18 +2927,31 @@
             document.getElementById("dayNav").style.display = "";
             const plan = getPlanForWeek(state.week);
             const session = plan[state.day];
+            if (!session) {
+                state.day = activeDays(state.week)[0];
+                render();
+                return;
+            }
             const key = todayKey(state.week, state.day);
             if (!DATA.logs[key]) DATA.logs[key] = {};
+            let realDs = dateForWeekDay(state.week, state.day);
+            if (!realDs && state.week === "post") realDs = shiftWeek(mondayKey(todayDateStr()), state.day - 1);
+            const isTodayView = realDs && realDs === todayDateStr();
+            const kicker = document.createElement("div");
+            kicker.className = "today-kicker" + (isTodayView ? "" : " preview");
+            kicker.innerHTML = '<span class="live-dot"></span><span>' + (isTodayView ? "TODAY · " : "") + escHtml(realDs ? fmtDayLong(realDs) : DAY_NAMES[state.day]) + (isTodayView ? "" : " · PREVIEW") + '</span>';
+            container.appendChild(kicker);
+            container.appendChild(renderWeekStrip());
             if (session.type !== "rest") {
                 const strip = document.createElement("div");
                 strip.className = "rir-strip";
-                strip.innerHTML = '<span>Target: <b>' + RIR_TEXT[state.week] + '</b></span><span>' + STEPS_TEXT[state.week] + '</span>';
+                strip.innerHTML = '<span>Standard: <b>' + STANDARD_TAG + '</b></span><span>' + stepsTextForWeek(state.week) + '</span>';
                 container.appendChild(strip);
             }
-            if (state.week === "34" && state.day === 1) {
+            if (state.week === 1) {
                 const banner = document.createElement("div");
                 banner.className = "rule-note";
-                banner.innerHTML = "<b>Before starting Weeks 3-4:</b> only move here once every box is checked — no unusual joint pain, recovering well, solid technique, current weights leave 2+ RIR without struggle, and Weeks 1-2 were consistent. If not — repeat Weeks 1-2 a bit longer. Smart choice, not a setback.";
+                banner.innerHTML = "<b>Startup week:</b> the Arc began <b>Wed Sep 9</b> — Mon/Tue are not missed sessions. Normal Monday–Sunday cycle starts Sep 14.";
                 container.appendChild(banner);
             }
             if (!session.type) {
@@ -2817,15 +2967,94 @@
             activeSession = session;
             refreshCompleteness();
         }
+        function renderWeekStrip() {
+            const btn = document.createElement("button");
+            btn.className = "week-strip";
+            const plan = getPlanForWeek(state.week);
+            let done = 0, planned = 0;
+            activeDays(state.week).forEach((d) => {
+                const s = plan[d];
+                if (!s) return;
+                if (!(s.type && s.type === "rest")) planned++;
+                if (dayHasSave(todayKey(state.week, d))) done++;
+            });
+            const pct = planned > 0 ? Math.round((done / planned) * 100) : 0;
+            btn.innerHTML = '<div class="weekbar-label"><span>' + escHtml(weekLabel(state.week)) + ' · ' + done + '/' + planned + ' done — tap for details</span><span>' + pct + '%</span></div>' +
+                '<div class="weekbar"><div class="weekfill" style="width:' + pct + '%"></div></div>';
+            btn.onclick = () => { state.view = "summary"; render(); };
+            return btn;
+        }
         function renderCheckin(key) {
             const wrap = document.createElement("div");
             wrap.className = "checkin";
             const dateStr = todayDateStr();
             const saved = DATA.checkins[dateStr] || {};
+            const goal = DATA.stepGoal || 7000;
             wrap.innerHTML =
                 '<div class="checkin-title">Today\'s check-in · ' + fmtDateShort(dateStr) + '</div>' +
-                '<div class="field"><label>Body weight (kg)</label><input type="number" step="0.1" id="checkinWeight" value="' + (saved.weight || "") + '" placeholder="e.g. 119.5"></div>';
+                '<div class="field"><label>Body weight (kg)</label><input type="number" step="0.1" id="checkinWeight" value="' + (saved.weight || "") + '" placeholder="e.g. 119.5"></div>' +
+                '<div class="field"><label>Steps (goal ' + goal.toLocaleString() + ')</label><input type="number" inputmode="numeric" id="checkinSteps" value="' + (saved.steps || "") + '" placeholder="e.g. 6500"></div>';
             return wrap;
+        }
+        /* ---------- EXERCISE CUSTOMIZATION (future-only, history-safe) ---------- */
+        function customKey(dow, sessionTitle, exName) {
+            return dow + "|" + sessionTitle + "|" + exName;
+        }
+        function getEffectiveExercises(dow, session) {
+            if (!session || !session.exercises) return [];
+            const title = session.title || "";
+            const removed = ((DATA.custom || {}).removed || {})[dow] || [];
+            const out = [];
+            session.exercises.forEach((base) => {
+                if (removed.indexOf(base.name) !== -1) return;
+                const ck = customKey(dow, title, base.name);
+                const ed = ((DATA.custom || {}).edits || {})[ck];
+                const sw = ((DATA.custom || {}).swaps || {})[ck];
+                const e = { name: base.name, muscle: base.muscle, equip: base.equip, setsReps: base.setsReps, rest: base.rest, why: base.why, timed: !!base.timed, _orig: base.name, _custom: false };
+                if (ed) {
+                    if (ed.name) e.name = ed.name;
+                    if (ed.muscle) e.muscle = ed.muscle;
+                    if (ed.equip) e.equip = ed.equip;
+                    if (ed.sets && ed.reps) e.setsReps = ed.sets + " x " + ed.reps;
+                    if (ed.rest) e.rest = ed.rest;
+                    if (ed.why !== undefined && ed.why !== null) e.why = ed.why;
+                    e._custom = true;
+                }
+                if (sw) {
+                    e.name = sw.name;
+                    if (sw.muscle) e.muscle = sw.muscle;
+                    e._custom = true;
+                    e._swapped = true;
+                }
+                out.push(e);
+            });
+            const added = (((DATA.custom || {}).added || {})[dow]) || [];
+            added.forEach((a) => {
+                out.push({ name: a.name, muscle: a.muscle || "Custom", equip: a.equip || "", setsReps: (a.sets || 3) + " x " + (a.reps || "12"), rest: a.rest || "60-90s", why: a.why || "", timed: !!a.timed, _orig: null, _custom: true, _added: true });
+            });
+            return out;
+        }
+        function isSkipped(key, exName) {
+            return !!(DATA.logs[key] && DATA.logs[key]["_skip_" + exName]);
+        }
+        function lastTimeText(exName, skipKey) {
+            const rows = [];
+            Object.keys(DATA.logs).forEach((k) => {
+                if (k === skipKey || !isCurrentKey(k)) return;
+                const log = DATA.logs[k];
+                if (!log._savedAt || !Array.isArray(log[exName]) || !log[exName].length) return;
+                rows.push({ key: k, date: log._realDate || log._date || null, sets: log[exName] });
+            });
+            if (!rows.length) return null;
+            rows.sort((a, b) => ((a.date || a.key) < (b.date || b.key) ? 1 : -1));
+            const r = rows[0];
+            const parts = r.sets.map((s) => {
+                const w = parseFloat(s.weight);
+                const rp = s.reps || s.time || "?";
+                if (!isNaN(w)) return w + "×" + rp;
+                return String(rp);
+            });
+            return "Last " + (r.date ? fmtDateShort(r.date) : r.key) + ": " + parts.join(" · ");
         }
         function renderStrengthDay(session, key) {
             const wrap = document.createElement("div");
@@ -2844,9 +3073,10 @@
                 wrap.appendChild(wu);
             }
             wrap.appendChild(renderCheckin(key));
-            session.exercises.forEach((exercise) => {
+            getEffectiveExercises(state.day, session).forEach((exercise) => {
                 wrap.appendChild(renderExerciseCard(exercise, key, session));
             });
+            wrap.appendChild(renderAddExercise(session, key));
             if (session.finisher) {
                 const fin = document.createElement("div");
                 fin.className = "info-card";
@@ -2856,63 +3086,180 @@
             wrap.appendChild(renderSaveBar(key, session));
             return wrap;
         }
+        function renderAddExercise(session, key) {
+            const dow = state.day;
+            const wrap = document.createElement("div");
+            const btn = document.createElement("button");
+            btn.className = "edit-toggle";
+            btn.textContent = "+ add exercise";
+            btn.style.marginBottom = "12px";
+            const box = document.createElement("div");
+            box.className = "edit-box";
+            box.style.display = "none";
+            box.style.marginBottom = "12px";
+            box.innerHTML =
+                '<div class="row"><div style="flex:2"><label>Name</label><input type="text" data-f="name" placeholder="e.g. Hack Squat"></div>' +
+                '<div style="flex:2"><label>Focus</label><input type="text" data-f="muscle" placeholder="e.g. Quads"></div></div>' +
+                '<div class="row"><div style="flex:1"><label>Sets</label><input type="number" inputmode="numeric" data-f="sets" value="3"></div>' +
+                '<div style="flex:2"><label>Reps</label><input type="text" data-f="reps" value="12"></div>' +
+                '<div style="flex:2"><label>Rest</label><input type="text" data-f="rest" value="60-90s"></div></div>' +
+                '<div class="edit-actions"><button class="edit-save" data-act="add">Add to future sessions</button></div>';
+            btn.onclick = () => { box.style.display = box.style.display === "none" ? "block" : "none"; };
+            box.querySelector('[data-act="add"]').onclick = () => {
+                const gv = (f) => box.querySelector('[data-f="' + f + '"]').value.trim();
+                const name = gv("name");
+                if (!name) { showToast("Name your exercise", "Give the new exercise a name first."); return; }
+                if (!DATA.custom.added[dow]) DATA.custom.added[dow] = [];
+                DATA.custom.added[dow].push({ name: name, muscle: gv("muscle"), sets: parseInt(gv("sets")) || 3, reps: gv("reps") || "12", rest: gv("rest") || "60-90s" });
+                saveData(DATA);
+                render();
+                showToast("Added " + name, "Shows in future " + session.title + " sessions. History untouched.");
+            };
+            wrap.appendChild(btn);
+            wrap.appendChild(box);
+            return wrap;
+        }
         function renderExerciseCard(exercise, key, session) {
-            const oKey = planOverrideKey(state.week, session ? session.title : "", exercise.name);
-            const ov = DATA.planOverrides[oKey];
-            const effSetsReps = ov ? (ov.sets + " x " + ov.reps) : exercise.setsReps;
-            const effRest = ov ? ov.rest : exercise.rest;
-            const numSets = ov ? ov.sets : parseNumSets(exercise.setsReps);
+            const dow = state.day;
+            const title = session ? session.title : "";
+            const ck = customKey(dow, title, exercise._orig || exercise.name);
+            const isCustom = !!exercise._custom;
+            const numSets = parseNumSets(exercise.setsReps);
+            const skipped = isSkipped(key, exercise.name);
             const card = document.createElement("div");
             card.className = "card";
+            if (skipped) card.style.opacity = "0.55";
             const head = document.createElement("div");
             head.className = "card-head";
             head.innerHTML = '<span class="ex-name">' + escHtml(exercise.name) + '</span><span class="ex-muscle">' + escHtml(exercise.muscle) + '</span>';
             card.appendChild(head);
-            const meta = document.createElement("div");
-            meta.className = "ex-meta";
-            meta.innerHTML = escHtml(exercise.equip + " · " + effSetsReps + " · rest " + effRest) + (ov ? ' <span class="custom-tag">· custom</span>' : '');
-            card.appendChild(meta);
+            const presc = document.createElement("div");
+            presc.className = "ex-presc";
+            presc.innerHTML = '<b>' + escHtml(exercise.setsReps) + '</b><span>rest ' + escHtml(exercise.rest) + (exercise.equip ? ' · ' + escHtml(exercise.equip) : '') + '</span>' + (isCustom ? ' <span class="custom-tag">· custom</span>' : '') + (skipped ? ' <span class="custom-tag">· skipped</span>' : '');
+            card.appendChild(presc);
             if (exercise.why) {
                 const why = document.createElement("div");
                 why.className = "ex-why";
                 why.textContent = exercise.why;
                 card.appendChild(why);
             }
+            const lastLine = document.createElement("div");
+            const lt = lastTimeText(exercise.name, key);
+            lastLine.className = "ex-last" + (lt ? "" : " first");
+            lastLine.textContent = lt || "First time — set the standard.";
+            card.appendChild(lastLine);
+            const toggles = document.createElement("div");
+            toggles.style.display = "flex";
+            toggles.style.gap = "14px";
             const editBtn = document.createElement("button");
             editBtn.className = "edit-toggle";
             editBtn.textContent = "edit";
-            editBtn.onclick = () => {
-                const box = card.querySelector(".edit-box");
-                box.style.display = box.style.display === "none" ? "block" : "none";
-            };
-            card.appendChild(editBtn);
-            const editBox = document.createElement("div");
-            editBox.className = "edit-box";
-            editBox.style.display = "none";
-            const curReps = ov ? ov.reps : exercise.setsReps.replace(/^\d+\s*x\s*/, "");
-            editBox.innerHTML =
-                '<div class="row">' +
-                '<div style="flex:1"><label>Sets</label><input type="number" inputmode="numeric" value="' + numSets + '"></div>' +
-                '<div style="flex:2"><label>Reps (e.g. 8-12)</label><input type="text" value="' + escHtml(curReps) + '"></div>' +
-                '<div style="flex:2"><label>Rest (e.g. 90s)</label><input type="text" value="' + escHtml(effRest) + '"></div>' +
-                '</div>' +
-                '<div class="edit-actions"><button class="edit-save">Save</button>' +
-                (ov ? '<button class="edit-reset">Reset to plan</button>' : '') + '</div>';
-            const inputs = editBox.querySelectorAll("input");
-            editBox.querySelector(".edit-save").onclick = () => {
-                const s = Math.max(1, Math.min(10, parseInt(inputs[0].value) || numSets));
-                DATA.planOverrides[oKey] = { sets: s, reps: inputs[1].value.trim() || curReps, rest: inputs[2].value.trim() || effRest };
+            const skipBtn = document.createElement("button");
+            skipBtn.className = "edit-toggle";
+            skipBtn.textContent = skipped ? "unskip" : "skip";
+            skipBtn.onclick = () => {
+                if (!DATA.logs[key]) DATA.logs[key] = {};
+                if (isSkipped(key, exercise.name)) delete DATA.logs[key]["_skip_" + exercise.name];
+                else DATA.logs[key]["_skip_" + exercise.name] = true;
                 saveData(DATA);
                 render();
             };
-            const resetBtn = editBox.querySelector(".edit-reset");
-            if (resetBtn) {
-                resetBtn.onclick = () => {
-                    delete DATA.planOverrides[oKey];
-                    saveData(DATA);
-                    render();
+            toggles.appendChild(editBtn);
+            toggles.appendChild(skipBtn);
+            card.appendChild(toggles);
+            const editBox = document.createElement("div");
+            editBox.className = "edit-box";
+            editBox.style.display = "none";
+            editBtn.onclick = () => {
+                editBox.style.display = editBox.style.display === "none" ? "block" : "none";
+            };
+            const curReps = exercise.setsReps.replace(/^\d+\s*x\s*/, "");
+            editBox.innerHTML =
+                '<div class="row">' +
+                '<div style="flex:1"><label>Sets</label><input type="number" inputmode="numeric" data-f="sets" value="' + numSets + '"></div>' +
+                '<div style="flex:2"><label>Reps (e.g. 12)</label><input type="text" data-f="reps" value="' + escHtml(curReps) + '"></div>' +
+                '<div style="flex:2"><label>Rest (e.g. 60-90s)</label><input type="text" data-f="rest" value="' + escHtml(exercise.rest) + '"></div>' +
+                '</div>' +
+                '<div class="row">' +
+                '<div style="flex:2"><label>Name</label><input type="text" data-f="name" value="' + escHtml(exercise.name) + '"></div>' +
+                '<div style="flex:2"><label>Focus</label><input type="text" data-f="muscle" value="' + escHtml(exercise.muscle) + '"></div>' +
+                '</div>' +
+                '<div class="row"><div style="flex:1"><label>Notes</label><input type="text" data-f="why" value="' + escHtml(exercise.why || "") + '" placeholder="cue, machine #, ..."></div></div>' +
+                '<div class="edit-actions"><button class="edit-save" data-act="save">Save</button>' +
+                (isCustom && !exercise._added ? '<button class="edit-reset" data-act="reset">Reset to plan</button>' : '') + '</div>' +
+                '<div class="row" style="margin-top:8px;"><div style="flex:1"><label>Swap with</label><select class="ex-select" data-f="swap" style="margin-bottom:0;"></select></div></div>' +
+                '<div class="edit-actions" style="margin-top:8px;"><button class="edit-reset" data-act="swap">Swap exercise</button>' +
+                '<button class="edit-reset" data-act="remove">Remove</button></div>';
+            const swapSel = editBox.querySelector('[data-f="swap"]');
+            allExerciseNames().forEach((n) => {
+                const o = document.createElement("option");
+                o.value = n;
+                o.textContent = n;
+                if (n === exercise.name) o.selected = true;
+                swapSel.appendChild(o);
+            });
+            const getF = (f) => editBox.querySelector('[data-f="' + f + '"]').value.trim();
+            editBox.querySelectorAll("button").forEach((b) => {
+                b.onclick = () => {
+                    const act = b.getAttribute("data-act");
+                    if (act === "save") {
+                        const s = Math.max(1, Math.min(10, parseInt(getF("sets")) || numSets));
+                        if (exercise._added) {
+                            const arr = DATA.custom.added[dow] || [];
+                            const found = arr.filter((a) => a.name === exercise.name)[0];
+                            if (found) { found.name = getF("name") || found.name; found.muscle = getF("muscle") || found.muscle; found.sets = s; found.reps = getF("reps") || found.reps; found.rest = getF("rest") || found.rest; found.why = getF("why"); }
+                        } else {
+                            DATA.custom.edits[ck] = { name: getF("name") || exercise.name, muscle: getF("muscle") || exercise.muscle, sets: s, reps: getF("reps") || curReps, rest: getF("rest") || exercise.rest, why: getF("why") };
+                            delete DATA.custom.swaps[ck];
+                        }
+                        saveData(DATA);
+                        render();
+                    } else if (act === "reset") {
+                        delete DATA.custom.edits[ck];
+                        delete DATA.custom.swaps[ck];
+                        const rr = ((DATA.custom || {}).removed || {})[dow];
+                        if (rr && exercise._orig) {
+                            const ix = rr.indexOf(exercise._orig);
+                            if (ix !== -1) rr.splice(ix, 1);
+                        }
+                        saveData(DATA);
+                        render();
+                    } else if (act === "swap") {
+                        const target = swapSel.value;
+                        if (!target || target === exercise.name) { showToast("Pick a different exercise", "Choose another exercise to swap in."); return; }
+                        showConfirm({
+                            title: "Swap " + exercise.name + "?",
+                            body: "Future " + title + " sessions will use " + target + " instead. Past logs keep showing " + exercise.name + ".",
+                            go: "Swap",
+                            onGo: () => {
+                                delete DATA.custom.edits[ck];
+                                DATA.custom.swaps[ck] = { name: target, fromDate: todayDateStr() };
+                                saveData(DATA);
+                                render();
+                            }
+                        });
+                    } else if (act === "remove") {
+                        showConfirm({
+                            title: "Remove " + exercise.name + "?",
+                            body: "It disappears from future " + title + " sessions. Past logs are untouched.",
+                            go: "Remove",
+                            onGo: () => {
+                                if (exercise._added) {
+                                    DATA.custom.added[dow] = (DATA.custom.added[dow] || []).filter((a) => a.name !== exercise.name);
+                                } else {
+                                    if (!DATA.custom.removed[dow]) DATA.custom.removed[dow] = [];
+                                    const on = exercise._orig || exercise.name;
+                                    if (DATA.custom.removed[dow].indexOf(on) === -1) DATA.custom.removed[dow].push(on);
+                                    delete DATA.custom.edits[ck];
+                                    delete DATA.custom.swaps[ck];
+                                }
+                                saveData(DATA);
+                                render();
+                            }
+                        });
+                    }
                 };
-            }
+            });
             card.appendChild(editBox);
             const table = document.createElement("table");
             table.className = "sets";
@@ -2979,7 +3326,7 @@
             wrap.appendChild(card);
             const coreCard = document.createElement("div");
             coreCard.className = "info-card";
-            coreCard.innerHTML = '<h3>Core Circuit — 2 rounds, 60s rest between rounds</h3>';
+            coreCard.innerHTML = '<h3>Core — 3 sets each, 60s rest between rounds</h3>';
             session.core.forEach(c => {
                 const line = document.createElement("p");
                 line.style.margin = "0 0 4px";
@@ -3059,7 +3406,7 @@
         function prevBest(exName, skipKey) {
             let best = null;
             Object.keys(DATA.logs).forEach((k) => {
-                if (k === skipKey) return;
+                if (k === skipKey || !isCurrentKey(k)) return;
                 const arr = DATA.logs[k][exName];
                 if (!Array.isArray(arr)) return;
                 arr.forEach((s) => {
@@ -3178,8 +3525,7 @@
         const NO_WEIGHT_EX = ["Plank", "Dead Bug", "Bird Dog", "Glute Bridge"];
         let activeKey = null, activeSession = null;
         function effectiveSets(week, session, exercise) {
-            const ov = DATA.planOverrides[planOverrideKey(week, session.title, exercise.name)];
-            return ov ? ov.sets : parseNumSets(exercise.setsReps);
+            return parseNumSets(exercise.setsReps);
         }
         function validateDay(key, session) {
             const missing = [];
@@ -3194,8 +3540,9 @@
                 return filled;
             };
             if (!session.type) {
-                session.exercises.forEach((exercise) => {
-                    const n = effectiveSets(state.week, session, exercise);
+                getEffectiveExercises(state.day, session).forEach((exercise) => {
+                    if (isSkipped(key, exercise.name)) return;
+                    const n = parseNumSets(exercise.setsReps);
                     if (exercise.timed) {
                         for (let s = 0; s < n; s++) {
                             check(exercise.name, s, "time", exercise.name + " · set " + (s + 1) + " · seconds");
@@ -3352,7 +3699,16 @@
                 if (!DATA.checkins[dateStr]) DATA.checkins[dateStr] = {};
                 DATA.checkins[dateStr].weight = cw.value;
             }
+            const cs = document.getElementById("checkinSteps");
+            if (cs && String(cs.value).trim() !== "") {
+                if (!DATA.checkins[dateStr]) DATA.checkins[dateStr] = {};
+                DATA.checkins[dateStr].steps = String(parseInt(cs.value) || 0);
+            }
             if (sn) DATA.logs[key]["_notes"] = sn.value;
+            if (!session.type) {
+                DATA.logs[key]["_planSnapshot"] = getEffectiveExercises(state.day, session).map((e) => ({ name: e.name, muscle: e.muscle, setsReps: e.setsReps, rest: e.rest }));
+            }
+            DATA.logs[key]["_realDate"] = dateStr;
             DATA.logs[key]["_date"] = dateStr;
             DATA.logs[key]["_savedAt"] = new Date().toISOString();
             saveData(DATA);
@@ -3395,9 +3751,6 @@
                 { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
             ));
         }
-        function planOverrideKey(week, sessionTitle, exName) {
-            return "w" + week + "|" + sessionTitle + "|" + exName;
-        }
         function dayHasSave(key) {
             return !!(DATA.logs[key] && DATA.logs[key]._savedAt);
         }
@@ -3408,6 +3761,11 @@
         function fmtDateShort(ds) {
             try {
                 return parseDateStr(ds).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+            } catch (e) { return ds; }
+        }
+        function fmtDayLong(ds) {
+            try {
+                return parseDateStr(ds).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" }).toUpperCase();
             } catch (e) { return ds; }
         }
         function savedDates() {
@@ -3541,32 +3899,38 @@
         }
         function renderSummaryView(container) {
             const plan = getPlanForWeek(state.week);
-            const label = state.week === "34" ? "Weeks 3-4" : "Week " + state.week;
+            const label = weekLabel(state.week);
             const title = document.createElement("div");
             title.className = "session-tag";
             title.textContent = label + " — Summary";
             container.appendChild(title);
             const sub = document.createElement("div");
             sub.className = "session-note";
-            sub.textContent = "Done vs pending for this week, plus total lifting volume (sets x reps x weight).";
+            sub.textContent = "Done vs planned for this week, plus lifting volume, cardio minutes, steps and body weight.";
             container.appendChild(sub);
             const card = document.createElement("div");
             card.className = "summary-card";
             const days = [];
-            let totalVol = 0, totalSets = 0, done = 0, maxVol = 0;
-            for (let d = 1; d <= 7; d++) {
+            let totalVol = 0, totalSets = 0, done = 0, planned = 0, maxVol = 0, cardioMins = 0;
+            const notes = [];
+            activeDays(state.week).forEach((d) => {
                 const s = plan[d];
                 const key = todayKey(state.week, d);
                 const isDone = dayHasSave(key);
+                const isRest = !!s.type && s.type === "rest";
                 const { volume, sets } = dayVolume(state.week, d);
+                if (!isRest) planned++;
                 if (isDone) { done++; totalVol += volume; totalSets += sets; }
                 if (volume > maxVol) maxVol = volume;
-                days.push({ d, title: s.title, isDone, volume, sets });
-            }
+                const lg = DATA.logs[key];
+                if (lg && lg.cardio && parseFloat(lg.cardio.mins) > 0) cardioMins += parseFloat(lg.cardio.mins);
+                if (lg && lg._notes && String(lg._notes).trim() !== "") notes.push({ d: d, t: String(lg._notes).trim() });
+                days.push({ d, title: s.title, isDone, isRest, volume, sets });
+            });
             const prog = document.createElement("div");
             prog.className = "weekbar-wrap";
-            prog.innerHTML = '<div class="weekbar-label"><span>Week progress</span><span>' + done + '/7</span></div>' +
-                '<div class="weekbar"><div class="weekfill" style="width:' + Math.round((done / 7) * 100) + '%"></div></div>';
+            prog.innerHTML = '<div class="weekbar-label"><span>Week progress</span><span>' + done + '/' + planned + '</span></div>' +
+                '<div class="weekbar"><div class="weekfill" style="width:' + (planned > 0 ? Math.round((done / planned) * 100) : 0) + '%"></div></div>';
             card.appendChild(prog);
             days.forEach((info) => {
                 const row = document.createElement("div");
@@ -3577,16 +3941,45 @@
                     '<span class="summary-day">' + DAY_NAMES[info.d] + '</span>' +
                     '<span class="summary-title">' + escHtml(info.title) + '</span>' +
                     (pct > 0 ? '<span class="vol-track"><span class="vol-fill" style="width:' + pct + '%"></span></span>' : '') +
-                    '<span class="summary-vol">' + (info.isDone ? (info.volume > 0 ? Math.round(info.volume).toLocaleString() + " kg" : "logged") : "pending") + '</span>';
+                    '<span class="summary-vol">' + (info.isDone ? (info.volume > 0 ? Math.round(info.volume).toLocaleString() + " kg" : "logged") : (info.isRest ? "rest" : "pending")) + '</span>';
                 row.style.cursor = "pointer";
                 row.onclick = ((dd) => () => { state.day = dd; state.view = "log"; render(); })(info.d);
                 card.appendChild(row);
             });
             const total = document.createElement("div");
             total.className = "summary-total";
-            total.innerHTML = "<span><b>" + done + "/7</b> sessions done</span><span><b>" +
+            total.innerHTML = "<span><b>" + done + "/" + planned + "</b> sessions done</span><span><b>" +
                 Math.round(totalVol).toLocaleString() + " kg</b> · " + totalSets + " sets</span>";
             card.appendChild(total);
+            const extra = document.createElement("div");
+            extra.className = "summary-total";
+            extra.innerHTML = "<span>Cardio <b>" + Math.round(cardioMins) + " min</b></span><span>" + escHtml(stepsTextForWeek(state.week)) + "</span>";
+            card.appendChild(extra);
+            let stepSum = 0, stepN = 0, latestW = null;
+            activeDays(state.week).forEach((d) => {
+                const ds = state.week === "post" ? null : dateForWeekDay(state.week, d);
+                if (!ds) return;
+                const ci = DATA.checkins[ds] || {};
+                const sv = parseInt(ci.steps);
+                if (!isNaN(sv)) { stepSum += Math.max(0, sv); stepN++; }
+                const wv = parseFloat(ci.weight);
+                if (!isNaN(wv)) latestW = wv;
+            });
+            const extra2 = document.createElement("div");
+            extra2.className = "summary-total";
+            extra2.innerHTML = "<span>Avg steps <b>" + (stepN ? Math.round(stepSum / stepN).toLocaleString() : "–") + "</b></span><span>Weight <b>" + (latestW !== null ? latestW + " kg" : "–") + "</b></span>";
+            card.appendChild(extra2);
+            if (notes.length) {
+                const nCard = document.createElement("div");
+                nCard.className = "summary-total";
+                nCard.style.display = "block";
+                let nh = "<span>Notes</span>";
+                notes.slice(0, 3).forEach((n) => {
+                    nh += "<div style='margin-top:6px;'><b>" + DAY_NAMES[n.d] + ":</b> " + escHtml(n.t.length > 120 ? n.t.slice(0, 120) + "…" : n.t) + "</div>";
+                });
+                nCard.innerHTML = nh;
+                card.appendChild(nCard);
+            }
             container.appendChild(card);
         }
 
@@ -3630,6 +4023,7 @@
         function adjustStepGoal(delta) {
             const g = Math.max(1000, Math.min(30000, (DATA.stepGoal || 7000) + delta));
             DATA.stepGoal = Math.round(g / 500) * 500;
+            DATA.stepGoalWeek = state.week;
             saveData(DATA);
             render();
         }
@@ -3980,24 +4374,26 @@
         /* ---------- EXERCISE HISTORY ---------- */
         function allExerciseNames() {
             const seen = {}, out = [];
-            [1, 2, "34"].forEach((w) => {
+            const add = (n) => { if (n && !seen[n]) { seen[n] = true; out.push(n); } };
+            [1, 2, 3, 4, "post"].forEach((w) => {
                 const plan = getPlanForWeek(w);
-                for (let d = 1; d <= 7; d++) {
+                activeDays(w).forEach((d) => {
                     const s = plan[d];
-                    if (s && s.exercises) {
-                        s.exercises.forEach((e) => {
-                            if (!seen[e.name]) { seen[e.name] = true; out.push(e.name); }
-                        });
-                    }
-                }
+                    if (s && s.exercises) s.exercises.forEach((e) => add(e.name));
+                    const cust = (((DATA.custom || {}).added || {})[d]) || [];
+                    cust.forEach((a) => add(a.name));
+                });
             });
+            Object.keys(((DATA.custom || {}).swaps) || {}).forEach((k) => add(DATA.custom.swaps[k].name));
             return out.sort();
         }
         function isTimedExercise(exName) {
-            const weeks = [1, 2, "34"];
+            const weeks = [1, 2, 3, 4, "post"];
             for (let wi = 0; wi < weeks.length; wi++) {
                 const plan = getPlanForWeek(weeks[wi]);
-                for (let d = 1; d <= 7; d++) {
+                const days = activeDays(weeks[wi]);
+                for (let di = 0; di < days.length; di++) {
+                    const d = days[di];
                     const s = plan[d];
                     if (s && s.exercises) {
                         for (let i = 0; i < s.exercises.length; i++) {
@@ -4012,6 +4408,7 @@
             const rows = [];
             const timed = isTimedExercise(exName);
             Object.keys(DATA.logs).forEach((key) => {
+                if (!isCurrentKey(key)) return;
                 const log = DATA.logs[key];
                 const arr = log[exName];
                 if (!Array.isArray(arr) || !arr.length) return;
@@ -4044,6 +4441,7 @@
         function allLoggedSessions() {
             const out = [];
             Object.keys(DATA.logs).forEach((key) => {
+                if (!isCurrentKey(key)) return;
                 const log = DATA.logs[key];
                 if (!log._savedAt) return;
                 const ds = sessionDateStr(log);
@@ -4270,6 +4668,7 @@
             if (confirmGoFn) { const fn = confirmGoFn; confirmGoFn = null; fn(); }
         };
         refreshInstallBtn();
+        bootToToday();
         render();
 
         /* ---------- Native bridge (Capacitor — safe no-op on web) ---------- */

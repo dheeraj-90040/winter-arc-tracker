@@ -32,7 +32,7 @@ No screenshots yet — the fastest demo is the real thing (30 seconds):
 2. Tap **⋮ → Add to Home screen → Install**
 3. Turn on airplane mode and log a session — that's the whole pitch
 
-Check the footer for the version tag (`v11`) to confirm you're on the latest.
+Check the footer for the version tag (`v13`) to confirm you're on the latest.
 
 ## Installation
 
