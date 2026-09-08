@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Winter Arc — Training Log</title>
     <meta name="theme-color" content="#101722">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1139,6 +1139,158 @@
                 transition: none !important;
             }
         }
+
+        /* ---------- Streak pill: animated ---------- */
+        @keyframes streakShine {
+            from { transform: translateX(-120%) skewX(-18deg); }
+            to { transform: translateX(240%) skewX(-18deg); }
+        }
+
+        @keyframes streakPop {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.18); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes emberFlicker {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .streak-pill {
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+        }
+
+        .streak-pill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 40%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+            transform: translateX(-120%) skewX(-18deg);
+            animation: streakShine 3.2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .streak-pill.pop {
+            animation: streakPop 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.2);
+        }
+
+        .streak-pill.hot {
+            background: linear-gradient(100deg, #3a1f14, #5a2a16, #3a1f14);
+            background-size: 200% 200%;
+            animation: emberFlicker 3s ease infinite, pulseGlow 2s ease-in-out infinite;
+        }
+
+        /* ---------- Mobile-first pass ---------- */
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        button, select, textarea, input {
+            touch-action: manipulation;
+        }
+
+        table.sets input,
+        .field input,
+        .checkin input,
+        .edit-box input {
+            min-width: 0;
+        }
+
+        .save-bar {
+            padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+        }
+
+        footer {
+            padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+        }
+
+        .summary-title {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (pointer: coarse) {
+            table.sets input,
+            .field input,
+            .checkin input,
+            .edit-box input,
+            .notes-box textarea,
+            .ex-select {
+                font-size: 16px;
+            }
+
+            .day-btn {
+                min-height: 42px;
+            }
+
+            .tab-btn {
+                min-height: 44px;
+            }
+
+            .save-btn {
+                min-height: 50px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 11.5px;
+            }
+
+            header {
+                padding: 18px 12px 12px;
+            }
+
+            nav.days,
+            nav.tabs {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .day-btn {
+                padding: 8px 11px;
+                font-size: 12px;
+            }
+
+            .rir-strip {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 3px;
+            }
+
+            .summary-vol {
+                font-size: 11px;
+            }
+
+            .vol-track {
+                display: none;
+            }
+
+            .cardio-inputs {
+                flex-direction: column;
+            }
+
+            .pr-toast {
+                bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+                font-size: 13px;
+                padding: 11px 14px;
+            }
+        }
     </style>
 </head>
 
@@ -1437,6 +1589,7 @@
         let DATA = loadData();
         if (!DATA.checkins) DATA.checkins = {};
         if (!DATA.planOverrides) DATA.planOverrides = {};
+        if (!DATA.milestones) DATA.milestones = {};
         function todayKey(week, day) { return "w" + week + "-d" + day; }
         function todayDateStr() { return new Date().toISOString().slice(0, 10); }
         function parseNumSets(setsReps) {
@@ -1451,7 +1604,7 @@
                 const btn = document.createElement("button");
                 btn.className = "day-btn" + (state.day === d ? " active" : "");
                 const key = todayKey(state.week, d);
-                const hasLog = DATA.logs[key] && Object.keys(DATA.logs[key]).length > 0;
+                const hasLog = dayHasSave(key);
                 btn.innerHTML = DAY_NAMES[d] + (hasLog ? '<span class="dot"></span>' : "");
                 btn.onclick = () => { state.day = d; render(); };
                 nav.appendChild(btn);
@@ -1756,16 +1909,32 @@
             });
             const cm = document.getElementById("cardioMins");
             const cr = document.getElementById("cardioRpe");
+            const cw = document.getElementById("checkinWeight");
+            const cs = document.getElementById("checkinSteps");
+            const sn = document.getElementById("sessionNotes");
+            const dateStr = todayDateStr();
+            const storedCi = DATA.checkins[dateStr] || {};
+            const storedNote = (DATA.logs[key] && DATA.logs[key]._notes) || "";
+            let hasContent = false;
+            document.querySelectorAll('input[data-ex]').forEach(input => {
+                if (String(input.value).trim() !== "") hasContent = true;
+            });
+            if (cm && String(cm.value).trim() !== "") hasContent = true;
+            if (cr && String(cr.value).trim() !== "") hasContent = true;
+            if (cw && cw.value.trim() !== "" && cw.value.trim() !== String(storedCi.weight || "")) hasContent = true;
+            if (cs && cs.value.trim() !== "" && cs.value.trim() !== String(storedCi.steps || "")) hasContent = true;
+            if (sn && sn.value.trim() !== "" && sn.value.trim() !== String(storedNote)) hasContent = true;
+            if (!hasContent && !dayHasSave(key)) {
+                if (DATA.logs[key] && Object.keys(DATA.logs[key]).length === 0) delete DATA.logs[key];
+                showToast("Nothing to save yet", "Log at least one set, cardio, weigh-in, or note first.");
+                return;
+            }
             if (cm || cr) {
                 DATA.logs[key]["cardio"] = { mins: cm ? cm.value : "", rpe: cr ? cr.value : "" };
             }
-            const cw = document.getElementById("checkinWeight");
-            const cs = document.getElementById("checkinSteps");
             if (cw || cs) {
-                const dateStr = todayDateStr();
                 DATA.checkins[dateStr] = { weight: cw ? cw.value : "", steps: cs ? cs.value : "" };
             }
-            const sn = document.getElementById("sessionNotes");
             if (sn) DATA.logs[key]["_notes"] = sn.value;
             DATA.logs[key]["_savedAt"] = new Date().toISOString();
             saveData(DATA);
@@ -1785,6 +1954,12 @@
                 const p = prs[0];
                 showToast("NEW PR — " + p.ex + ": " + p.top + " kg",
                     prs.length > 1 ? "+" + (prs.length - 1) + " more PRs this session" : "Previous best beaten. Keep going.");
+            }
+            const streakN = calcStreak();
+            if (!prs.length && (streakN === 3 || streakN === 7 || streakN === 14 || streakN === 30) && !DATA.milestones[streakN]) {
+                DATA.milestones[streakN] = true;
+                saveData(DATA);
+                showToast(streakN + "-day streak — unstoppable", "Consistency is the whole game. Keep showing up.");
             }
             const bar = document.querySelector(".save-bar");
             let status = bar.nextElementSibling;
@@ -1871,7 +2046,13 @@
         function renderStreak() {
             const pill = document.getElementById("streakPill");
             const n = calcStreak();
-            pill.textContent = n + "-DAY STREAK";
+            const txt = n + "-DAY STREAK";
+            if (pill.textContent !== txt) {
+                pill.textContent = txt;
+                pill.classList.remove("pop");
+                void pill.offsetWidth;
+                pill.classList.add("pop");
+            }
             pill.classList.toggle("hot", n >= 3);
         }
 
