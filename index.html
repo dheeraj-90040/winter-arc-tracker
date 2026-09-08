@@ -2606,6 +2606,7 @@
         }
         function celebrateSave(res) {
             const c = toggleCenter();
+            buzz(res.prs.length || res.milestone ? "success" : "medium");
             if (res.prs.length) {
                 const p = res.prs[0];
                 const extra = res.prs.length > 1 ? " (+" + (res.prs.length - 1) + " more PRs today)" : "";
@@ -3504,6 +3505,49 @@
             if (confirmGoFn) { const fn = confirmGoFn; confirmGoFn = null; fn(); }
         };
         render();
+
+        /* ---------- Native bridge (Capacitor — safe no-op on web) ---------- */
+        function capPlugins() {
+            try {
+                const C = window.Capacitor;
+                if (!C || !C.isNativePlatform || !C.isNativePlatform()) return null;
+                return C.Plugins || null;
+            } catch (e) { return null; }
+        }
+        function buzz(kind) {
+            try {
+                const P = capPlugins();
+                const H = P && P.Haptics;
+                if (!H) return;
+                if (kind === "success" && H.notification) H.notification({ type: "SUCCESS" });
+                else if (H.impact) H.impact({ style: kind === "light" ? "LIGHT" : "MEDIUM" });
+            } catch (e) {}
+        }
+        function nativeBoot() {
+            const P = capPlugins();
+            if (!P) return;
+            try {
+                if (P.StatusBar) {
+                    if (P.StatusBar.setBackgroundColor) P.StatusBar.setBackgroundColor({ color: "#101722" });
+                    if (P.StatusBar.setOverlaysWebView) P.StatusBar.setOverlaysWebView({ overlay: false });
+                }
+                if (P.App && P.App.addListener) {
+                    P.App.addListener("backButton", () => {
+                        const cm = document.getElementById("confirmModal");
+                        if (cm && cm.classList.contains("open")) { closeConfirm(); return; }
+                        const im = document.getElementById("infoModal");
+                        if (im && im.classList.contains("open")) { closeInfo(); return; }
+                        if (P.App.exitApp) P.App.exitApp();
+                    });
+                }
+            } catch (e) {}
+            window.addEventListener("load", () => {
+                setTimeout(() => {
+                    try { if (P.SplashScreen && P.SplashScreen.hide) P.SplashScreen.hide(); } catch (e) {}
+                }, 400);
+            });
+        }
+        nativeBoot();
 
         /* ---------- PWA: Service Worker registration (offline-first, localStorage persists offline) ---------- */
         if ('serviceWorker' in navigator) {
