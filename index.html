@@ -932,6 +932,20 @@
             position: relative;
         }
 
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+            flex-shrink: 0;
+        }
+
         #sessionContent > div > * {
             animation: fadeUp 0.45s cubic-bezier(0.2, 0.7, 0.3, 1) both;
         }
@@ -1242,6 +1256,33 @@
             .save-btn {
                 min-height: 50px;
             }
+        }
+
+        /* ---------- Segmented view switcher ---------- */
+        nav.tabs {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            padding: 4px;
+            gap: 4px;
+            margin: 10px auto 2px;
+            max-width: 640px;
+            width: calc(100% - 32px);
+            box-sizing: border-box;
+        }
+
+        nav.tabs .tab-btn {
+            background: transparent;
+            border: none;
+            border-radius: 9px;
+            box-shadow: none;
+            color: var(--text-dim);
+        }
+
+        nav.tabs .tab-btn.active {
+            background: var(--panel-2);
+            color: var(--frost);
+            box-shadow: inset 0 0 0 1px var(--frost-dim), 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         @media (max-width: 430px) {
@@ -1969,9 +2010,12 @@
 
     <header>
         <div class="inner">
-            <div>
-                <h1>WINTER <span>ARC</span></h1>
-                <div class="subtitle">Month 1 Training Log</div>
+            <div class="brand">
+                <img class="brand-mark" src="icon-192.png" alt="Winter Arc logo" width="44" height="44">
+                <div>
+                    <h1>WINTER <span>ARC</span></h1>
+                    <div class="subtitle">Month 1 Training Log</div>
+                </div>
             </div>
             <div class="header-right">
                 <div class="week-pill" id="weekPill">Week 1</div>
@@ -1996,7 +2040,7 @@
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-            <div class="app-version">Winter Arc v6 · offline-ready</div>
+            <div class="app-version">Winter Arc v7 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
