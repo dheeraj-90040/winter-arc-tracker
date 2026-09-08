@@ -1618,6 +1618,270 @@
             margin: 6px 0 2px;
             -webkit-text-stroke: 1px var(--frost-dim);
         }
+
+        /* ---------- Footer actions + version ---------- */
+        .footer-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-actions .export-btn {
+            flex: 1.2;
+        }
+
+        .reset-btn {
+            flex: 1;
+            background: rgba(255, 138, 92, 0.08);
+            border: 1px solid var(--ember);
+            color: var(--ember);
+            font-family: 'Oswald', sans-serif;
+            font-size: 12.5px;
+            letter-spacing: 0.4px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            min-height: 44px;
+        }
+
+        .reset-btn:active {
+            transform: scale(0.96);
+            background: rgba(255, 138, 92, 0.16);
+        }
+
+        .app-version {
+            font-size: 10.5px;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* ---------- Steps tab ---------- */
+        .goal-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .goal-num {
+            font-family: 'Oswald', sans-serif;
+            font-size: 30px;
+            color: var(--frost);
+        }
+
+        .goal-num small {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .stepper {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .step-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--frost);
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .step-btn:active {
+            transform: scale(0.9);
+            border-color: var(--frost);
+        }
+
+        .today-steps-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+            margin-top: 10px;
+        }
+
+        .today-steps-input {
+            flex: 1;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 20px;
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .today-steps-input:focus {
+            outline: none;
+            border-color: var(--frost);
+        }
+
+        .quick-add {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .qa-btn {
+            flex: 1;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--frost);
+            border-radius: 8px;
+            padding: 10px 0;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            min-height: 44px;
+            transition: transform 0.1s ease;
+        }
+
+        .qa-btn:active {
+            transform: scale(0.95);
+            border-color: var(--frost);
+        }
+
+        .steps-chart {
+            display: flex;
+            align-items: stretch;
+            gap: 4px;
+            height: 168px;
+            position: relative;
+            margin-top: 6px;
+        }
+
+        .goal-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-top: 2px dashed var(--ember);
+            pointer-events: none;
+        }
+
+        .goal-line span {
+            position: absolute;
+            right: 0;
+            top: -16px;
+            font-size: 9px;
+            color: var(--ember);
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.4px;
+        }
+
+        .step-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .step-val {
+            font-size: 8px;
+            color: var(--text-dim);
+            font-family: 'Oswald', sans-serif;
+            white-space: nowrap;
+        }
+
+        .step-col.today-col .step-val {
+            color: var(--frost);
+            font-size: 9.5px;
+        }
+
+        .step-bar {
+            width: 100%;
+            max-width: 24px;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            position: relative;
+            min-height: 5px;
+        }
+
+        .step-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 3px;
+            background: var(--frost-dim);
+            transform-origin: bottom;
+            animation: barGrowY 0.6s ease both;
+        }
+
+        @keyframes barGrowY {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
+        }
+
+        .step-col.hit .step-fill {
+            background: linear-gradient(0deg, var(--frost-dim), var(--frost));
+            box-shadow: 0 0 8px rgba(125, 216, 232, 0.35);
+        }
+
+        .step-col.today-col .step-bar {
+            border-color: var(--frost-dim);
+        }
+
+        .day-letter {
+            font-size: 9px;
+            color: var(--text-dim);
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .step-col.today-col .day-letter {
+            color: var(--frost);
+        }
+
+        .stat-chips {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .chip {
+            flex: 1;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 9px 4px;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .chip .k {
+            font-size: 9.5px;
+            color: var(--text-dim);
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.4px;
+        }
+
+        .chip .v {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            color: var(--text);
+            margin-top: 2px;
+        }
+
+        .chip .v em {
+            font-style: normal;
+            font-size: 10px;
+            color: var(--text-dim);
+            display: block;
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -1647,11 +1911,12 @@
 
     <div class="wrap">
         <footer>
-            <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
-            <div>
-                <button class="info-link" style="margin-top:12px;" onclick="askReset()">Reset all data</button>
+            <div class="footer-actions">
+                <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
+                <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;">
+            <div class="app-version">Winter Arc v4 · offline-ready</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
         </footer>
@@ -1931,6 +2196,7 @@
         if (!DATA.checkins) DATA.checkins = {};
         if (!DATA.planOverrides) DATA.planOverrides = {};
         if (!DATA.milestones) DATA.milestones = {};
+        if (!DATA.stepGoal) DATA.stepGoal = 7000;
         function todayKey(week, day) { return "w" + week + "-d" + day; }
         function todayDateStr() { return new Date().toISOString().slice(0, 10); }
         function parseNumSets(setsReps) {
@@ -1979,6 +2245,11 @@
             if (state.view === "progress") {
                 document.getElementById("dayNav").style.display = "none";
                 renderProgressView(container);
+                return;
+            }
+            if (state.view === "steps") {
+                document.getElementById("dayNav").style.display = "none";
+                renderStepsView(container);
                 return;
             }
             document.getElementById("dayNav").style.display = "";
@@ -2474,6 +2745,8 @@
             if (!v.ok) {
                 paintMissing(v);
                 shakeToggle();
+                const first = v.missing.map((m) => m.input).find((el) => el && el.scrollIntoView);
+                if (first) { try { first.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {} }
                 showToast("Not complete yet",
                     v.missing.slice(0, 3).map((m) => m.label).join(" · ") + (v.missing.length > 3 ? " · +" + (v.missing.length - 3) + " more" : ""));
                 return;
@@ -2602,7 +2875,7 @@
         function renderTabs() {
             const tabs = document.getElementById("viewTabs");
             tabs.innerHTML = "";
-            [["log", "Log"], ["summary", "Week"], ["progress", "Progress"]].forEach(([v, label]) => {
+            [["log", "Log"], ["summary", "Week"], ["progress", "Progress"], ["steps", "Steps"]].forEach(([v, label]) => {
                 const b = document.createElement("button");
                 b.className = "tab-btn" + (state.view === v ? " active" : "");
                 b.textContent = label;
@@ -2742,6 +3015,184 @@
                 Math.round(totalVol).toLocaleString() + " kg</b> · " + totalSets + " sets</span>";
             card.appendChild(total);
             container.appendChild(card);
+        }
+
+        /* ---------- Steps tracker (reads daily check-ins, goal persisted) ---------- */
+        function dsShift(base, delta) {
+            const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + delta);
+            return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+        }
+        function stepsOn(ds) {
+            const ci = DATA.checkins[ds];
+            if (!ci || ci.steps === "" || ci.steps == null) return { steps: 0, logged: false };
+            const v = parseInt(ci.steps);
+            return isNaN(v) ? { steps: 0, logged: false } : { steps: Math.max(0, v), logged: true };
+        }
+        function last14Steps() {
+            const out = [];
+            const now = new Date();
+            for (let i = 13; i >= 0; i--) {
+                const ds = dsShift(now, -i);
+                const s = stepsOn(ds);
+                out.push({ date: ds, steps: s.steps, logged: s.logged, today: i === 0 });
+            }
+            return out;
+        }
+        function stepStats() {
+            const days = last14Steps();
+            const goal = DATA.stepGoal || 7000;
+            const last7 = days.slice(-7);
+            const avg7 = Math.round(last7.reduce((a, d) => a + d.steps, 0) / 7);
+            let best = { steps: 0, date: null };
+            days.forEach((d) => { if (d.steps > best.steps) best = d; });
+            const hits = days.filter((d) => d.steps >= goal).length;
+            let streak = 0;
+            for (let i = days.length - 1; i >= 0; i--) {
+                if (i === days.length - 1 && !days[i].logged) continue;
+                if (days[i].steps >= goal) streak++;
+                else break;
+            }
+            return { days, goal, avg7, best, hits, streak };
+        }
+        function adjustStepGoal(delta) {
+            const g = Math.max(1000, Math.min(30000, (DATA.stepGoal || 7000) + delta));
+            DATA.stepGoal = Math.round(g / 500) * 500;
+            saveData(DATA);
+            render();
+        }
+        function setTodaySteps(val) {
+            const ds = todayDateStr();
+            if (!DATA.checkins[ds]) DATA.checkins[ds] = {};
+            const v = parseInt(val);
+            DATA.checkins[ds].steps = isNaN(v) ? "" : String(Math.max(0, v));
+            saveData(DATA);
+            render();
+            renderStreak();
+        }
+        function addTodaySteps(delta) {
+            const ds = todayDateStr();
+            const cur = stepsOn(ds).steps;
+            if (!DATA.checkins[ds]) DATA.checkins[ds] = {};
+            DATA.checkins[ds].steps = String(cur + delta);
+            saveData(DATA);
+            render();
+            const st = stepStats();
+            if (cur < st.goal && cur + delta >= st.goal) {
+                burstAt(window.innerWidth / 2, window.innerHeight * 0.35, false);
+                showToast("Daily goal smashed — " + st.goal.toLocaleString() + " steps", "Legs did that. Lungs thank you.");
+            }
+        }
+        function renderStepsView(container) {
+            const title = document.createElement("div");
+            title.className = "session-tag";
+            title.textContent = "Steps — every step counts";
+            container.appendChild(title);
+            const sub = document.createElement("div");
+            sub.className = "session-note";
+            sub.textContent = "Pulled straight from your daily check-ins — log steps on any training day or right here. Hit the goal line and the bars turn frost.";
+            container.appendChild(sub);
+            const st = stepStats();
+
+            const goalCard = document.createElement("div");
+            goalCard.className = "chart-card";
+            const grow = document.createElement("div");
+            grow.className = "goal-row";
+            grow.innerHTML = '<div><div class="chart-sub" style="margin:0;">DAILY GOAL</div><div class="goal-num">' + st.goal.toLocaleString() + ' <small>steps</small></div></div>';
+            const stepper = document.createElement("div");
+            stepper.className = "stepper";
+            const minus = document.createElement("button");
+            minus.className = "step-btn";
+            minus.textContent = "−";
+            minus.setAttribute("aria-label", "Lower step goal");
+            minus.onclick = () => adjustStepGoal(-500);
+            const plus = document.createElement("button");
+            plus.className = "step-btn";
+            plus.textContent = "+";
+            plus.setAttribute("aria-label", "Raise step goal");
+            plus.onclick = () => adjustStepGoal(500);
+            stepper.appendChild(minus);
+            stepper.appendChild(plus);
+            grow.appendChild(stepper);
+            goalCard.appendChild(grow);
+
+            const today = st.days[st.days.length - 1];
+            const trow = document.createElement("div");
+            trow.className = "today-steps-row";
+            const tin = document.createElement("input");
+            tin.className = "today-steps-input";
+            tin.type = "number";
+            tin.inputMode = "numeric";
+            tin.placeholder = "Today's steps";
+            tin.value = today.logged ? today.steps : "";
+            tin.setAttribute("aria-label", "Today's steps");
+            tin.onchange = () => setTodaySteps(tin.value);
+            trow.appendChild(tin);
+            goalCard.appendChild(trow);
+            const qa = document.createElement("div");
+            qa.className = "quick-add";
+            [500, 1000, 2000].forEach((d) => {
+                const b = document.createElement("button");
+                b.className = "qa-btn";
+                b.textContent = "+" + d.toLocaleString();
+                b.onclick = () => addTodaySteps(d);
+                qa.appendChild(b);
+            });
+            goalCard.appendChild(qa);
+            container.appendChild(goalCard);
+
+            const chartCard = document.createElement("div");
+            chartCard.className = "chart-card";
+            const ch = document.createElement("h3");
+            ch.textContent = "Last 14 days";
+            chartCard.appendChild(ch);
+            const maxV = Math.max.apply(null, [st.goal * 1.2].concat(st.days.map((d) => d.steps)));
+            const chart = document.createElement("div");
+            chart.className = "steps-chart";
+            const gl = document.createElement("div");
+            gl.className = "goal-line";
+            gl.style.bottom = "calc(" + Math.min(100, Math.round((st.goal / maxV) * 100)) + "% + 22px)";
+            gl.innerHTML = "<span>GOAL</span>";
+            chart.appendChild(gl);
+            const letters = ["S", "M", "T", "W", "T", "F", "S"];
+            st.days.forEach((d) => {
+                const col = document.createElement("div");
+                col.className = "step-col" + (d.steps >= st.goal && d.logged ? " hit" : "") + (d.today ? " today-col" : "");
+                const val = document.createElement("div");
+                val.className = "step-val";
+                val.textContent = d.logged ? (d.steps >= 1000 ? (Math.round(d.steps / 100) / 10) + "k" : d.steps) : "–";
+                const bar = document.createElement("div");
+                bar.className = "step-bar";
+                bar.style.height = Math.max(3, Math.round((d.steps / maxV) * 100)) + "%";
+                const fill = document.createElement("div");
+                fill.className = "step-fill";
+                fill.style.height = "100%";
+                bar.appendChild(fill);
+                const lt = document.createElement("div");
+                lt.className = "day-letter";
+                lt.textContent = letters[parseDateStr(d.date).getDay()];
+                col.appendChild(val);
+                col.appendChild(bar);
+                col.appendChild(lt);
+                chart.appendChild(col);
+            });
+            chartCard.appendChild(chart);
+            container.appendChild(chartCard);
+
+            const chips = document.createElement("div");
+            chips.className = "stat-chips";
+            const chipData = [
+                { k: "7-DAY AVG", v: st.avg7.toLocaleString(), em: "steps/day" },
+                { k: "BEST (14D)", v: st.best.steps ? st.best.steps.toLocaleString() : "–", em: st.best.date ? fmtDateShort(st.best.date) : "log steps" },
+                { k: "GOAL HITS", v: st.hits + "/14", em: Math.round((st.hits / 14) * 100) + "%" },
+                { k: "GOAL STREAK", v: String(st.streak), em: st.streak === 1 ? "day" : "days" },
+            ];
+            chipData.forEach((c) => {
+                const el = document.createElement("div");
+                el.className = "chip";
+                el.innerHTML = '<div class="k">' + c.k + '</div><div class="v">' + c.v + '<em>' + escHtml(c.em) + '</em></div>';
+                chips.appendChild(el);
+            });
+            container.appendChild(chips);
         }
 
         /* ---------- SVG LINE CHARTS (no external deps — works offline) ---------- */
