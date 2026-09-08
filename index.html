@@ -2527,7 +2527,7 @@
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-                <div class="app-version">Winter Arc v13 · offline-ready</div>
+                <div class="app-version">Winter Arc v14 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -2806,10 +2806,17 @@
         function weekLabel(week) {
             if (week === "post") {
                 const mk = mondayKey(todayDateStr());
-                return "Week · " + fmtDateShort(mk) + "–" + fmtDateShort(shiftWeek(mk, 6));
+                return "This week · " + fmtDateShort(mk) + "–" + fmtDateShort(shiftWeek(mk, 6));
             }
             const w = PROGRAM_WEEKS[week - 1];
             return w ? w.label : "Week " + week;
+        }
+        function pillOrder() {
+            // Manual toggle cycles the 4 program weeks only. The live calendar
+            // week ("post") joins the cycle automatically once the program ends.
+            const order = [1, 2, 3, 4];
+            if (programWeekForDate(todayDateStr()) === "post") order.push("post");
+            return order;
         }
         function bootToToday() {
             const t = todayDateStr();
@@ -2884,18 +2891,22 @@
             });
             try {
                 const cur = nav.querySelector(".day-btn.active");
-                if (cur && cur.scrollIntoView) cur.scrollIntoView({ inline: "center", block: "nearest" });
+                if (cur && nav.scrollTo && typeof cur.offsetLeft === "number" && typeof nav.clientWidth === "number" && nav.clientWidth > 0) {
+                    const w = typeof cur.clientWidth === "number" ? cur.clientWidth : 0;
+                    const sl = typeof nav.scrollLeft === "number" ? nav.scrollLeft : 0;
+                    if (cur.offsetLeft < sl || cur.offsetLeft + w > sl + nav.clientWidth) {
+                        nav.scrollTo({ left: cur.offsetLeft - nav.clientWidth / 2 + w / 2, behavior: "auto" });
+                    }
+                }
             } catch (e) {}
         }
         function renderWeekPill() {
             const pill = document.getElementById("weekPill");
             pill.textContent = weekLabel(state.week);
             pill.onclick = () => {
-                if (state.week === 1) state.week = 2;
-                else if (state.week === 2) state.week = 3;
-                else if (state.week === 3) state.week = 4;
-                else if (state.week === 4) state.week = "post";
-                else state.week = 1;
+                const order = pillOrder();
+                const ix = order.indexOf(state.week);
+                state.week = order[(ix + 1) % order.length];
                 state.day = activeDays(state.week)[0];
                 render();
             };
