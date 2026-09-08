@@ -1160,6 +1160,362 @@
             transform: scale(0.96);
         }
 
+        /* ---------- Steps dashboard ---------- */
+        .dash-stats {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .dash-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 15px 16px 16px;
+        }
+
+        .dash-kicker {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 1.2px;
+            color: var(--text-dim);
+        }
+
+        .big-num {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 34px;
+            line-height: 1.05;
+        }
+
+        .today-hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .goal-of {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        .arc {
+            width: 88px;
+            height: 88px;
+            flex-shrink: 0;
+        }
+
+        .arc-bg {
+            fill: none;
+            stroke: var(--panel-2);
+            stroke-width: 9;
+        }
+
+        .arc-fg {
+            fill: none;
+            stroke: #22c55e;
+            stroke-width: 9;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.8s ease;
+        }
+
+        .arc-pct {
+            fill: var(--text);
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 17px;
+            text-anchor: middle;
+        }
+
+        .derived-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .derived-row > div {
+            flex: 1;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            padding: 8px 4px;
+            text-align: center;
+        }
+
+        .derived-row b {
+            display: block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+        }
+
+        .derived-row span {
+            font-size: 9px;
+            color: var(--text-dim);
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .goal-edit {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+        }
+
+        .streak-hero {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .flame-ic {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 138, 92, 0.12);
+            border: 1px solid var(--ember);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ember);
+            flex-shrink: 0;
+        }
+
+        .flame-ic svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .week-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .wdot {
+            flex: 1;
+            text-align: center;
+        }
+
+        .wdot span {
+            font-family: 'Oswald', sans-serif;
+            font-size: 9.5px;
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .wdot i {
+            display: block;
+            height: 8px;
+            border-radius: 99px;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+        }
+
+        .wdot.hit i {
+            background: #22c55e;
+            border-color: #22c55e;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.45);
+        }
+
+        .wdot.today i {
+            border-color: var(--frost);
+        }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .badge {
+            text-align: center;
+            opacity: 0.85;
+        }
+
+        .badge-ic {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: #4d5666;
+        }
+
+        .badge-ic svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .badge.unlocked .badge-ic {
+            color: #22c55e;
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-name {
+            display: block;
+            font-size: 9px;
+            color: var(--text-dim);
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        .badge.unlocked .badge-name {
+            color: var(--text);
+        }
+
+        .dash-bottom {
+            display: grid;
+            gap: 12px;
+        }
+
+        .plot-col.week-bar .step-bar {
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .plot-col.week-bar .step-fill {
+            background: #3a4457;
+            border-radius: 99px;
+        }
+
+        .plot-col.week-bar.hit .step-fill {
+            background: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.45);
+        }
+
+        .hist-row {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hist-row:last-child {
+            border-bottom: none;
+        }
+
+        .hist-ic {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--frost);
+            flex-shrink: 0;
+        }
+
+        .hist-ic svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .hist-mid {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .hist-mid b {
+            display: block;
+            font-size: 14.5px;
+        }
+
+        .hist-mid span {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .hist-del {
+            background: none;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+
+        .hist-del svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .hist-del:active {
+            transform: scale(0.92);
+            color: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .fab {
+            position: fixed;
+            right: 18px;
+            bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+            background: #22c55e;
+            color: #06270f;
+            border: none;
+            border-radius: 99px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.4px;
+            padding: 14px 22px;
+            cursor: pointer;
+            box-shadow: 0 8px 26px rgba(34, 197, 94, 0.4);
+            z-index: 60;
+            transition: transform 0.12s ease;
+        }
+
+        .fab:active {
+            transform: scale(0.94);
+        }
+
+        .confirm-go.steps-go {
+            background: #22c55e;
+        }
+
+        #stepModal .field {
+            margin-bottom: 12px;
+        }
+
+        #stepModal .field input {
+            font-size: 16px;
+        }
+
+        @media (min-width: 620px) {
+            .dash-stats {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .dash-bottom {
+                grid-template-columns: 1.25fr 1fr;
+                align-items: start;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation: none !important;
@@ -2082,7 +2438,7 @@
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-            <div class="app-version">Winter Arc v10 · offline-ready</div>
+            <div class="app-version">Winter Arc v11 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -2355,7 +2711,7 @@
         const RIR_TEXT = { 1: "3-4 RIR — leave 3-4 good reps in the tank", 2: "3-4 RIR — leave 3-4 good reps in the tank", "34": "2-3 RIR — a bit closer to your limit, still never to failure" };
         const STEPS_TEXT = { 1: "6,000-7,000 steps/day", 2: "~7,000 steps/day", "34": "7,000-8,000+ steps/day" };
         /* ---------- STATE ---------- */
-        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false, selectedStepDate: null };
+        let state = { week: 1, day: 1, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false };
         const STORAGE_KEY = "winterArcData_v2";
         function loadData() {
             try {
@@ -3277,25 +3633,115 @@
             saveData(DATA);
             render();
         }
-        function setTodaySteps(val) {
-            const ds = todayDateStr();
+        const STEP_ICONS = {
+            flame: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.4 0 7.5-3 7.5-7.2 0-3.1-1.9-5.4-3.4-7C14.6 6.2 13.5 4.5 13.5 2c-3 2-4.5 4.2-5.2 6.6-.4-1-.6-2-.6-3C5.7 7 4.5 9.6 4.5 12.4 4.5 18 7.6 22 12 22z"/></svg>',
+            foot: '<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="9" cy="7.5" rx="3" ry="4.5"/><ellipse cx="15.5" cy="15.5" rx="3" ry="4.5"/></svg>',
+            target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>',
+            bolt: '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 4 14 11 14 10 22 20 9 13 9 13 2"/></svg>',
+            trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4a1 1 0 0 0-1 1c0 2.5 2 4.5 4.6 4.9M17 6h3a1 1 0 0 1 1 1c0 2.5-2 4.5-4.6 4.9"/></svg>',
+            medal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="5"/><path d="M8.5 9.5 6 3h4l2 4 2-4h4l-2.5 6.5"/></svg>',
+            cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+            trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg>'
+        };
+        function stepDerived(steps) {
+            return {
+                km: (Math.round(steps * 0.000762 * 100) / 100).toFixed(2),
+                kcal: Math.round(steps * 0.04),
+                mins: Math.round(steps / 100)
+            };
+        }
+        function currentWeekDays() {
+            const mk = mondayKey(todayDateStr());
+            const out = [];
+            for (let i = 0; i < 7; i++) {
+                const ds = shiftWeek(mk, i);
+                const s = stepsOn(ds);
+                out.push({ date: ds, steps: s.steps, logged: s.logged, today: ds === todayDateStr() });
+            }
+            return out;
+        }
+        function relDay(ds) {
+            const t = todayDateStr();
+            if (ds === t) return "Today";
+            if (ds === dsShift(new Date(), -1)) return "Yesterday";
+            const diff = Math.round((parseDateStr(t) - parseDateStr(ds)) / 86400000);
+            if (diff > 0 && diff < 7) return diff + " days ago";
+            return fmtDateShort(ds);
+        }
+        function stepBadges() {
+            const goal = DATA.stepGoal || 7000;
+            let logged = 0, hits = 0, best = 0, total = 0;
+            Object.keys(DATA.checkins).forEach((k) => {
+                const v = parseInt((DATA.checkins[k] || {}).steps);
+                if (isNaN(v)) return;
+                logged++;
+                total += Math.max(0, v);
+                if (v >= goal) hits++;
+                if (v > best) best = v;
+            });
+            const streak = stepStats().streak;
+            return [
+                { id: "first", name: "First Stride", icon: "foot", unlocked: logged >= 1 },
+                { id: "getter", name: "Goal Getter", icon: "target", unlocked: hits >= 1 },
+                { id: "streak3", name: "Hot Streak", icon: "flame", unlocked: streak >= 3 },
+                { id: "streak7", name: "Unstoppable", icon: "bolt", unlocked: streak >= 7 },
+                { id: "marathon", name: "Marathon Day", icon: "trophy", unlocked: best >= 15000 },
+                { id: "century", name: "Century Club", icon: "medal", unlocked: total >= 100000 }
+            ];
+        }
+        function openStepsModal(ds) {
+            const date = ds || todayDateStr();
+            const ci = DATA.checkins[date] || {};
+            const ov = document.getElementById("stepModal");
+            if (!ov) return;
+            const sEl = document.getElementById("stepModalSteps");
+            const dEl = document.getElementById("stepModalDate");
+            const wEl = document.getElementById("stepModalWeight");
+            if (sEl) sEl.value = ci.steps || "";
+            if (dEl) { dEl.value = date; try { dEl.max = todayDateStr(); } catch (e) {} }
+            if (wEl) wEl.value = ci.weight || "";
+            ov.classList.add("open");
+        }
+        function closeStepsModal() {
+            const ov = document.getElementById("stepModal");
+            if (ov) ov.classList.remove("open");
+        }
+        function saveStepsModal() {
+            const sEl = document.getElementById("stepModalSteps");
+            const dEl = document.getElementById("stepModalDate");
+            const wEl = document.getElementById("stepModalWeight");
+            const ds = (dEl && dEl.value) ? dEl.value : todayDateStr();
+            if (ds > todayDateStr()) { showToast("Future dates can't be logged", "Pick today or an earlier day."); return; }
+            const sV = sEl ? parseInt(sEl.value) : NaN;
+            if (isNaN(sV) || sV < 1) { showToast("Enter your steps", "Steps must be at least 1 to save an entry."); return; }
             const prev = stepsOn(ds).steps;
             if (!DATA.checkins[ds]) DATA.checkins[ds] = {};
-            const v = parseInt(val);
-            DATA.checkins[ds].steps = isNaN(v) ? "" : String(Math.max(0, v));
+            DATA.checkins[ds].steps = String(sV);
+            if (wEl && String(wEl.value).trim() !== "") {
+                const wV = parseFloat(wEl.value);
+                if (!isNaN(wV)) DATA.checkins[ds].weight = String(wV);
+            }
             saveData(DATA);
+            closeStepsModal();
             render();
-            renderStreak();
-            rewardGoal(prev, stepsOn(ds).steps, DATA.stepGoal || 7000);
+            if (ds === todayDateStr()) rewardGoal(prev, sV, DATA.stepGoal || 7000);
+            else showToast("Saved " + relDay(ds), fmtDateShort(ds) + " updated.");
         }
-        function addTodaySteps(delta) {
-            const ds = todayDateStr();
-            const cur = stepsOn(ds).steps;
-            if (!DATA.checkins[ds]) DATA.checkins[ds] = {};
-            DATA.checkins[ds].steps = String(cur + delta);
-            saveData(DATA);
-            render();
-            rewardGoal(cur, cur + delta, stepStats().goal);
+        function deleteStepEntry(ds) {
+            const s = stepsOn(ds);
+            showConfirm({
+                title: "Delete entry?",
+                body: "Removes " + s.steps.toLocaleString() + " steps for " + fmtDateShort(ds) + ". Any logged weight stays.",
+                go: "Delete",
+                onGo: () => {
+                    const ci = DATA.checkins[ds] || {};
+                    if (ci.weight !== "" && ci.weight != null) ci.steps = "";
+                    else delete DATA.checkins[ds];
+                    saveData(DATA);
+                    render();
+                    showToast("Entry deleted", fmtDateShort(ds) + " cleared.");
+                }
+            });
         }
         function rewardGoal(prev, next, goal) {
             if (!(prev < goal && next >= goal)) return;
@@ -3304,25 +3750,6 @@
                 return;
             }
             setTimeout(() => celebrateOverlay("goal", next.toLocaleString() + " steps", "Daily goal of " + goal.toLocaleString() + " crushed. Legs did that, lungs thank you."), 300);
-        }
-        function saveStepDate() {
-            const ds = state.selectedStepDate;
-            if (!ds) return;
-            const sEl = document.getElementById("stepEditSteps");
-            const wEl = document.getElementById("stepEditWeight");
-            const sRaw = sEl ? String(sEl.value).trim() : "";
-            const wRaw = wEl ? String(wEl.value).trim() : "";
-            const sV = parseInt(sRaw), wV = parseFloat(wRaw);
-            if ((sRaw === "" || isNaN(sV)) && (wRaw === "" || isNaN(wV))) {
-                delete DATA.checkins[ds];
-            } else {
-                if (!DATA.checkins[ds]) DATA.checkins[ds] = {};
-                if (sRaw !== "" && !isNaN(sV)) DATA.checkins[ds].steps = String(Math.max(0, sV));
-                if (wRaw !== "" && !isNaN(wV)) DATA.checkins[ds].weight = String(wV);
-            }
-            saveData(DATA);
-            render();
-            showToast("Saved " + fmtDateShort(ds), "That day's log is updated.");
         }
         function renderStepsView(container) {
             const title = document.createElement("div");
@@ -3334,71 +3761,82 @@
             sub.textContent = "Pulled straight from your daily check-ins — log steps on any training day or right here. Hit the goal line and the bars turn frost.";
             container.appendChild(sub);
             const st = stepStats();
+            const week = currentWeekDays();
+            const t = stepsOn(todayDateStr());
+            const goal = st.goal;
+            const pct = goal > 0 ? Math.min(100, Math.round((t.steps / goal) * 100)) : 0;
+            const CIRC = (2 * Math.PI * 34).toFixed(1);
+            const dev = stepDerived(t.steps);
 
-            const goalCard = document.createElement("div");
-            goalCard.className = "chart-card";
-            const grow = document.createElement("div");
-            grow.className = "goal-row";
-            grow.innerHTML = '<div><div class="chart-sub" style="margin:0;">DAILY GOAL</div><div class="goal-num">' + st.goal.toLocaleString() + ' <small>steps</small></div></div>';
-            const stepper = document.createElement("div");
-            stepper.className = "stepper";
-            const minus = document.createElement("button");
-            minus.className = "step-btn";
-            minus.textContent = "−";
-            minus.setAttribute("aria-label", "Lower step goal");
-            minus.onclick = () => adjustStepGoal(-500);
-            const plus = document.createElement("button");
-            plus.className = "step-btn";
-            plus.textContent = "+";
-            plus.setAttribute("aria-label", "Raise step goal");
-            plus.onclick = () => adjustStepGoal(500);
-            stepper.appendChild(minus);
-            stepper.appendChild(plus);
-            grow.appendChild(stepper);
-            goalCard.appendChild(grow);
-            const todayLine = document.createElement("div");
-            todayLine.className = "today-line";
-            todayLine.textContent = "Today · " + fmtDateShort(todayDateStr()) + " — log below or quick-add";
-            goalCard.appendChild(todayLine);
-
-            const today = st.days[st.days.length - 1];
-            const trow = document.createElement("div");
-            trow.className = "today-steps-row";
-            const tin = document.createElement("input");
-            tin.className = "today-steps-input";
-            tin.type = "number";
-            tin.inputMode = "numeric";
-            tin.placeholder = "Today's steps";
-            tin.value = today.logged ? today.steps : "";
-            tin.setAttribute("aria-label", "Today's steps");
-            tin.onchange = () => setTodaySteps(tin.value);
-            trow.appendChild(tin);
-            goalCard.appendChild(trow);
-            const qa = document.createElement("div");
-            qa.className = "quick-add";
-            [500, 1000, 2000].forEach((d) => {
-                const b = document.createElement("button");
-                b.className = "qa-btn";
-                b.textContent = "+" + d.toLocaleString();
-                b.onclick = () => addTodaySteps(d);
-                qa.appendChild(b);
+            const stats = document.createElement("div");
+            stats.className = "dash-stats";
+            const c1 = document.createElement("div");
+            c1.className = "dash-card";
+            c1.innerHTML =
+                '<div class="dash-kicker">TODAY\'S STEPS</div>' +
+                '<div class="today-line">Today · ' + fmtDateShort(todayDateStr()) + '</div>' +
+                '<div class="today-hero"><div><div class="big-num">' + (t.logged ? t.steps.toLocaleString() : "–") + '</div>' +
+                '<div class="goal-of">of ' + goal.toLocaleString() + ' goal</div></div>' +
+                '<svg class="arc" viewBox="0 0 84 84"><circle class="arc-bg" cx="42" cy="42" r="34"/>' +
+                '<circle class="arc-fg" cx="42" cy="42" r="34" stroke-dasharray="' + CIRC + '" stroke-dashoffset="' + (CIRC * (1 - pct / 100)).toFixed(1) + '" transform="rotate(-90 42 42)"/>' +
+                '<text class="arc-pct" x="42" y="49">' + pct + '%</text></svg></div>' +
+                '<div class="derived-row">' +
+                '<div><b>' + dev.km + '</b><span>DIST KM</span></div>' +
+                '<div><b>' + dev.kcal + '</b><span>KCAL</span></div>' +
+                '<div><b>' + dev.mins + '</b><span>ACTIVE MIN</span></div></div>' +
+                '<div class="goal-edit"><span>DAILY GOAL · ' + goal.toLocaleString() + '</span><span class="stepper"></span></div>';
+            const gs = c1.querySelector(".stepper");
+            ["−", "+"].forEach((sym) => {
+                const gb = document.createElement("button");
+                gb.className = "step-btn";
+                gb.textContent = sym;
+                gb.setAttribute("aria-label", sym === "+" ? "Raise step goal" : "Lower step goal");
+                gb.onclick = () => adjustStepGoal(sym === "+" ? 500 : -500);
+                gs.appendChild(gb);
             });
-            goalCard.appendChild(qa);
-            container.appendChild(goalCard);
+            stats.appendChild(c1);
 
+            const c2 = document.createElement("div");
+            c2.className = "dash-card";
+            const letters = ["M", "T", "W", "T", "F", "S", "S"];
+            let dots = "";
+            week.forEach((d) => {
+                const wd = (parseDateStr(d.date).getDay() + 6) % 7;
+                dots += '<div class="wdot' + (d.steps >= goal && d.logged ? " hit" : "") + (d.today ? " today" : "") + '"><span>' + letters[wd] + '</span><i></i></div>';
+            });
+            c2.innerHTML =
+                '<div class="dash-kicker">CURRENT STREAK</div>' +
+                '<div class="streak-hero"><span class="flame-ic">' + STEP_ICONS.flame + '</span><span class="big-num">' + st.streak + '</span></div>' +
+                '<div class="chart-sub" style="margin:0 0 8px;">' + (st.streak === 1 ? "1 day" : st.streak + " days") + ' · ' + goal.toLocaleString() + ' a day</div>' +
+                '<div class="week-dots">' + dots + '</div>';
+            stats.appendChild(c2);
+
+            const badges = stepBadges();
+            const c3 = document.createElement("div");
+            c3.className = "dash-card";
+            let grid = "";
+            badges.forEach((b) => {
+                grid += '<div class="badge' + (b.unlocked ? " unlocked" : "") + '"><span class="badge-ic">' + STEP_ICONS[b.icon] + '</span><span class="badge-name">' + b.name + '</span></div>';
+            });
+            c3.innerHTML = '<div class="dash-kicker">ACHIEVEMENTS</div><div class="badge-grid">' + grid + '</div>';
+            stats.appendChild(c3);
+            container.appendChild(stats);
+
+            const bottom = document.createElement("div");
+            bottom.className = "dash-bottom";
             const chartCard = document.createElement("div");
             chartCard.className = "chart-card";
             const ch = document.createElement("h3");
-            ch.textContent = "Last 14 days";
+            ch.textContent = "This week";
             chartCard.appendChild(ch);
             const range = document.createElement("div");
             range.className = "chart-sub";
-            range.textContent = fmtDateShort(st.days[0].date) + " – " + fmtDateShort(st.days[st.days.length - 1].date);
+            range.textContent = fmtDateShort(week[0].date) + " – " + fmtDateShort(week[week.length - 1].date);
             chartCard.appendChild(range);
-            const maxV = Math.max.apply(null, [st.goal * 1.05].concat(st.days.map((d) => d.steps)));
+            const maxV = Math.max.apply(null, [goal * 1.05].concat(week.map((d) => d.steps)));
             const PLOT_H = 150;
             const px = (v) => (v > 0 ? Math.max(4, Math.round((v / maxV) * PLOT_H)) : 0);
-            const letters = ["S", "M", "T", "W", "T", "F", "S"];
+            const wletters = ["S", "M", "T", "W", "T", "F", "S"];
             const fmtSteps = (d) => (d.logged ? (d.steps >= 1000 ? (Math.round(d.steps / 100) / 10) + "k" : String(d.steps)) : "–");
             const valsRow = document.createElement("div");
             valsRow.className = "steps-vals";
@@ -3406,23 +3844,18 @@
             plot.className = "steps-plot";
             const gl = document.createElement("div");
             gl.className = "goal-line";
-            gl.style.bottom = Math.min(PLOT_H - 2, Math.round((st.goal / maxV) * PLOT_H)) + "px";
+            gl.style.bottom = Math.min(PLOT_H - 2, Math.round((goal / maxV) * PLOT_H)) + "px";
             gl.innerHTML = "<span>GOAL</span>";
             plot.appendChild(gl);
             const daysRow = document.createElement("div");
             daysRow.className = "steps-days";
-            st.days.forEach((d) => {
-                const pick = () => { state.selectedStepDate = d.date; render(); };
+            week.forEach((d) => {
                 const vv = document.createElement("div");
-                vv.className = "step-val" + (d.today ? " today" : "") + (d.date === state.selectedStepDate ? " sel" : "");
+                vv.className = "step-val" + (d.today ? " today" : "");
                 vv.textContent = fmtSteps(d);
-                vv.style.cursor = "pointer";
-                vv.onclick = pick;
                 valsRow.appendChild(vv);
                 const col = document.createElement("div");
-                col.className = "plot-col" + (d.steps >= st.goal && d.logged ? " hit" : "") + (d.today ? " today-col" : "") + (d.date === state.selectedStepDate ? " sel" : "");
-                col.style.cursor = "pointer";
-                col.onclick = pick;
+                col.className = "plot-col week-bar" + (d.steps >= goal && d.logged ? " hit" : "") + (d.today ? " today-col" : "");
                 const bar = document.createElement("div");
                 bar.className = "step-bar";
                 bar.style.height = px(d.steps) + "px";
@@ -3433,79 +3866,74 @@
                 col.appendChild(bar);
                 plot.appendChild(col);
                 const lt = document.createElement("div");
-                lt.className = "day-cell" + (d.today ? " today" : "") + (d.date === state.selectedStepDate ? " sel" : "");
-                lt.innerHTML = '<div class="day-num">' + parseDateStr(d.date).getDate() + '</div><div class="day-letter">' + letters[parseDateStr(d.date).getDay()] + '</div>';
-                lt.style.cursor = "pointer";
-                lt.onclick = pick;
+                lt.className = "day-cell" + (d.today ? " today" : "");
+                lt.innerHTML = '<div class="day-num">' + parseDateStr(d.date).getDate() + '</div><div class="day-letter">' + wletters[parseDateStr(d.date).getDay()] + '</div>';
                 daysRow.appendChild(lt);
             });
             chartCard.appendChild(valsRow);
             chartCard.appendChild(plot);
             chartCard.appendChild(daysRow);
-            container.appendChild(chartCard);
+            const avgLine = document.createElement("div");
+            avgLine.className = "chart-sub";
+            avgLine.style.marginTop = "10px";
+            avgLine.style.marginBottom = "0";
+            avgLine.textContent = "7-day avg " + st.avg7.toLocaleString() + " · best " + (st.best.steps ? st.best.steps.toLocaleString() + " (" + fmtDateShort(st.best.date) + ")" : "–");
+            chartCard.appendChild(avgLine);
+            bottom.appendChild(chartCard);
 
-            if (state.selectedStepDate) {
-                const eds = state.selectedStepDate;
-                const eci = DATA.checkins[eds] || {};
-                const ed = document.createElement("div");
-                ed.className = "chart-card";
-                const eh = document.createElement("h3");
-                eh.textContent = "Edit day · " + fmtDateShort(eds) + (eds === todayDateStr() ? " (today)" : "");
-                ed.appendChild(eh);
-                const erow = document.createElement("div");
-                erow.className = "today-steps-row";
-                const es = document.createElement("input");
-                es.className = "today-steps-input";
-                es.type = "number";
-                es.inputMode = "numeric";
-                es.id = "stepEditSteps";
-                es.placeholder = "Steps";
-                es.value = eci.steps || "";
-                es.setAttribute("aria-label", "Steps for " + eds);
-                const ew = document.createElement("input");
-                ew.className = "today-steps-input";
-                ew.type = "number";
-                ew.step = "0.1";
-                ew.inputMode = "decimal";
-                ew.id = "stepEditWeight";
-                ew.placeholder = "Weight (kg)";
-                ew.value = eci.weight || "";
-                ew.setAttribute("aria-label", "Weight for " + eds);
-                erow.appendChild(es);
-                erow.appendChild(ew);
-                ed.appendChild(erow);
-                const esave = document.createElement("button");
-                esave.className = "save-btn";
-                esave.style.width = "100%";
-                esave.style.marginTop = "10px";
-                esave.textContent = "Save " + fmtDateShort(eds);
-                esave.onclick = saveStepDate;
-                ed.appendChild(esave);
-                const eclose = document.createElement("button");
-                eclose.className = "edit-toggle";
-                eclose.style.fontSize = "11px";
-                eclose.style.marginTop = "8px";
-                eclose.textContent = "close";
-                eclose.onclick = () => { state.selectedStepDate = null; render(); };
-                ed.appendChild(eclose);
-                container.appendChild(ed);
+            const histCard = document.createElement("div");
+            histCard.className = "chart-card";
+            const hh = document.createElement("h3");
+            hh.textContent = "Recent";
+            histCard.appendChild(hh);
+            const entries = Object.keys(DATA.checkins)
+                .map((k) => ({ date: k, steps: parseInt((DATA.checkins[k] || {}).steps) }))
+                .filter((e) => !isNaN(e.steps))
+                .sort((a, b) => (a.date < b.date ? 1 : -1))
+                .slice(0, 7);
+            if (!entries.length) {
+                const p = document.createElement("p");
+                p.className = "chart-sub";
+                p.textContent = "No entries yet — tap + Log Steps to start the list.";
+                histCard.appendChild(p);
+            } else {
+                entries.forEach((e) => {
+                    const row = document.createElement("div");
+                    row.className = "hist-row";
+                    row.innerHTML =
+                        '<span class="hist-ic">' + STEP_ICONS.cal + '</span>' +
+                        '<span class="hist-mid"><b>' + e.steps.toLocaleString() + '</b><span>' + relDay(e.date) + ' · ' + fmtDateShort(e.date) + '</span></span>';
+                    const del = document.createElement("button");
+                    del.className = "hist-del";
+                    del.innerHTML = STEP_ICONS.trash;
+                    del.setAttribute("aria-label", "Delete entry for " + e.date);
+                    del.onclick = ((ds) => () => deleteStepEntry(ds))(e.date);
+                    row.appendChild(del);
+                    histCard.appendChild(row);
+                });
             }
+            bottom.appendChild(histCard);
+            container.appendChild(bottom);
 
-            const chips = document.createElement("div");
-            chips.className = "stat-chips";
-            const chipData = [
-                { k: "7-DAY AVG", v: st.avg7.toLocaleString(), em: "steps/day" },
-                { k: "BEST (14D)", v: st.best.steps ? st.best.steps.toLocaleString() : "–", em: st.best.date ? fmtDateShort(st.best.date) : "log steps" },
-                { k: "GOAL HITS", v: st.hits + "/14", em: Math.round((st.hits / 14) * 100) + "%" },
-                { k: "GOAL STREAK", v: String(st.streak), em: st.streak === 1 ? "day" : "days" },
-            ];
-            chipData.forEach((c) => {
-                const el = document.createElement("div");
-                el.className = "chip";
-                el.innerHTML = '<div class="k">' + c.k + '</div><div class="v">' + c.v + '<em>' + escHtml(c.em) + '</em></div>';
-                chips.appendChild(el);
-            });
-            container.appendChild(chips);
+            const fab = document.createElement("button");
+            fab.className = "fab";
+            fab.textContent = "+ Log Steps";
+            fab.onclick = () => openStepsModal();
+            container.appendChild(fab);
+            const mov = document.createElement("div");
+            mov.className = "modal-overlay";
+            mov.id = "stepModal";
+            mov.innerHTML =
+                '<div class="modal"><h2>Log steps</h2>' +
+                '<div class="field"><label>Steps</label><input type="number" inputmode="numeric" id="stepModalSteps" placeholder="e.g. 7500"></div>' +
+                '<div class="field"><label>Date</label><input type="date" id="stepModalDate"></div>' +
+                '<div class="field"><label>Weight, kg (optional)</label><input type="number" step="0.1" inputmode="decimal" id="stepModalWeight" placeholder="e.g. 118.5"></div>' +
+                '<div class="confirm-actions"><button class="confirm-back" id="stepModalBack">Cancel</button>' +
+                '<button class="confirm-go steps-go" id="stepModalSave">Save Entry</button></div></div>';
+            container.appendChild(mov);
+            mov.onclick = (e) => { if (e.target === mov) closeStepsModal(); };
+            document.getElementById("stepModalBack").onclick = closeStepsModal;
+            document.getElementById("stepModalSave").onclick = saveStepsModal;
         }
 
         /* ---------- SVG LINE CHARTS (no external deps — works offline) ---------- */
