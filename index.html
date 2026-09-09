@@ -2587,7 +2587,7 @@
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
             <input type="file" id="importFile" accept=".json,application/json" style="display:none;" onchange="importBackupFile(this)">
-                <div class="app-version">Winter Arc v18 · offline-ready</div>
+                <div class="app-version">Winter Arc v19 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Everything you type saves automatically as a draft — even before you mark the day complete.
             </div>
@@ -2902,6 +2902,7 @@
             saveData(DATA);
         }
         /* ---------- STATE ---------- */
+        const APP_VERSION = 19;
         let state = { week: 1, day: 3, view: "log", selectedEx: null, reminderDismissed: false, stepsNudgeDismissed: false };
         const STORAGE_KEY = "winterArcData_v2";
         function loadData() {
@@ -3618,7 +3619,7 @@
             ov.className = "celebrate-overlay";
             const card = document.createElement("div");
             card.className = "celebrate-card" + (kind === "streak" ? " streak-tier" : kind === "goal" ? " goal-tier" : "");
-            const kicker = kind === "pr" ? "PERSONAL RECORD" : kind === "streak" ? "STREAK MILESTONE" : kind === "goal" ? "DAILY GOAL SMASHED" : "SESSION LOGGED";
+            const kicker = kind === "pr" ? "PERSONAL RECORD" : kind === "streak" ? "STREAK MILESTONE" : kind === "goal" ? "DAILY GOAL SMASHED" : kind === "update" ? "WHAT'S NEW" : "SESSION LOGGED";
             card.innerHTML =
                 '<div class="celebrate-kicker">' + kicker + '</div>' +
                 '<div class="celebrate-title">' + escHtml(title) + '</div>' +
@@ -4871,9 +4872,22 @@
             closeConfirm();
             if (confirmGoFn) { const fn = confirmGoFn; confirmGoFn = null; fn(); }
         };
+        function maybeShowUpdate() {
+            const av = document.querySelector(".app-version");
+            if (av) av.textContent = "Winter Arc v" + APP_VERSION + " · offline-ready";
+            if (DATA.seenVersion === APP_VERSION) return;
+            DATA.seenVersion = APP_VERSION;
+            saveData(DATA);
+            if (reducedMotion()) {
+                showToast("Updated to v" + APP_VERSION, "Thu is Upper A now — the week follows your plan.");
+                return;
+            }
+            setTimeout(() => celebrateOverlay("update", "v" + APP_VERSION + " • schedule fixed", "Thu is Upper A now, and everything you type auto-saves as a draft."), 800);
+        }
         refreshInstallBtn();
         bootToToday();
         render();
+        maybeShowUpdate();
 
         /* ---------- Native bridge (Capacitor — safe no-op on web) ---------- */
         function capPlugins() {
