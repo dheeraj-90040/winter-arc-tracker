@@ -2587,7 +2587,7 @@
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
             <input type="file" id="importFile" accept=".json,application/json" style="display:none;" onchange="importBackupFile(this)">
-                <div class="app-version">Winter Arc v17 · offline-ready</div>
+                <div class="app-version">Winter Arc v18 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Everything you type saves automatically as a draft — even before you mark the day complete.
             </div>
@@ -2816,25 +2816,23 @@
         const STANDARD_TAG = "3 × 12 · rest 60–90s";
         function buildWeek(mins) {
             return {
-                1: lowerA(),
-                2: cardioDay("Cardio", mins + " min — treadmill walking or cross-trainer / elliptical. Conversational pace: breathing harder but still able to speak in sentences. Focus: cardiovascular fitness + calorie expenditure. Optional light mobility after.", mins),
-                3: upperA(),
-                4: lowerB(),
-                5: upperB(),
+                1: upperB(),
+                2: lowerB(),
+                3: cardioCoreDay(mins),
+                4: upperA(),
+                5: lowerA(),
                 6: cardioCoreDay(mins),
                 7: restDay(),
             };
         }
         function buildWeek1() {
             // Startup week: program begins Wed Sep 9. Mon/Tue are not missed sessions.
-            const liteCore = cardioCoreDay("30");
-            liteCore.title = "Recovery / Cardio + Core";
-            liteCore.note = "30 min easy cardio — treadmill or cross-trainer, whichever feels best. Then a short core circuit. Recovery is part of the program, not a day off from effort.";
+            // Wed = Cardio / Re-entry, Thu = Upper A, Fri = Cardio, Sat = Lower A, Sun = Rest.
             return {
-                3: upperA(),
-                4: cardioDay("Cardio", "30 min — treadmill walking or cross-trainer / elliptical. Conversational pace: breathing harder but still able to speak in sentences. Focus: cardiovascular fitness + calorie expenditure. Optional light mobility after.", "30"),
-                5: lowerA(),
-                6: liteCore,
+                3: cardioDay("Cardio / Re-entry", "30 min easy — treadmill walking or cross-trainer. Conversational pace: breathing harder but still able to speak in sentences. Today is about re-entry, not intensity: move, breathe, leave with energy. Focus: cardiovascular fitness + habit. Optional light mobility after.", "30"),
+                4: upperA(),
+                5: cardioDay("Cardio", "30 min — treadmill walking or cross-trainer / elliptical. Conversational pace: breathing harder but still able to speak in sentences. Focus: cardiovascular fitness + calorie expenditure. Optional light mobility after.", "30"),
+                6: lowerA(),
                 7: restDay(),
             };
         }
