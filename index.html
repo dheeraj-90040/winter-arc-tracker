@@ -2587,9 +2587,9 @@
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
             <input type="file" id="importFile" accept=".json,application/json" style="display:none;" onchange="importBackupFile(this)">
-                <div class="app-version">Winter Arc v16 · offline-ready</div>
+                <div class="app-version">Winter Arc v17 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
-                Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
+                Everything you type saves automatically as a draft — even before you mark the day complete.
             </div>
         </footer>
     </div>
@@ -4836,9 +4836,37 @@
             container.appendChild(bwCard);
         }
 
+        let draftTimer = null;
+        function persistDraft() {
+            if (state.view !== "log" || !activeKey || !activeSession) return;
+            const key = activeKey;
+            if (!DATA.logs[key]) DATA.logs[key] = {};
+            document.querySelectorAll('input[data-ex]').forEach(input => {
+                const exName = input.dataset.ex;
+                const setIdx = parseInt(input.dataset.set);
+                const field = input.dataset.field;
+                if (!DATA.logs[key][exName]) DATA.logs[key][exName] = [];
+                if (!DATA.logs[key][exName][setIdx]) DATA.logs[key][exName][setIdx] = {};
+                DATA.logs[key][exName][setIdx][field] = input.value;
+            });
+            const cm = document.getElementById("cardioMins");
+            const cr = document.getElementById("cardioRpe");
+            if (cm || cr) DATA.logs[key]["cardio"] = { mins: cm ? cm.value : "", rpe: cr ? cr.value : "" };
+            const cw = document.getElementById("checkinWeight");
+            if (cw && String(cw.value).trim() !== "") {
+                const ds = todayDateStr();
+                if (!DATA.checkins[ds]) DATA.checkins[ds] = {};
+                DATA.checkins[ds].weight = cw.value;
+            }
+            const sn = document.getElementById("sessionNotes");
+            if (sn) DATA.logs[key]["_notes"] = sn.value;
+            saveData(DATA);
+        }
         document.getElementById("sessionContent").addEventListener("input", (e) => {
             if (e.target && e.target.classList && e.target.classList.contains("missing")) e.target.classList.remove("missing");
             refreshCompleteness();
+            try { clearTimeout(draftTimer); } catch (err) {}
+            draftTimer = setTimeout(persistDraft, 600);
         });
         document.getElementById("confirmBack").onclick = closeConfirm;
         document.getElementById("confirmGo").onclick = () => {
