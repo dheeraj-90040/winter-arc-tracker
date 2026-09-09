@@ -1,4 +1,4 @@
-const CACHE_NAME = 'winter-arc-cache-v15';
+const CACHE_NAME = 'winter-arc-cache-v16';
 const ASSETS = ['index.html', 'manifest.json', 'icon-192.png', 'icon-512.png'];
 
 // Install: pre-cache app shell

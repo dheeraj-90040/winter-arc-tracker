@@ -2583,9 +2583,11 @@
             <div class="footer-actions">
                 <button class="install-btn" id="installBtn" style="display:none;" onclick="onInstallClick()">Install app</button>
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
+                <button class="export-btn" onclick="document.getElementById('importFile').click()">Import backup</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-                <div class="app-version">Winter Arc v15 · offline-ready</div>
+            <input type="file" id="importFile" accept=".json,application/json" style="display:none;" onchange="importBackupFile(this)">
+                <div class="app-version">Winter Arc v16 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -3884,6 +3886,39 @@
             a.download = "winter-arc-backup-" + todayDateStr() + ".json";
             a.click();
             URL.revokeObjectURL(url);
+        }
+        function validateBackup(obj) {
+            if (!obj || typeof obj !== "object" || Array.isArray(obj)) return "Not a Winter Arc backup file.";
+            if (!obj.logs || typeof obj.logs !== "object" || Array.isArray(obj.logs)) return "Backup has no training logs.";
+            if (!obj.checkins || typeof obj.checkins !== "object" || Array.isArray(obj.checkins)) return "Backup has no check-ins.";
+            return null;
+        }
+        function importBackupFile(input) {
+            const f = input && input.files && input.files[0];
+            if (input) input.value = "";
+            if (!f) return;
+            if (typeof FileReader === "undefined") { showToast("Import failed", "File reading isn't supported here."); return; }
+            const rd = new FileReader();
+            rd.onload = () => {
+                let obj = null;
+                try { obj = JSON.parse(rd.result); } catch (e) { obj = null; }
+                const err = validateBackup(obj);
+                if (err) { showToast("Import failed", err); return; }
+                const nLogs = Object.keys(obj.logs).length;
+                const nCi = Object.keys(obj.checkins).length;
+                showConfirm({
+                    title: "Import backup?",
+                    body: "This replaces everything on this device with the backup (" + nLogs + " sessions, " + nCi + " check-ins). This can't be undone.",
+                    go: "Import",
+                    onGo: () => {
+                        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); }
+                        catch (e) { showToast("Import failed", "Storage is unavailable."); return; }
+                        location.reload();
+                    }
+                });
+            };
+            rd.onerror = () => showToast("Import failed", "Couldn't read that file.");
+            rd.readAsText(f);
         }
         function openInfo() { document.getElementById("infoModal").classList.add("open"); }
         function closeInfo() { document.getElementById("infoModal").classList.remove("open"); }
