@@ -1801,7 +1801,65 @@
 
         .ex-last.first {
             color: var(--text-dim);
-            border-left-color: var(--line);
+            font-style: italic;
+        }
+
+        /* ---------- Exercise guidance + edit modal ---------- */
+        #confirmModal {
+            z-index: 120;
+        }
+
+        .ex-guide {
+            color: var(--text-dim);
+            font-size: 12px;
+            margin: -2px 0 10px;
+            line-height: 1.55;
+        }
+
+        .ex-guide b {
+            color: var(--frost);
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+            font-size: 11.5px;
+            letter-spacing: 0.3px;
+        }
+
+        .exm-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .exm-row .field {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .modal .field {
+            margin-bottom: 10px;
+        }
+
+        .modal textarea {
+            width: 100%;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .modal textarea:focus {
+            outline: none;
+            border-color: var(--frost);
+        }
+
+        .exm-sub {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
         }
 
         .week-strip {
@@ -2527,7 +2585,7 @@
                 <button class="export-btn" onclick="exportData()">Export backup (.json)</button>
                 <button class="reset-btn" onclick="askReset()">Reset all data</button>
             </div>
-                <div class="app-version">Winter Arc v14 · offline-ready</div>
+                <div class="app-version">Winter Arc v15 · offline-ready</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">
                 Saved automatically in this browser. Keep opening this same file — a fresh download starts empty.
             </div>
@@ -2629,6 +2687,13 @@
                 <button class="confirm-back" id="confirmBack">Cancel</button>
                 <button class="confirm-go" id="confirmGo">Confirm</button>
             </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="exerciseModal">
+        <div class="modal">
+            <h2 id="exModalTitle">Edit Exercise</h2>
+            <div id="exModalBody"></div>
         </div>
     </div>
 
@@ -3008,6 +3073,31 @@
             return wrap;
         }
         /* ---------- EXERCISE CUSTOMIZATION (future-only, history-safe) ---------- */
+        /* ---------- EXERCISE GUIDANCE (setup + form, 1-2 sentences each) ---------- */
+        const EX_GUIDE = {
+            "Machine Chest Press": "Adjust the seat so the handles start at mid-chest, back and head supported, feet flat. Press forward smoothly without aggressive lockout, and control the return so the stack never slams.",
+            "Lat Pulldown": "Pin thighs firmly under the pad, sit tall with a 10-15° lean. Drive elbows down to the upper chest — no swinging, never behind the neck.",
+            "Seated Cable Row": "Feet planted, knees soft, chest up and spine neutral. Pull to the lower chest and control the return without rocking your torso.",
+            "Machine Shoulder Press": "Set the seat so handles start at shoulder/ear level, back supported. Press up smoothly and lower under control — never force a painful range.",
+            "Rope Triceps Pushdown": "Cable at upper-chest height, elbows pinned to your sides. Push down to full extension and return slowly without swinging the shoulders.",
+            "Dumbbell Curl": "Stand tall, elbows tucked at your sides. Curl without swinging, keep elbows from drifting forward, and lower slowly.",
+            "Leg Press": "Seat set so your lower back stays supported, feet shoulder-width. Lower under control and press through your feet — no rounding, no knees caving in.",
+            "Seated Leg Curl": "Line the machine's knee pivot with your knee, pad above the ankles, hips glued to the seat. Curl smoothly and control the return.",
+            "Leg Extension": "Pivot aligned with the knee, pad just above the ankle. Extend smoothly and lower under control — no momentum.",
+            "Glute Bridge": "Back flat, knees bent, feet hip-width. Drive through your feet until hips form a straight line — squeeze, don't overarch.",
+            "Calf Raise": "Feet stable on the platform. Rise through a full comfortable range, pause at the top, then lower slowly.",
+            "Dead Bug": "Back flat, hips and knees bent, arms up. Extend opposite arm and leg while pinning your lower back down — alternate slowly.",
+            "Chest-Supported Row": "Chest pad set so handles are easy to reach. Pull to your torso with the chest glued to the pad, and control the return.",
+            "Goblet Squat": "Dumbbell held close to the chest, feet shoulder-width. Sit between your hips with a controlled chest, then drive through your feet.",
+            "Dumbbell Romanian Deadlift": "Dumbbells at your thighs, knees soft, spine neutral. Push hips back, sliding weights down your legs — stop before your back rounds.",
+            "Cable Lateral Raise": "Cable low, working arm slightly out from the machine. Raise to shoulder height with a soft elbow — no shrugging or swinging.",
+            "Hammer Curl": "Palms facing, elbows at your sides. Curl with a neutral grip and lower slowly without swinging.",
+            "Plank": "Elbows under shoulders, straight braced line. Hold while breathing normally — no sagging or piked hips.",
+            "Bird Dog": "Hands under shoulders, knees under hips. Extend opposite arm and leg with a stable torso, return slowly and alternate."
+        };
+        function guideText(exName) {
+            return EX_GUIDE[exName] || null;
+        }
         function customKey(dow, sessionTitle, exName) {
             return dow + "|" + sessionTitle + "|" + exName;
         }
@@ -3029,6 +3119,7 @@
                     if (ed.sets && ed.reps) e.setsReps = ed.sets + " x " + ed.reps;
                     if (ed.rest) e.rest = ed.rest;
                     if (ed.why !== undefined && ed.why !== null) e.why = ed.why;
+                    if (ed.desc !== undefined && ed.desc !== null) e.desc = ed.desc;
                     e._custom = true;
                 }
                 if (sw) {
@@ -3041,7 +3132,7 @@
             });
             const added = (((DATA.custom || {}).added || {})[dow]) || [];
             added.forEach((a) => {
-                out.push({ name: a.name, muscle: a.muscle || "Custom", equip: a.equip || "", setsReps: (a.sets || 3) + " x " + (a.reps || "12"), rest: a.rest || "60-90s", why: a.why || "", timed: !!a.timed, _orig: null, _custom: true, _added: true });
+                out.push({ name: a.name, muscle: a.muscle || "Custom", equip: a.equip || "", setsReps: (a.sets || 3) + " x " + (a.reps || "12"), rest: a.rest || "60-90s", why: a.why || "", desc: a.desc || "", timed: !!a.timed, _orig: null, _custom: true, _added: true });
             });
             return out;
         }
@@ -3133,7 +3224,6 @@
         function renderExerciseCard(exercise, key, session) {
             const dow = state.day;
             const title = session ? session.title : "";
-            const ck = customKey(dow, title, exercise._orig || exercise.name);
             const isCustom = !!exercise._custom;
             const numSets = parseNumSets(exercise.setsReps);
             const skipped = isSkipped(key, exercise.name);
@@ -3153,6 +3243,15 @@
                 why.className = "ex-why";
                 why.textContent = exercise.why;
                 card.appendChild(why);
+            }
+            const guideStr = (exercise.desc !== undefined && exercise.desc !== null && String(exercise.desc).trim() !== "")
+                ? String(exercise.desc).trim()
+                : (guideText(exercise.name) || guideText(exercise._orig || ""));
+            if (guideStr) {
+                const guide = document.createElement("div");
+                guide.className = "ex-guide";
+                guide.innerHTML = "<b>Setup &amp; form:</b> " + escHtml(guideStr);
+                card.appendChild(guide);
             }
             const lastLine = document.createElement("div");
             const lt = lastTimeText(exercise.name, key);
@@ -3178,100 +3277,7 @@
             toggles.appendChild(editBtn);
             toggles.appendChild(skipBtn);
             card.appendChild(toggles);
-            const editBox = document.createElement("div");
-            editBox.className = "edit-box";
-            editBox.style.display = "none";
-            editBtn.onclick = () => {
-                editBox.style.display = editBox.style.display === "none" ? "block" : "none";
-            };
-            const curReps = exercise.setsReps.replace(/^\d+\s*x\s*/, "");
-            editBox.innerHTML =
-                '<div class="row">' +
-                '<div style="flex:1"><label>Sets</label><input type="number" inputmode="numeric" data-f="sets" value="' + numSets + '"></div>' +
-                '<div style="flex:2"><label>Reps (e.g. 12)</label><input type="text" data-f="reps" value="' + escHtml(curReps) + '"></div>' +
-                '<div style="flex:2"><label>Rest (e.g. 60-90s)</label><input type="text" data-f="rest" value="' + escHtml(exercise.rest) + '"></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div style="flex:2"><label>Name</label><input type="text" data-f="name" value="' + escHtml(exercise.name) + '"></div>' +
-                '<div style="flex:2"><label>Focus</label><input type="text" data-f="muscle" value="' + escHtml(exercise.muscle) + '"></div>' +
-                '</div>' +
-                '<div class="row"><div style="flex:1"><label>Notes</label><input type="text" data-f="why" value="' + escHtml(exercise.why || "") + '" placeholder="cue, machine #, ..."></div></div>' +
-                '<div class="edit-actions"><button class="edit-save" data-act="save">Save</button>' +
-                (isCustom && !exercise._added ? '<button class="edit-reset" data-act="reset">Reset to plan</button>' : '') + '</div>' +
-                '<div class="row" style="margin-top:8px;"><div style="flex:1"><label>Swap with</label><select class="ex-select" data-f="swap" style="margin-bottom:0;"></select></div></div>' +
-                '<div class="edit-actions" style="margin-top:8px;"><button class="edit-reset" data-act="swap">Swap exercise</button>' +
-                '<button class="edit-reset" data-act="remove">Remove</button></div>';
-            const swapSel = editBox.querySelector('[data-f="swap"]');
-            allExerciseNames().forEach((n) => {
-                const o = document.createElement("option");
-                o.value = n;
-                o.textContent = n;
-                if (n === exercise.name) o.selected = true;
-                swapSel.appendChild(o);
-            });
-            const getF = (f) => editBox.querySelector('[data-f="' + f + '"]').value.trim();
-            editBox.querySelectorAll("button").forEach((b) => {
-                b.onclick = () => {
-                    const act = b.getAttribute("data-act");
-                    if (act === "save") {
-                        const s = Math.max(1, Math.min(10, parseInt(getF("sets")) || numSets));
-                        if (exercise._added) {
-                            const arr = DATA.custom.added[dow] || [];
-                            const found = arr.filter((a) => a.name === exercise.name)[0];
-                            if (found) { found.name = getF("name") || found.name; found.muscle = getF("muscle") || found.muscle; found.sets = s; found.reps = getF("reps") || found.reps; found.rest = getF("rest") || found.rest; found.why = getF("why"); }
-                        } else {
-                            DATA.custom.edits[ck] = { name: getF("name") || exercise.name, muscle: getF("muscle") || exercise.muscle, sets: s, reps: getF("reps") || curReps, rest: getF("rest") || exercise.rest, why: getF("why") };
-                            delete DATA.custom.swaps[ck];
-                        }
-                        saveData(DATA);
-                        render();
-                    } else if (act === "reset") {
-                        delete DATA.custom.edits[ck];
-                        delete DATA.custom.swaps[ck];
-                        const rr = ((DATA.custom || {}).removed || {})[dow];
-                        if (rr && exercise._orig) {
-                            const ix = rr.indexOf(exercise._orig);
-                            if (ix !== -1) rr.splice(ix, 1);
-                        }
-                        saveData(DATA);
-                        render();
-                    } else if (act === "swap") {
-                        const target = swapSel.value;
-                        if (!target || target === exercise.name) { showToast("Pick a different exercise", "Choose another exercise to swap in."); return; }
-                        showConfirm({
-                            title: "Swap " + exercise.name + "?",
-                            body: "Future " + title + " sessions will use " + target + " instead. Past logs keep showing " + exercise.name + ".",
-                            go: "Swap",
-                            onGo: () => {
-                                delete DATA.custom.edits[ck];
-                                DATA.custom.swaps[ck] = { name: target, fromDate: todayDateStr() };
-                                saveData(DATA);
-                                render();
-                            }
-                        });
-                    } else if (act === "remove") {
-                        showConfirm({
-                            title: "Remove " + exercise.name + "?",
-                            body: "It disappears from future " + title + " sessions. Past logs are untouched.",
-                            go: "Remove",
-                            onGo: () => {
-                                if (exercise._added) {
-                                    DATA.custom.added[dow] = (DATA.custom.added[dow] || []).filter((a) => a.name !== exercise.name);
-                                } else {
-                                    if (!DATA.custom.removed[dow]) DATA.custom.removed[dow] = [];
-                                    const on = exercise._orig || exercise.name;
-                                    if (DATA.custom.removed[dow].indexOf(on) === -1) DATA.custom.removed[dow].push(on);
-                                    delete DATA.custom.edits[ck];
-                                    delete DATA.custom.swaps[ck];
-                                }
-                                saveData(DATA);
-                                render();
-                            }
-                        });
-                    }
-                };
-            });
-            card.appendChild(editBox);
+            editBtn.onclick = () => openExerciseModal(dow, title, exercise);
             const table = document.createElement("table");
             table.className = "sets";
             const isTimed = !!exercise.timed;
@@ -3295,6 +3301,132 @@
             }
             card.appendChild(table);
             return card;
+        }
+        function closeExerciseModal() { document.getElementById("exerciseModal").classList.remove("open"); }
+        function openExerciseModal(dow, title, exercise) {
+            const ck = customKey(dow, title, exercise._orig || exercise.name);
+            const numSets = parseNumSets(exercise.setsReps);
+            const curReps = String(exercise.setsReps || "").replace(/^\d+\s*x\s*/, "");
+            const ed = ((DATA.custom || {}).edits || {})[ck] || {};
+            const isCustom = !!exercise._custom;
+            document.getElementById("exModalTitle").textContent = "Edit Exercise";
+            const body = document.getElementById("exModalBody");
+            body.innerHTML =
+                '<div class="field"><label>Exercise Name</label><input type="text" id="exmName" value="' + escHtml(exercise.name) + '"></div>' +
+                '<div class="exm-row"><div class="field"><label>Sets</label><input type="number" inputmode="numeric" id="exmSets" value="' + numSets + '"></div>' +
+                '<div class="field"><label>Reps</label><input type="text" id="exmReps" value="' + escHtml(curReps) + '"></div>' +
+                '<div class="field"><label>Rest</label><input type="text" id="exmRest" value="' + escHtml(exercise.rest) + '"></div></div>' +
+                '<div class="field"><label>Focus</label><input type="text" id="exmFocus" value="' + escHtml(exercise.muscle) + '"></div>' +
+                '<div class="field"><label>Description</label><textarea id="exmDesc" rows="2" placeholder="' + escHtml(guideText(exercise._orig || exercise.name) || guideText(exercise.name) || "Setup & form cue...") + '">' + escHtml(ed.desc || "") + '</textarea></div>' +
+                '<div class="confirm-actions"><button class="confirm-back" id="exmCancel">Cancel</button>' +
+                '<button class="confirm-go" id="exmSave">Save Changes</button></div>' +
+                '<div class="exm-sub">' +
+                (isCustom && !exercise._added ? '<button class="edit-toggle" id="exmReset">Reset to plan</button>' : '') +
+                '<button class="edit-toggle" id="exmSwapBtn">Swap exercise</button>' +
+                '<button class="edit-toggle" id="exmRemoveBtn">Remove</button>' +
+                '</div>' +
+                '<div class="field" id="exmSwapWrap" style="display:none;margin-top:10px;"><label>Swap with</label>' +
+                '<select class="ex-select" id="exmSwap" style="margin-bottom:0;"></select></div>';
+            const swapSel = document.getElementById("exmSwap");
+            allExerciseNames().forEach((n) => {
+                const o = document.createElement("option");
+                o.value = n;
+                o.textContent = n;
+                if (n === exercise.name) o.selected = true;
+                swapSel.appendChild(o);
+            });
+            const gv = (id) => document.getElementById(id).value.trim();
+            document.getElementById("exmCancel").onclick = closeExerciseModal;
+            document.getElementById("exmSave").onclick = () => {
+                const s = Math.max(1, Math.min(10, parseInt(gv("exmSets")) || numSets));
+                if (exercise._added) {
+                    const arr = DATA.custom.added[dow] || [];
+                    const found = arr.filter((a) => a.name === exercise.name)[0];
+                    if (found) {
+                        found.name = gv("exmName") || found.name;
+                        found.muscle = gv("exmFocus") || found.muscle;
+                        found.sets = s;
+                        found.reps = gv("exmReps") || found.reps;
+                        found.rest = gv("exmRest") || found.rest;
+                        const dd = gv("exmDesc");
+                        if (dd) found.desc = dd; else delete found.desc;
+                    }
+                } else {
+                    DATA.custom.edits[ck] = {
+                        name: gv("exmName") || exercise.name,
+                        muscle: gv("exmFocus") || exercise.muscle,
+                        sets: s,
+                        reps: gv("exmReps") || curReps,
+                        rest: gv("exmRest") || exercise.rest,
+                        why: exercise.why
+                    };
+                    const dd = gv("exmDesc");
+                    if (dd) DATA.custom.edits[ck].desc = dd;
+                    delete DATA.custom.swaps[ck];
+                }
+                saveData(DATA);
+                closeExerciseModal();
+                render();
+                showToast("Saved " + (gv("exmName") || exercise.name), "Future sessions use the updated version. History untouched.");
+            };
+            const resetBtn = document.getElementById("exmReset");
+            if (resetBtn) {
+                resetBtn.onclick = () => {
+                    delete DATA.custom.edits[ck];
+                    delete DATA.custom.swaps[ck];
+                    const rr = ((DATA.custom || {}).removed || {})[dow];
+                    if (rr && exercise._orig) {
+                        const ix = rr.indexOf(exercise._orig);
+                        if (ix !== -1) rr.splice(ix, 1);
+                    }
+                    saveData(DATA);
+                    closeExerciseModal();
+                    render();
+                };
+            }
+            document.getElementById("exmSwapBtn").onclick = () => {
+                const w = document.getElementById("exmSwapWrap");
+                const doSwap = () => {
+                    const target = swapSel.value;
+                    if (!target || target === exercise.name) { showToast("Pick a different exercise", "Choose another exercise to swap in."); return; }
+                    showConfirm({
+                        title: "Swap " + exercise.name + "?",
+                        body: "Future " + title + " sessions will use " + target + " instead. Past logs keep showing " + exercise.name + ".",
+                        go: "Swap",
+                        onGo: () => {
+                            delete DATA.custom.edits[ck];
+                            DATA.custom.swaps[ck] = { name: target, fromDate: todayDateStr() };
+                            saveData(DATA);
+                            closeExerciseModal();
+                            render();
+                        }
+                    });
+                };
+                if (w.style.display === "none") { w.style.display = "block"; }
+                else doSwap();
+            };
+            document.getElementById("exmRemoveBtn").onclick = () => {
+                showConfirm({
+                    title: "Remove " + exercise.name + "?",
+                    body: "It disappears from future " + title + " sessions. Past logs are untouched.",
+                    go: "Remove",
+                    onGo: () => {
+                        if (exercise._added) {
+                            DATA.custom.added[dow] = (DATA.custom.added[dow] || []).filter((a) => a.name !== exercise.name);
+                        } else {
+                            if (!DATA.custom.removed[dow]) DATA.custom.removed[dow] = [];
+                            const on = exercise._orig || exercise.name;
+                            if (DATA.custom.removed[dow].indexOf(on) === -1) DATA.custom.removed[dow].push(on);
+                            delete DATA.custom.edits[ck];
+                            delete DATA.custom.swaps[ck];
+                        }
+                        saveData(DATA);
+                        closeExerciseModal();
+                        render();
+                    }
+                });
+            };
+            document.getElementById("exerciseModal").classList.add("open");
         }
         function renderCardioDay(session, key) {
             const wrap = document.createElement("div");
@@ -4709,6 +4841,8 @@
                 }
                 if (P.App && P.App.addListener) {
                     P.App.addListener("backButton", () => {
+                        const em = document.getElementById("exerciseModal");
+                        if (em && em.classList.contains("open")) { closeExerciseModal(); return; }
                         const cm = document.getElementById("confirmModal");
                         if (cm && cm.classList.contains("open")) { closeConfirm(); return; }
                         const im = document.getElementById("infoModal");
