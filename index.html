@@ -5244,15 +5244,34 @@
             showToast("Install", "Open this page in Chrome, then tap ⋮ → Add to Home screen → Install.");
         }
 
-        /* ---------- PWA: Service Worker registration (offline-first, localStorage persists offline) ---------- */
+        /* ---------- PWA: Service Worker registration + automatic update sync ---------- */
+        var __waReloading = false;
+        function __waReload() { if (__waReloading) return; __waReloading = true; try { location.reload(); } catch (e) {} }
+        function __waPromptUpdate() {
+            var b = document.createElement("div");
+            b.setAttribute("role", "status");
+            b.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:500;background:#101722;border-bottom:1px solid #7dd8e8;color:#e8ecf1;text-align:center;font-size:12.5px;padding:10px 12px;font-family:'Inter',sans-serif;";
+            b.textContent = "New version found — loading the latest…";
+            document.body.appendChild(b);
+            setTimeout(__waReload, 2500);
+        }
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function () {
                 navigator.serviceWorker.register('sw.js').then(function (reg) {
                     console.log('SW registered:', reg.scope);
+                    if (reg.waiting && navigator.serviceWorker.controller) __waPromptUpdate();
+                    reg.onupdatefound = function () {
+                        var nw = reg.installing;
+                        if (!nw) return;
+                        nw.onstatechange = function () {
+                            if (nw.state === 'installed' && navigator.serviceWorker.controller) __waPromptUpdate();
+                        };
+                    };
                 }).catch(function (err) {
                     console.log('SW registration failed:', err);
                 });
             });
+            navigator.serviceWorker.addEventListener('controllerchange', __waReload);
         }
     </script>
 
